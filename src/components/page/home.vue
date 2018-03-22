@@ -97,7 +97,12 @@
         </div>
         <div class="cnt-margin">
             <el-row>
-                <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+                <el-col :span="12"><div class="grid-content bg-purple">
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">1</div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">2</div></el-col>
+                    </el-row>
+                </div></el-col>
                 <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
             </el-row>
         </div>
