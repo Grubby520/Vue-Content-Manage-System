@@ -1,0 +1,12 @@
+{
+    "userList": [
+        {
+            "username": "super_admin",
+            "password": "super123"
+        },
+        {
+            "username": "tenant_admin",
+            "password": "tenant123"
+        }
+    ]
+}

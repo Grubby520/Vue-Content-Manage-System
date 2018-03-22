@@ -1,0 +1,84 @@
+{
+    "basic": [
+        {
+            "name": "服务器",
+            "icon": "icon-yn_server-management",
+            "total": 200,
+            "error": 2
+        },
+        {
+            "name": "存储设备",
+            "icon": "icon-yn_device_storage-management",
+            "total": 210,
+            "error": 2
+        },
+        {
+            "name": "网络设备",
+            "icon": "icon-yn_device_network-management",
+            "total": 220,
+            "error": 2
+        },
+        {
+            "name": "IP资源",
+            "icon": "icon-iconn-management",
+            "total": 240,
+            "error": 2
+        }
+    ],
+    "resource": [
+        {
+            "name": "云主机",
+            "icon": "icon-Cloud-infrastructure-management",
+            "total": 200,
+            "error": 2
+        },
+        {
+            "name": "云存储",
+            "icon": "icon-region-management",
+            "total": 210,
+            "error": 2
+        },
+        {
+            "name": "云防火墙",
+            "icon": "icon-SecurityInformation-management",
+            "total": 220,
+            "error": 2
+        },
+        {
+            "name": "负载均衡",
+            "icon": "icon-yn_server-management",
+            "total": 240,
+            "error": 2
+        }
+    ],
+    "distribution": [
+        {
+            "name": "CPU",
+            "icon": "icon-yn_server-management",
+            "total": 200,
+            "use": 2,
+            "unit": "核"
+        },
+        {
+            "name": "内存",
+            "icon": "icon-yn_server-management",
+            "total": 210,
+            "use": 2,
+            "unit": "TB"
+        },
+        {
+            "name": "存储容量",
+            "icon": "icon-yn_server-management",
+            "total": 220,
+            "use": 2,
+            "unit": "TB"
+        },
+        {
+            "name": "公网IP",
+            "icon": "icon-yn_server-management",
+            "total": 240,
+            "use": 2,
+            "unit": "个"
+        }
+    ]
+}
