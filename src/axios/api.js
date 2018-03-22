@@ -44,6 +44,9 @@ export default {
     getHomeList(url, params) {
         return fetch(url, params);
     },
+    getHomeList_business(url, params) {
+        return fetch(url, params);
+    },
 
     getTable(url, params) {
         return fetch(url, params);

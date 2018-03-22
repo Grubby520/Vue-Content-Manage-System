@@ -37,5 +37,13 @@
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translate(0, -50%);
+    transform: translate(15%, -50%);
+}
+.el-chart{
+    height: 240px;
+    margin: 15px 0 25px 0;
+}
+.el-chart.small{
+    width: 50%;
+    margin: 15px auto 25px ;
 }

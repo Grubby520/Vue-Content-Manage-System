@@ -26,7 +26,7 @@ const homeListData = function( ) {
     let homeListJson = require('../static/json/home_database.json');
     for(const item in homeListJson){
         homeListJson[item].forEach(function(value, index){
-            if(item == 'distribution'){
+            if(item === 'distribution'){
                 value.total = Random.integer(100, 200);
                 value.use = Random.integer(20, 100);
                 const id = 'id';
@@ -43,7 +43,14 @@ const homeListData = function( ) {
     }
     return homeListJson;
 };
-
+const businessListData = function( ) {
+    return {
+        business_monitor: [Random.integer(80, 100),Random.integer(0, 20),Random.integer(120, 130)],
+        business_security: Random.integer(0, 100),
+        business_usability: Random.integer(0, 100),
+        business_busyness: Random.integer(0, 100)
+    }
+};
 
 /*table的数据*/
 const produceNewsData = function(data) {
@@ -118,6 +125,7 @@ const submitUserPower = function(data) {
 
 Mock.mock('/validate_logon','post', userListData);
 Mock.mock('/getHomeList','post', homeListData);
+Mock.mock('/getHomeList/business','post', businessListData);
 Mock.mock('/userTable','post', produceNewsData);
 Mock.mock('/userTable/getUserPower','post', getUserPower);
 Mock.mock('/userTable/submitUserPower','post', submitUserPower);

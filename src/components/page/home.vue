@@ -88,7 +88,7 @@
                                 </div></el-col>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple relative">
-                                <el-progress type="circle" :percentage="value.rate" class="line-center"></el-progress>
+                                <el-progress type="circle" :percentage="value.rate" class="line-center" :width="95"></el-progress>
                             </div></el-col>
                         </el-row>
                     </div>
@@ -96,38 +96,83 @@
             </el-row>
         </div>
         <div class="cnt-margin">
-            <el-row>
-                <el-col :span="12"><div class="grid-content bg-purple">
+            <el-row :gutter="15">
+                <el-col :span="8"><div class="grid-content bg-purple">
                     <el-row>
-                        <el-col :span="12"><div class="grid-content bg-purple">1</div></el-col>
-                        <el-col :span="12"><div class="grid-content bg-purple">2</div></el-col>
+                        <el-col><div class="grid-content bg-purple">
+                            <p class="title_sec">业务概况</p>
+                            <div id="business-monitor" class="el-chart"></div>
+                        </div></el-col>
                     </el-row>
                 </div></el-col>
-                <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+                <el-col :span="16"><div class="grid-content bg-purple">
+                    <el-row>
+                        <el-col :span="8"><div class="grid-content bg-purple">
+                            <p class="title_sec center">业务安全性</p>
+                            <div id="business-security" class="el-chart small"></div>
+                        </div></el-col>
+                        <el-col :span="8"><div class="grid-content bg-purple">
+                            <p class="title_sec center">业务可用性</p>
+                            <div id="business-usability" class="el-chart small"></div>
+                        </div></el-col>
+                        <el-col :span="8"><div class="grid-content bg-purple">
+                            <p class="title_sec center">业务繁忙度</p>
+                            <div id="business-busyness" class="el-chart small"></div>
+                        </div></el-col>
+                    </el-row>
+                </div></el-col>
             </el-row>
         </div>
-
     </div>
 </template>
 
 <script>
     import '../../../static/css/home.css'
     import api from '../../axios/api.js'
+    import Option from '../../../static/js/components/charts'
     export default {
         data(){
             return {
                 basic: [],
                 resource: [],
-                distribution: []
+                distribution: [],
+                business_monitor: [50,20,110],
+                business_security: 50,
+                business_usability: 80,
+                business_busyness: 20,
             }
         },
         created(){
+
             api.getHomeList('/getHomeList',{})
                 .then(res => {
                     this.basic = res.basic;
                     this.resource = res.resource;
                     this.distribution = res.distribution;
                 });
+
+            api.getHomeList_business('/getHomeList/business',{})
+                .then(res => {
+                    this.drawPie_2('business-security', res.business_security,'#58c130');
+                    this.drawPie_2('business-usability', res.business_usability, '#25a4f6');
+                    this.drawPie_2('business-busyness', res.business_busyness, '#ff3b2f');
+                });
+
+        },
+        mounted(){
+            this.drawPie('business-monitor', this.business_monitor);
+        },
+        methods: {
+            drawPie(id, data){
+                let myChart = this.$echarts.init(document.getElementById(id));
+                let myOption = Option.business_monitor_option(data);
+                myChart.setOption(myOption);
+            },
+            drawPie_2(id, value, color){
+                let myChart = this.$echarts.init(document.getElementById(id));
+                let myOption = Option.business_status(value, color);
+                myChart.setOption(myOption);
+            }
         }
     }
 </script>
