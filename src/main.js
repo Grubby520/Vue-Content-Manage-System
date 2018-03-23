@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import eCharts from 'echarts'
-Vue.prototype.$echarts  = eCharts;
+// import eCharts from 'echarts'
+// Vue.prototype.$echarts  = eCharts;
 
 import axios from 'axios'
 

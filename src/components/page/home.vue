@@ -8,7 +8,7 @@
         </div>
 
         <div class="cnt-margin">
-            <el-row :gutter="15" class="outer">
+            <el-row :gutter="15" class="outer" style="height: 140px">
                 <el-col class="title">基础设施</el-col>
                 <el-col :span="6" v-for="value in basic" :key="value.id">
                     <div class="grid-content bg-purple">
@@ -37,7 +37,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row :gutter="15" class="outer">
+            <el-row :gutter="15" class="outer" style="height: 140px">
                 <el-col class="title">云资源</el-col>
                 <el-col :span="6" v-for="value in resource" :key="value.id">
                     <div class="grid-content bg-purple">
@@ -66,7 +66,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row :gutter="15" class="outer">
+            <el-row :gutter="15" class="outer" style="height: 177px">
                 <el-col class="title">资源分配</el-col>
                 <el-col :span="6" v-for="value in distribution" :key="value.id" class="resource-assign">
                     <div class="grid-content bg-purple">
@@ -96,7 +96,7 @@
             </el-row>
         </div>
         <div class="cnt-margin">
-            <el-row :gutter="15">
+            <el-row :gutter="15" style="height: 317px">
                 <el-col :span="8"><div class="grid-content bg-purple">
                     <el-row>
                         <el-col><div class="grid-content bg-purple">
@@ -109,15 +109,24 @@
                     <el-row>
                         <el-col :span="8"><div class="grid-content bg-purple">
                             <p class="title_sec center">业务安全性</p>
-                            <div id="business-security" class="el-chart small"></div>
+                            <div class="el-chart right">
+                                <div id="business-security" class=" small"></div>
+                                <p><span class="level" :class="[security.className]">{{security.text}}</span></p>
+                            </div>
                         </div></el-col>
                         <el-col :span="8"><div class="grid-content bg-purple">
                             <p class="title_sec center">业务可用性</p>
-                            <div id="business-usability" class="el-chart small"></div>
+                            <div class="el-chart">
+                                <div id="business-usability" class=" small"></div>
+                                <p><span class="level" :class="[usability.className]">{{usability.text}}</span></p>
+                            </div>
                         </div></el-col>
                         <el-col :span="8"><div class="grid-content bg-purple">
                             <p class="title_sec center">业务繁忙度</p>
-                            <div id="business-busyness" class="el-chart small"></div>
+                            <div class="el-chart">
+                                <div id="business-busyness" class=" small"></div>
+                                <p><span class="level" :class="[busyness.className]">{{busyness.text}}</span></p>
+                            </div>
                         </div></el-col>
                     </el-row>
                 </div></el-col>
@@ -129,7 +138,7 @@
 <script>
     import '../../../static/css/home.css'
     import api from '../../axios/api.js'
-    import Option from '../../../static/js/components/charts'
+    import {Chart,getColor,business_monitor_option,business_status} from '../../../static/js/components/charts'
     export default {
         data(){
             return {
@@ -137,13 +146,24 @@
                 resource: [],
                 distribution: [],
                 business_monitor: [50,20,110],
-                business_security: 50,
-                business_usability: 80,
-                business_busyness: 20,
+                security: {
+                    text: '',
+                    className: '',
+                    color:''
+                },
+                usability: {
+                    text: '',
+                    className: '',
+                    color:''
+                },
+                busyness: {
+                    text: '',
+                    className: '',
+                    color:''
+                }
             }
         },
         created(){
-
             api.getHomeList('/getHomeList',{})
                 .then(res => {
                     this.basic = res.basic;
@@ -153,26 +173,65 @@
 
             api.getHomeList_business('/getHomeList/business',{})
                 .then(res => {
-                    this.drawPie_2('business-security', res.business_security,'#58c130');
-                    this.drawPie_2('business-usability', res.business_usability, '#25a4f6');
-                    this.drawPie_2('business-busyness', res.business_busyness, '#ff3b2f');
-                });
+                    console.log(res);
+                    if(res.business_security >= 80){
+                        this.security.text = '安全';
+                        this.security.className = 'good';
+                        this.security.color = '#58c130';
+                    }else if(res.business_security >= 60){
+                        this.security.text = '一般';
+                        this.security.className = 'normal';
+                        this.security.color = '#25a4f6';
+                    }else{
+                        this.security.text = '危险';
+                        this.security.className = 'bad';
+                        this.security.color = '#ff3b2f';
+                    }
 
+                    if(res.business_usability >= 80){
+                        this.usability.text = '高';
+                        this.usability.className = 'good';
+                        this.usability.color = '58c130';
+                    }else if(res.business_usability >= 60){
+                        this.usability.text = '中';
+                        this.usability.className = 'normal';
+                        this.usability.color = '#25a4f6';
+                    }else{
+                        this.usability.text = '低';
+                        this.usability.className = 'bad';
+                        this.usability.color = '#ff3b2f';
+                    }
+
+                    if(res.business_busyness >= 80){
+                        this.busyness.text = '繁忙';
+                        this.busyness.className = 'bad';
+                        this.busyness.color = '#ff3b2f';
+
+                    }else if(res.business_busyness >= 60){
+                        this.busyness.text = '一般';
+                        this.busyness.className = 'normal';
+                        this.busyness.color = '#25a4f6';
+                    }else{
+                        this.busyness.text = '空闲';
+                        this.busyness.className = 'good';
+                        this.busyness.color = '#58c130';
+                    }
+
+                    new Chart('business-monitor').setOption( business_monitor_option(res.business_monitor));
+                    new Chart('business-security').setOption( business_status(res.business_security, this.security.color));
+                    new Chart('business-usability').setOption( business_status(res.business_usability, this.usability.color));
+                    new Chart('business-busyness').setOption( business_status(res.business_busyness, this.busyness.color));
+
+                });
         },
         mounted(){
-            this.drawPie('business-monitor', this.business_monitor);
+            this.$nextTick(function () {
+                document.getElementById('main-nav').style.height = document.getElementById('wrapper').offsetHeight - 50 +'px';
+            });
+
         },
         methods: {
-            drawPie(id, data){
-                let myChart = this.$echarts.init(document.getElementById(id));
-                let myOption = Option.business_monitor_option(data);
-                myChart.setOption(myOption);
-            },
-            drawPie_2(id, value, color){
-                let myChart = this.$echarts.init(document.getElementById(id));
-                let myOption = Option.business_status(value, color);
-                myChart.setOption(myOption);
-            }
+
         }
     }
 </script>

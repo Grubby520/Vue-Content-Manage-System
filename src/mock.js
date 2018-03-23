@@ -46,9 +46,9 @@ const homeListData = function( ) {
 const businessListData = function( ) {
     return {
         business_monitor: [Random.integer(80, 100),Random.integer(0, 20),Random.integer(120, 130)],
-        business_security: Random.integer(0, 100),
-        business_usability: Random.integer(0, 100),
-        business_busyness: Random.integer(0, 100)
+        business_security: Random.integer(5, 100),
+        business_usability: Random.integer(5, 100),
+        business_busyness: Random.integer(5, 100)
     }
 };
 

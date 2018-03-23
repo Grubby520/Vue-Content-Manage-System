@@ -135,15 +135,9 @@
                 </el-table-column>
                 <el-table-column prop="name" label="用户名" width="120">
                     <template slot-scope="scope">
-                        <el-button
-                            v-popover:popover-user
-                            type="text"
-                            size="small">
-                            {{scope.row.name}}
-                        </el-button>
-                    <!-- 用户名弹窗:有问题,每次都会动态生成一个el-popover !-->
+                        <!-- bug!-->
                         <el-popover
-                            ref="popover-user"
+                            ref="popoverUser"
                             placement="right"
                             width="400"
                             trigger="click">
@@ -184,6 +178,13 @@
                                 </tr>
                             </table>
                         </el-popover>
+
+                        <el-button
+                            v-popover:popoverUser
+                            type="text"
+                            size="small">
+                            {{scope.row.name}}
+                        </el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="org" label="所属单位">
@@ -467,6 +468,10 @@
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+            },
+
+            hideOver(){
+                console.log('close');
             }
         }
     }
