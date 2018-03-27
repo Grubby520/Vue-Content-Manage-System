@@ -131,12 +131,6 @@
             }
 
         },
-        mounted(){
-            this.$nextTick(function () {
-                console.log(this.formLabelWidth);
-            });
-
-        },
         methods: {
             reset(){
                 this.$emit('callback');
