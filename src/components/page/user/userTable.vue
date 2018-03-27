@@ -14,55 +14,11 @@
                     <el-button type="primary" icon="delete" class="handle-create mr10" @click="dialogAddVisible = true">新建</el-button>
                     <el-button type="primary" icon="delete" class="handle-del mr10" @click="del">删除</el-button>
                 </div>
-                <!-- 新建弹窗 -->
-                <el-dialog title="新建用户" :visible.sync="dialogAddVisible">
-                    <el-form :model="form_add">
-                        <el-form-item label="用户名:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-input v-model="form_add.name" placeholder="请输入3-12位用户名称" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="用户密码:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-input type="password" v-model="form_add.password1" placeholder="密码" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="确认密码:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-input type="password" v-model="form_add.password2" placeholder="确认密码" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="角色:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-select v-model="form_add.roleId" placeholder="请选择角色">
-                                <el-option
-                                    v-for="item in roles"
-                                    :key="item.roleId"
-                                    :label="item.roleName"
-                                    :value="item.roleId">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="所属机构:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-select v-model="form_add.orgId" filterable placeholder="请选择所属机构">
-                                <el-option
-                                    v-for="item in orgs"
-                                    :key="item.orgId"
-                                    :label="item.orgName"
-                                    :value="item.orgId">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="描述:" :label-width="formLabelWidth">
-                            <span class="not-must"></span>
-                            <textarea class="el-textarea" v-model="form_add.desc" placeholder="加入描述内容，非必填" auto-complete="off"></textarea>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogAddVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogAddVisible = false">提 交</el-button>
-                    </div>
-                </el-dialog>
-                <!-- 编辑弹窗 -->
-                <el-dialog title="编辑用户" :visible.sync="dialogEditVisible">
+
+                <!--add dialog-->
+                <u-add :dialogAddVisible="dialogAddVisible" v-on:callback="callbackFn"></u-add>
+                <!-- edit 编辑弹窗 -->
+                <!--<el-dialog title="编辑用户" :visible.sync="dialogEditVisible">
                     <el-form :model="form_edit">
                         <el-form-item label="用户名:" :label-width="formLabelWidth">
                             <i class="iconfont icon-must"></i>
@@ -100,8 +56,8 @@
                         <el-button @click="dialogEditVisible = false">取 消</el-button>
                         <el-button type="primary" @click="dialogEditSubmit">提 交</el-button>
                     </div>
-                </el-dialog>
-                <!--数据权限弹窗-->
+                </el-dialog>-->
+                <!-- power 数据权限弹窗-->
                 <el-dialog title="用户数据权限设置" :visible.sync="dialogPowerVisible">
                     <span slot="title">用户数据权限设置<span style="color: #4db3ff;">（{{name}}）</span></span>
                     <el-form :model="form_edit">
@@ -161,15 +117,15 @@
                                 <tr>
                                     <td>激活状态</td>
                                     <td>
-                                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../static/img/cg.png" alt=""> 已绑定</p>
-                                        <p v-else class="table-fail"><img src="../../../static/img/fail.png" alt="">未绑定</p>
+                                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已绑定</p>
+                                        <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未绑定</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>证书状态</td>
                                     <td>
-                                        <p v-if="scope.row.isRun" class="table-success"><img src="../../../static/img/cg.png" alt=""> 已激活</p>
-                                        <p v-else class="table-fail"><img src="../../../static/img/fail.png" alt="">未激活</p>
+                                        <p v-if="scope.row.isRun" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已激活</p>
+                                        <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未激活</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -199,14 +155,14 @@
                     </el-table-column>
                 <el-table-column prop="isRun" label="激活状态">
                     <template slot-scope="scope">
-                            <p v-if="scope.row.isRun" class="table-success"><img src="../../../static/img/cg.png" alt=""> 已激活</p>
-                            <p v-else class="table-fail"><img src="../../../static/img/fail.png" alt="">未激活</p>
+                            <p v-if="scope.row.isRun" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已激活</p>
+                            <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未激活</p>
                     </template>
                 </el-table-column>
                 <el-table-column prop="isBind" label="证书状态" class-name="todo">
                     <template slot-scope="scope">
-                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../static/img/cg.png" alt=""> 已绑定</p>
-                        <p v-else class="table-fail"><img src="../../../static/img/fail.png" alt="">未绑定</p>
+                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已绑定</p>
+                        <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未绑定</p>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="180">
@@ -233,8 +189,12 @@
 </template>
 
 <script>
-    import api from '../../axios/api.js'
+    import api from '../../../axios/api.js'
+    import UAdd from './user-add.vue'
     export default {
+        components: {
+            UAdd
+        },
         data() {
             //自定义方法
             const getPowerData = _ => {
@@ -246,7 +206,7 @@
                     );
                 return data;
             };
-            return {
+            return  {
                 tableData: [],
                 cur_page: 1,//当前页码
                 page_size: 15,//1页条数
@@ -263,7 +223,7 @@
                 modal1: false,
                 roleId: '',
                 orgId: '',
-                desc: '',
+                desc: 'address-desac',
                 form_add: {
                     name: '',
                     password1: '',
@@ -283,28 +243,10 @@
                     orgId: '',
                     desc: ''
                 },
-                //通过接口获取？
-                roles: [
-                    {roleId:1,roleName: '系统管理员'},
-                    {roleId:2,roleName: '监管人员'},
-                    {roleId:3,roleName: '租户管理员'},
-                    {roleId:4,roleName: '云服务商'},
-                    {roleId:5,roleName: '应用厂商'}
-                ],
-                orgs: [
-                    {orgId:1,orgName: '省办公厅'},
-                    {orgId:2,orgName: '省政协'},
-                    {orgId:3,orgName: '省政法委'},
-                    {orgId:4,orgName: '省公安厅消防总队'},
-                    {orgId:5,orgName: '省地税局'},
-                    {orgId:6,orgName: '省国税局'},
-                    {orgId:7,orgName: '省工商局'},
-                    {orgId:8,orgName: '省审计厅'},
-                    {orgId:9,orgName: '省商务厅'}
-                ],
                 formLabelWidth: '150px',
                 power_data:getPowerData(),
-                orgPower: []//权限arr
+                orgPower: [],//权限arr
+
             }
         },
         created(){
@@ -333,6 +275,9 @@
             }
         },
         methods: {
+            callbackFn: function(){
+                this.dialogAddVisible = !this.dialogAddVisible;
+            },
             //init table
             getData() {
                 //api，获取table列表对象
@@ -474,6 +419,7 @@
                 console.log('close');
             }
         }
+
     }
 </script>
 

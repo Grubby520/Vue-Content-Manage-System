@@ -19,7 +19,7 @@
     export default {
         data() {
             return {
-                name: 'linxin'
+                name: 'super_admin'
             }
         },
         computed:{

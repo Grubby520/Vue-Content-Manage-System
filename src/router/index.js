@@ -19,7 +19,7 @@ export default new Router({
                 },
                 {
                     path: '/userTable',
-                    component: resolve => require(['../components/page/userTable.vue'], resolve)
+                    component: resolve => require(['../components/page/user/userTable.vue'], resolve)
                 },
                 {
                     path: '/tenantTable',

@@ -7,6 +7,9 @@ body{
     font-family:"Helvetica Neue",Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
     font-size: 16px;
 }
+html,body,#app{
+    height: 100%;
+}
 html,body,#app,.wrapper{
     width:100%;
     background-color: #e7ecf0;
@@ -259,9 +262,9 @@ color
 .el-dialog__body .el-select .el-input{
     width: 100%;
 }
-.el-dialog__body .el-form-item__label{
-    padding-right: 0;
-}
+/*.el-dialog__body .el-form-item__label{*/
+    /*padding-right: 0;*/
+/*}*/
 .icon-must{
     font-size: 0.1em!important;
     color: #ff5508;
