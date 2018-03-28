@@ -7,7 +7,7 @@ const Random = Mock.Random;
 const userListData = function(data) {
     data = JSON.parse(data.body);
     let result = 'false';
-    const userListJson = require('../static/json/user_database.json');
+    const userListJson = require('../static/json/login/user_database.json');
     userListJson.userList.some(function(value, index){
         if(value.username === data.username && value.password === data.password){
             result = 'success';
@@ -20,10 +20,10 @@ const userListData = function(data) {
 };
 
 /*
-* home-表
+* login-表
 * */
 const homeListData = function( ) {
-    let homeListJson = require('../static/json/home_database.json');
+    let homeListJson = require('../static/json/home/home_database.json');
     for(const item in homeListJson){
         homeListJson[item].forEach(function(value, index){
             if(item === 'distribution'){
@@ -51,6 +51,32 @@ const businessListData = function( ) {
         business_busyness: Random.integer(5, 100)
     }
 };
+
+
+/**
+ *  获取角色列表
+ **/
+const roleList = function(){
+    let list = require('../static/json/public/role_database.json');
+    for(const i in list){
+        list[i].roleId = Random.id();
+    }
+    return list;
+};
+
+/**
+ *  获取部门列表
+ **/
+const departmentList = function(){
+    let list = require('../static/json/public/departments_database.json');
+    for(const i in list){
+        list[i].orgId = Random.id();
+    }
+    return list;
+};
+/*
+* 部门list
+* */
 
 /*table的数据*/
 const produceNewsData = function(data) {
@@ -122,6 +148,9 @@ const submitUserPower = function(data) {
 
 /*所有接口*/
 // Mock.mock( url, post/get , params)
+
+Mock.mock('/roleList','post', roleList);
+Mock.mock('/departmentList','post', departmentList);
 
 Mock.mock('/validate_logon','post', userListData);
 Mock.mock('/getHomeList','post', homeListData);

@@ -173,7 +173,6 @@
 
             api.getHomeList_business('/getHomeList/business',{})
                 .then(res => {
-                    console.log(res);
                     if(res.business_security >= 80){
                         this.security.text = '安全';
                         this.security.className = 'good';

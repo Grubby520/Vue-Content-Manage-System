@@ -1,20 +1,26 @@
 <!-- add dialog -->
 <template >
-    <el-dialog title="新建用户" :visible.sync="dialogAddVisible" :close-on-click-modal=false :before-close="closeDialog">
+    <el-dialog
+        title="新建用户"
+        :visible.sync="dialogAddVisible"
+        :close-on-click-modal=false
+        :before-close="closeDialog"
+        :close-on-press-escape=false
+        >
         <el-form :model="form_add" :rules="rules" ref="form_add">
-            <el-form-item label="用户名:" :label-width="formLabelWidth" prop="name">
+            <el-form-item label="用户名 :" :label-width="formLabelWidth" prop="name">
                 <i class="iconfont icon-must"></i>
                 <el-input v-model="form_add.name" placeholder="请输入3-12位用户名称" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="用户密码:" :label-width="formLabelWidth" prop="pass">
+            <el-form-item label="用户密码 :" :label-width="formLabelWidth" prop="pass">
                 <i class="iconfont icon-must"></i>
                 <el-input type="password" v-model="form_add.pass" placeholder="密码" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="确认密码:" :label-width="formLabelWidth" prop="checkPass" >
+            <el-form-item label="确认密码 :" :label-width="formLabelWidth" prop="checkPass" >
                 <i class="iconfont icon-must"></i>
                 <el-input type="password" v-model="form_add.checkPass" placeholder="确认密码" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="角色:" :label-width="formLabelWidth"  prop="roleId">
+            <el-form-item label="角色 :" :label-width="formLabelWidth"  prop="roleId">
                 <i class="iconfont icon-must"></i>
                 <el-select v-model="form_add.roleId" placeholder="请选择角色">
                     <el-option
@@ -25,7 +31,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="所属机构:" :label-width="formLabelWidth" prop="orgId">
+            <el-form-item label="所属机构 :" :label-width="formLabelWidth" prop="orgId">
                 <i class="iconfont icon-must"></i>
                 <el-select v-model="form_add.orgId" filterable placeholder="请选择所属机构">
                     <el-option
@@ -36,8 +42,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="描述:" :label-width="formLabelWidth">
-                <span class="not-must"></span>
+            <el-form-item label="描述 :" :label-width="formLabelWidth">
                 <textarea class="el-textarea" v-model="form_add.desc" placeholder="加入描述内容，非必填" auto-complete="off"></textarea>
             </el-form-item>
         </el-form>
@@ -47,10 +52,45 @@
             <el-button type="primary" @click="submitForm('form_add')">创 建</el-button>
         </div>
 
+        <el-dialog
+            width="50%"
+            title="参数列表"
+            :show-close=true
+            :modal=false
+            :close-on-click-modal=false
+            :visible.sync="innerVisible"
+            :append-to-body=true>
+            <table width="100%" class="inner-dialog">
+                <tr>
+                    <td>参数名</td>
+                    <td>参数值</td>
+                </tr>
+                <tr>
+                    <td>用户名</td>
+                    <td>{{form_add.name}}</td>
+                </tr>
+                <tr>
+                    <td>角色Id</td>
+                    <td>{{form_add.roleId}}</td>
+                </tr>
+                <tr>
+                    <td>所属机构Id</td>
+                    <td>{{form_add.orgId}}</td>
+                </tr>
+                <tr>
+                    <td>描述</td>
+                    <td>{{form_add.desc}}</td>
+                </tr>
+            </table>
+            <el-button @click="innerVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogSubmit">提 交</el-button>
+        </el-dialog>
+
     </el-dialog>
 </template>
 
 <script>
+    import api from '../../../axios/api.js'
     export default {
         props: ['dialogAddVisible'],
 //        computed:{
@@ -65,13 +105,11 @@
 //            }
 //        },
         data: function () {
+            //验证规则
             let validatePass = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入密码'));
                 } else {
-                    if (this.form_add.checkPass !== '') {
-                        this.$refs.rules.validateField('checkPass');
-                    }
                     callback();
                 }
             };
@@ -89,33 +127,14 @@
                     name: '',
                     pass: '',
                     checkPass: '',
-                    role: '',
                     roleId: '',
-                    org: '',
                     orgId: '',
-                    date2: '',
                     desc: ''
                 },
+                innerVisible: false,
                 formLabelWidth: '150px',
-                //通过接口获取？
-                roles: [
-                    {roleId:1,roleName: '系统管理员'},
-                    {roleId:2,roleName: '监管人员'},
-                    {roleId:3,roleName: '租户管理员'},
-                    {roleId:4,roleName: '云服务商'},
-                    {roleId:5,roleName: '应用厂商'}
-                ],
-                departments: [
-                    {orgId:1,orgName: '省办公厅'},
-                    {orgId:2,orgName: '省政协'},
-                    {orgId:3,orgName: '省政法委'},
-                    {orgId:4,orgName: '省公安厅消防总队'},
-                    {orgId:5,orgName: '省地税局'},
-                    {orgId:6,orgName: '省国税局'},
-                    {orgId:7,orgName: '省工商局'},
-                    {orgId:8,orgName: '省审计厅'},
-                    {orgId:9,orgName: '省商务厅'}
-                ],
+                roles: [],
+                departments: [],
                 rules: {
                     name: [
                         {required: true, message: '请输入3-12位用户名称', trigger: 'blur'},
@@ -126,37 +145,68 @@
                     ],
                     checkPass: [
                         {required: true, validator: validatePass2, trigger: 'blur' }
+                    ],
+                    roleId: [
+                        { required: true, message: '请选择角色', trigger: 'change' }
+                    ],
+                    orgId: [
+                        { required: true, message: '请选择所属机构', trigger: 'change' }
                     ]
                 }
             }
 
         },
+        created(){
+            this.initData();
+        },
         methods: {
-            reset(){
-                this.$emit('callback');
+            initData(){
+                api.$http('/roleList', {})
+                    .then(res => {
+                        this.roles = res;
+                    });
+
+                api.$http('/departmentList',{})
+                    .then(res => {
+                        this.departments = res;
+                    })
             },
             closeDialog(){
                 this.$emit('callback');
             },
             resetForm(formName) {
+                this.form_add.desc = '';
                 this.$refs[formName].resetFields();
             },
-            //add-submit
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$emit('callback');
+                        this.innerVisible = true;
+                        //this.$emit('callback');
                     } else {
-                        console.log('error submit!!');
+                        console.error('error submit');
                         return false;
                     }
                 });
             },
+            dialogSubmit(){
+                this.innerVisible = false;
+                this.$emit('callback');
+                this.resetForm('form_add');
+                this.$message({
+                    type: 'success',
+                    message: '提交成功',
+                    duration: '1500'
+                });
+            }
         }
     }
 </script>
 <style>
     .el-form-item__label{
         padding-right: 10px;
+    }
+    .inner-dialog td{
+        border-bottom: 1px solid #ccc;
     }
 </style>

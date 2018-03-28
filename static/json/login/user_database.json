@@ -5,7 +5,7 @@
             "password": "super123"
         },
         {
-            "username": "tenant_admin",
+            "username": "tenant",
             "password": "tenant123"
         }
     ]

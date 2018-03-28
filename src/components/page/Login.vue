@@ -85,6 +85,7 @@
                         api.checkLogin('/validate_logon', this.ruleForm
                             ).then(res => {
                                 if(res.result === 'success'){
+                                    localStorage.setItem('username', this.ruleForm.username);
                                     this.$router.push('/home'); // 跳转到home页面
                                 }
                                 else{

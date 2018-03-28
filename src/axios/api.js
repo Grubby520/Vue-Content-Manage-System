@@ -31,6 +31,10 @@ export function fetch(url, params) {
 
 //接口地址
 export default {
+
+    $http(url,params){
+        return fetch(url, params);
+    },
     /*
     * login
     * */
@@ -39,7 +43,7 @@ export default {
     },
 
     /*
-    * home
+    * login
     * */
     getHomeList(url, params) {
         return fetch(url, params);

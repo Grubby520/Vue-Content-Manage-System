@@ -27,7 +27,7 @@
             return {
                 items: [
                     {
-                        icon: 'icon iconfont icon-home',
+                        icon: 'icon iconfont icon-login',
                         index: 'home',
                         title: '首页'
                     },

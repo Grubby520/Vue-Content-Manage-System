@@ -11,12 +11,12 @@
             <div class="table-title">用户管理列表</div>
             <div class="handle-box">
                 <div class="box-left">
-                    <el-button type="primary" icon="delete" class="handle-create mr10" @click="dialogAddVisible = true">新建</el-button>
+                    <el-button type="primary" icon="delete" class="handle-create mr10" @click="openAddDialog">新建</el-button>
                     <el-button type="primary" icon="delete" class="handle-del mr10" @click="del">删除</el-button>
                 </div>
 
                 <!--add dialog-->
-                <u-add :dialogAddVisible="dialogAddVisible" v-on:callback="callbackFn"></u-add>
+                <u-add :dialogAddVisible="dialogAddVisible" v-if="asyncLoading" v-on:callback="callbackFn"></u-add>
                 <!-- edit 编辑弹窗 -->
                 <!--<el-dialog title="编辑用户" :visible.sync="dialogEditVisible">
                     <el-form :model="form_edit">
@@ -207,6 +207,7 @@
                 return data;
             };
             return  {
+                asyncLoading: false,
                 tableData: [],
                 cur_page: 1,//当前页码
                 page_size: 15,//1页条数
@@ -308,6 +309,12 @@
                 this.getData(val);
             },
 
+            openAddDialog(){
+                if(!this.asyncLoading){
+                    this.asyncLoading = true;
+                }
+                this.dialogAddVisible = true;
+            },
             /*设置按钮*/
             //open
             dialogPowerOpen(index, row) {
@@ -329,7 +336,7 @@
                 this.$message({
                     type: 'success',
                     message: '提交成功',
-                    duration: '800'
+                    duration: '1500'
                 });
             },
             //cancel
@@ -357,7 +364,7 @@
                 this.$message({
                     type: 'success',
                     message: '提交成功',
-                    duration: '800'
+                    duration: '1500'
                 });
             },
 
@@ -399,14 +406,14 @@
                     this.$message({
                         type: 'success',
                         message: '删除成功!',
-                        duration: '800'
+                        duration: '1500'
                     });
                 })
                     .catch(() => {
                     this.$message({
                         type: 'info',
                         message: '已取消删除',
-                        duration: '800'
+                        duration: '1500'
                     });
                 });
                 //self.multipleSelection = [];
