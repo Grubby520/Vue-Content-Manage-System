@@ -1,22 +1,22 @@
 [
     {
-        "roleId":"",
+        "roleId":"1",
         "roleName":"系统管理员"
     },
     {
-        "roleId":"",
+        "roleId":"2",
         "roleName":"监管人员"
     },
     {
-        "roleId":"",
+        "roleId":"3",
         "roleName":"租户管理员"
     },
     {
-        "roleId":"",
+        "roleId":"4",
         "roleName":"云服务商"
     },
     {
-        "roleId":"",
+        "roleId":"5",
         "roleName":"应用厂商"
     }
 ]

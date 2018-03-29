@@ -15,52 +15,13 @@
                     <el-button type="primary" icon="delete" class="handle-del mr10" @click="del">删除</el-button>
                 </div>
 
-                <!--add dialog-->
-                <u-add :dialogAddVisible="dialogAddVisible" v-if="asyncLoading" v-on:callback="callbackFn"></u-add>
-                <!-- edit 编辑弹窗 -->
-                <!--<el-dialog title="编辑用户" :visible.sync="dialogEditVisible">
-                    <el-form :model="form_edit">
-                        <el-form-item label="用户名:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-input v-model="form_edit.name" placeholder="请输入3-12位用户名称" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="角色:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-select v-model="form_edit.roleId" placeholder="请选择角色">
-                                <el-option
-                                    v-for="item in roles"
-                                    :key="item.roleId"
-                                    :label="item.roleName"
-                                    :value="item.roleId"
-                                >
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="所属机构:" :label-width="formLabelWidth">
-                            <i class="iconfont icon-must"></i>
-                            <el-select v-model="form_edit.orgId"  filterable placeholder="请选择所属机构">
-                                <el-option
-                                    v-for="item in orgs"
-                                    :key="item.orgId"
-                                    :label="item.orgName"
-                                    :value="item.orgId">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="描述:" :label-width="formLabelWidth">
-                            <span class="not-must"></span>
-                            <textarea class="el-textarea" v-model="form_edit.desc" placeholder="加入描述内容，非必填" auto-complete="off"></textarea>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogEditVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogEditSubmit">提 交</el-button>
-                    </div>
-                </el-dialog>-->
+                <!--add/edit dialog-->
+                <user-dialog :dialogVisible="dialogVisible" :form="form" v-if="asyncLoading"  v-on:callbackParent="callbackFn"></user-dialog>
+
                 <!-- power 数据权限弹窗-->
                 <el-dialog title="用户数据权限设置" :visible.sync="dialogPowerVisible">
                     <span slot="title">用户数据权限设置<span style="color: #4db3ff;">（{{name}}）</span></span>
-                    <el-form :model="form_edit">
+                    <el-form :model="form">
                         <el-transfer
                             v-model="orgPower"
                             :data="power_data"
@@ -168,7 +129,7 @@
                 <el-table-column label="操作" width="180">
                     <template slot-scope="scope">
                         <el-button size="small" class="handle-edit"
-                                   @click="dialogEditOpen(scope.$index, scope.row)">编辑</el-button>
+                                   @click="openEditDialog(scope.$index, scope.row)">编辑</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -190,10 +151,10 @@
 
 <script>
     import api from '../../../axios/api.js'
-    import UAdd from './user-add.vue'
+    import UserDialog from './user-dialog.vue'
     export default {
         components: {
-            UAdd
+            UserDialog
         },
         data() {
             //自定义方法
@@ -217,7 +178,7 @@
                 del_list: [],
                 is_search: false,
                 dialogAddVisible: false,
-                dialogEditVisible: false,
+                dialogVisible: false,
                 dialogPowerVisible: false,
                 name: '',
                 dialogUserVisible: false,
@@ -225,24 +186,15 @@
                 roleId: '',
                 orgId: '',
                 desc: 'address-desac',
-                form_add: {
+                form: {
+                    title: '',
                     name: '',
-                    password1: '',
-                    password2: '',
-                    role: '',
+                    pass: '',
+                    checkPass: '',
                     roleId: '',
-                    org: '',
                     orgId: '',
-                    date2: '',
-                    desc: ''
-                },
-                form_edit: {
-                    name: '',
-                    roleName: '',
-                    roleId: '',
-                    orgName: '',
-                    orgId: '',
-                    desc: ''
+                    desc: '',
+                    type: ''
                 },
                 formLabelWidth: '150px',
                 power_data:getPowerData(),
@@ -277,7 +229,8 @@
         },
         methods: {
             callbackFn: function(){
-                this.dialogAddVisible = !this.dialogAddVisible;
+                this.dialogVisible = !this.dialogVisible;
+
             },
             //init table
             getData() {
@@ -290,13 +243,6 @@
                     .then(res => {
                         this.tableData = res.articles;
                     });
-//                let self = this;
-//                if(process.env.NODE_ENV === 'development'){
-//                    self.url = '/ms/userTable/list';
-//                }
-//                self.$axios.post(self.url, {page:self.cur_page}).then((res) => {
-//                    self.tableData = res.data.list;
-//                })
             },
             //per page number
             handleSizeChange(val) {
@@ -313,8 +259,35 @@
                 if(!this.asyncLoading){
                     this.asyncLoading = true;
                 }
-                this.dialogAddVisible = true;
+                this.form = {
+                    title: '新建用户',
+                    name : '',
+                    desc : '',
+                    roleId : '',
+                    orgId : '',
+                    pass:'',
+                    checkPass:'',
+                    type: 'add'
+                };
+                this.dialogVisible = true;
             },
+
+            openEditDialog(index, row) {
+                this.form = {
+                    title: '编辑用户',
+                    name : row.name,
+                    desc : row.desc,
+                    roleId : row.roleId,
+                    orgId : row.orgId,
+                    pass:'',
+                    checkPass:'',
+                    type: 'edit'
+                };
+                if(!this.asyncLoading) this.asyncLoading = true;
+                // open dialog
+                this.dialogVisible = true;
+            },
+
             /*设置按钮*/
             //open
             dialogPowerOpen(index, row) {
@@ -344,29 +317,6 @@
                 this.dialogPowerVisible = false;
             },
 
-            /*编辑按钮*/
-            dialogEditOpen(index, row) {
-                //init data
-                this.form_edit.name = row.name;
-                this.form_edit.desc = row.desc;
-                this.form_edit.roleId = row.roleId;
-                this.form_edit.role = row.roleName;
-                this.form_edit.orgId = row.orgId;
-                this.form_edit.org = row.orgName;
-                // open dialog
-                this.dialogEditVisible = true;
-            },
-            dialogEditSubmit() {
-                //提交时，只需要获取id的值，不需要name的值
-                let submit_data = this.form_edit;
-                //api,提交
-                this.dialogEditVisible = false;
-                this.$message({
-                    type: 'success',
-                    message: '提交成功',
-                    duration: '1500'
-                });
-            },
 
             search(){
                 this.is_search = true;

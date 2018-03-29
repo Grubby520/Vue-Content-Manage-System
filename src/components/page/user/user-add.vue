@@ -138,7 +138,7 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入3-12位用户名称', trigger: 'blur'},
-                        {min: 3, max: 12, message: '长度在 3 到 12 个字符', trigger: 'blur'}
+                        {min: 2, max: 12, message: '长度在 3 到 12 个字符', trigger: 'blur'}
                     ],
                     pass: [
                         {required: true, validator: validatePass, trigger: 'blur' }

@@ -57,10 +57,7 @@ const businessListData = function( ) {
  *  获取角色列表
  **/
 const roleList = function(){
-    let list = require('../static/json/public/role_database.json');
-    for(const i in list){
-        list[i].roleId = Random.id();
-    }
+    const list = require('../static/json/public/role_database.json');
     return list;
 };
 
@@ -68,10 +65,7 @@ const roleList = function(){
  *  获取部门列表
  **/
 const departmentList = function(){
-    let list = require('../static/json/public/departments_database.json');
-    for(const i in list){
-        list[i].orgId = Random.id();
-    }
+    const list = require('../static/json/public/departments_database.json');
     return list;
 };
 /*
@@ -86,22 +80,22 @@ const produceNewsData = function(data) {
 	for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
         //const role_all = ['系统管理员','监管人员','租户管理员','云服务商','应用厂商'];
         const role_all = [
-            {roleId:1,roleName: '系统管理员'},
-            {roleId:2,roleName: '监管人员'},
-            {roleId:3,roleName: '租户管理员'},
-            {roleId:4,roleName: '云服务商'},
-            {roleId:5,roleName: '应用厂商'}
+            {roleId:'1',roleName: '系统管理员'},
+            {roleId:'2',roleName: '监管人员'},
+            {roleId:'3',roleName: '租户管理员'},
+            {roleId:'4',roleName: '云服务商'},
+            {roleId:'5',roleName: '应用厂商'}
             ];
         const unit_all = [
-            {orgId:1,orgName: '省办公厅'},
-            {orgId:2,orgName: '省政协'},
-            {orgId:3,orgName: '省政法委'},
-            {orgId:4,orgName: '省公安厅消防总队'},
-            {orgId:5,orgName: '省地税局'},
-            {orgId:6,orgName: '省国税局'},
-            {orgId:7,orgName: '省工商局'},
-            {orgId:8,orgName: '省审计厅'},
-            {orgId:9,orgName: '省商务厅'}
+            {orgId:'1',orgName: '省办公厅'},
+            {orgId:'2',orgName: '省政协'},
+            {orgId:'3',orgName: '省政法委'},
+            {orgId:'4',orgName: '省公安厅消防总队'},
+            {orgId:'5',orgName: '省地税局'},
+            {orgId:'6',orgName: '省国税局'},
+            {orgId:'7',orgName: '省工商局'},
+            {orgId:'8',orgName: '省审计厅'},
+            {orgId:'9',orgName: '省商务厅'}
         ];
         let randomRole = Mock.mock({"randomOne|1": role_all}).randomOne;
         let randomUnit = Mock.mock({"randomOne|1": unit_all}).randomOne;

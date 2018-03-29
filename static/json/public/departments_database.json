@@ -1,38 +1,38 @@
 [
     {
-        "orgId":"",
+        "orgId":"1",
         "orgName":"省办公厅"
     },
     {
-        "orgId":"",
+        "orgId":"2",
         "orgName":"省政协"
     },
     {
-        "orgId":"",
+        "orgId":"3",
         "orgName":"省政法委"
     },
     {
-        "orgId":"",
+        "orgId":"4",
         "orgName":"省公安厅消防总队"
     },
     {
-        "orgId":"",
+        "orgId":"5",
         "orgName":"省地税局"
     },
     {
-        "orgId":"",
+        "orgId":"6",
         "orgName":"省国税局"
     },
     {
-        "orgId":"",
+        "orgId":"7",
         "orgName":"省工商局"
     },
     {
-        "orgId":"",
+        "orgId":"8",
         "orgName":"省审计厅"
     },
     {
-        "orgId":"",
+        "orgId":"9",
         "orgName":"省商务厅"
     }
 ]
