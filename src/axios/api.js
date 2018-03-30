@@ -2,21 +2,21 @@ import axios from 'axios'
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-// 请求拦截器
+// 请求
 axios.interceptors.request.use(function(config) {
     return config;
   }, function(error) {
     return Promise.reject(error);
   });
 
-// 响应拦截器
+// 响应
 axios.interceptors.response.use(function(response) {
   return response;
 }, function(error) {
   return Promise.reject(error);
 });
 
-// 封装axios的post请求
+// 封装promise
 export function fetch(url, params) {
   return new Promise((resolve, reject) => {
     axios.post(url, params)
@@ -34,33 +34,6 @@ export default {
 
     $http(url,params){
         return fetch(url, params);
-    },
-    /*
-    * login
-    * */
-    checkLogin(url, params) {
-        return fetch(url, params);
-    },
-
-    /*
-    * login
-    * */
-    getHomeList(url, params) {
-        return fetch(url, params);
-    },
-    getHomeList_business(url, params) {
-        return fetch(url, params);
-    },
-
-    getTable(url, params) {
-        return fetch(url, params);
-    },
-    getUserPower(url,params){
-        return fetch(url, params);
-    },
-    submitUserPower(url,params) {
-        return fetch(url, params);
     }
-
 }
 

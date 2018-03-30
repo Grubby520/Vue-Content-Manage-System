@@ -35,12 +35,24 @@
                 </el-dialog>
 
                 <div class="box-right">
-                    <el-select v-model="select_cate" placeholder="筛选角色" class="handle-select mr10">
-                        <el-option key="1" label="广东省" value="广东省"></el-option>
-                        <el-option key="2" label="湖南省" value="湖南省"></el-option>
+                    <el-select v-model="select_role" placeholder="角色" class="handle-select mr10">
+                        <el-option
+                            v-for="item in roles"
+                            :key="item.roleId"
+                            :label="item.roleName"
+                            :value="item.roleId">
+                        </el-option>
                     </el-select>
-                    <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                    <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                    <el-select v-model="select_department" filterable placeholder="单位" class="handle-select mr10">
+                        <el-option
+                            v-for="item in departments"
+                            :key="item.orgId"
+                            :label="item.orgName"
+                            :value="item.orgId">
+                        </el-option>
+                    </el-select>
+                    <el-input v-model="select_word" placeholder="用户名" class="handle-input mr10"></el-input>
+                    <el-button type="primary" icon="search" @click="search">查询</el-button>
                 </div>
             </div>
 
@@ -158,7 +170,7 @@
         },
         data() {
             //自定义方法
-            const getPowerData = _ => {
+            const getPowerData = () => {
                 const data = [];
                 data.push(
                     {key:1,label:'移动-华三'},
@@ -173,7 +185,10 @@
                 cur_page: 1,//当前页码
                 page_size: 15,//1页条数
                 multipleSelection: [],
-                select_cate: '',
+                roles: [],
+                select_role: '',
+                departments: [],
+                select_department: '',
                 select_word: '',
                 del_list: [],
                 is_search: false,
@@ -203,39 +218,33 @@
             }
         },
         created(){
-            this.getData();
+            this.getTableData();
+            this.getSelectSearchData();
         },
         computed: {
-            data(){
-                const self = this;
-                return self.tableData.filter(function(d){
-                    let is_del = false;
-                    for (let i = 0; i < self.del_list.length; i++) {
-                        if(d.name === self.del_list[i].name){
-                            is_del = true;
-                            break;
-                        }
-                    }
-                    if(!is_del){
-                        if(d.address.indexOf(self.select_cate) > -1 &&
-                            (d.name.indexOf(self.select_word) > -1 ||
-                            d.address.indexOf(self.select_word) > -1)
-                        ){
-                            return d;
-                        }
-                    }
-                })
-            }
+
         },
         methods: {
+            //通信$emit
             callbackFn: function(){
                 this.dialogVisible = !this.dialogVisible;
-
             },
-            //init table
-            getData() {
+            //初始化下拉搜索
+            getSelectSearchData(){
+                api.$http('/roleList', {})
+                    .then(res => {
+                        this.roles = res;
+                    });
+
+                api.$http('/departmentList',{})
+                    .then(res => {
+                        this.departments = res;
+                    })
+            },
+            //初始化table
+            getTableData() {
                 //api，获取table列表对象
-                api.getTable('/userTable',
+                api.$http('/userTable',
                     {
                         curPage: this.cur_page,
                         pageSize: this.page_size
@@ -244,17 +253,7 @@
                         this.tableData = res.articles;
                     });
             },
-            //per page number
-            handleSizeChange(val) {
-                this.page_size = val;
-                this.getData(val);
-            },
-            //goTo page
-            handleCurrentChange(val){
-                this.cur_page = val;
-                this.getData(val);
-            },
-
+            //新建dialog
             openAddDialog(){
                 if(!this.asyncLoading){
                     this.asyncLoading = true;
@@ -271,7 +270,7 @@
                 };
                 this.dialogVisible = true;
             },
-
+            //编辑dialog
             openEditDialog(index, row) {
                 this.form = {
                     title: '编辑用户',
@@ -287,12 +286,31 @@
                 // open dialog
                 this.dialogVisible = true;
             },
+            //搜索
+            search(){
+                this.is_search = true;
+            },
+
+            //per page number
+            handleSizeChange(val) {
+                this.page_size = val;
+                this.getTableData(val);
+            },
+            //goTo page
+            handleCurrentChange(val){
+                this.cur_page = val;
+                this.getTableData(val);
+            },
+
+
+
+
 
             /*设置按钮*/
             //open
             dialogPowerOpen(index, row) {
                 //接口，获取当前orgId对应的orgPower的值
-                api.getUserPower('/userTable/getUserPower',
+                api.$http('/userTable/getUserPower',
                     {
                         orgId: row.orgId
                     })
@@ -317,10 +335,6 @@
                 this.dialogPowerVisible = false;
             },
 
-
-            search(){
-                this.is_search = true;
-            },
             formatter(row, column) {
                 return row.address;
             },

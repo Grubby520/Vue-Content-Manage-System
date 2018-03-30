@@ -22,64 +22,11 @@
 </template>
 
 <script>
+    import api from '../../axios/api.js'
     export default {
         data() {
             return {
-                items: [
-                    {
-                        icon: 'icon iconfont icon-login',
-                        index: 'home',
-                        title: '首页'
-                    },
-                    {
-                        icon: 'el-icon-menu',
-                        index: '2',
-                        title: '系统管理',
-                        subs: [
-                            {
-                                index: 'userTable',
-                                title: '用户管理'
-                            },
-                            {
-                                index: 'tenantTable',
-                                title: '租户管理'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-date',
-                        index: '3',
-                        title: '表单',
-                        subs: [
-                            {
-                                index: 'baseform',
-                                title: '基本表单'
-                            },
-                            {
-                                index: 'vueeditor',
-                                title: '编辑器'
-                            },
-                            {
-                                index: 'markdown',
-                                title: 'markdown'
-                            },
-                            {
-                                index: 'upload',
-                                title: '文件上传'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-star-on',
-                        index: 'basecharts',
-                        title: '图表'
-                    },
-                    {
-                        icon: 'el-icon-upload2',
-                        index: 'drag',
-                        title: '拖拽'
-                    }
-                ]
+                items:[]
             }
         },
         computed:{
@@ -88,12 +35,18 @@
             }
         },
         created() {
-//            console.log('created');
+            this.getMenuList();
+        },
+        methods: {
+            getMenuList(){
+                api.$http('/menuList',{})
+                    .then(res => {
+                        this.items = res;
+                    })
+            }
         },
         mounted: function () {
             this.$nextTick(function () {
-                // Code that will run only after the
-                // entire view has been rendered
                 const self = this;
                 let dom_nav = this.$refs.nav.offsetHeight;
             });

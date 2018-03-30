@@ -316,3 +316,9 @@ color
 .el-popover td:last-child{
     padding-left: 15px;
 }
+.el-form-item:first-child{
+    margin-top: 22px;
+}
+.innerDialog, .innerDialog>div{
+    width: 400px;
+}

@@ -9,6 +9,16 @@ add/edit dialog
         :before-close="closeDialog"
         :close-on-press-escape=false
     >
+        <el-dialog
+            class="innerDialog"
+            width="50%"
+            title="提示"
+            :visible.sync="innerVisible"
+            :modal=false
+            >
+            <h3>您未做任何修改</h3>
+        </el-dialog>
+
         <el-form :model="formData" :rules="rules" ref="formData">
             <el-form-item label="用户名 :" :label-width="formLabelWidth" prop="name">
                 <i class="iconfont icon-must"></i>
@@ -59,6 +69,7 @@ add/edit dialog
 
 <script>
     import api from '../../../axios/api.js'
+    import {deepCopyObject, isObjectValueEqual} from '../../../../static/js/public.js'
     export default {
         props: {
             dialogVisible: {type: Boolean},
@@ -103,20 +114,17 @@ add/edit dialog
                     ]
             },
                 formData: {},
-                oldFormData: this.form,
-                formLabelWidth: '150px',
+                copyFormData : {},
                 roles: [],
                 departments: [],
-                copyFormData : {}
+                formLabelWidth: '150px',
+                innerVisible: false
             }
         },
         created(){
             this.formData = this.form;
-            this.copyFormData = this.copyArray(this.form);
+            this.copyFormData = deepCopyObject(this.form);
             this.initData();
-        },
-        computed: {
-
         },
         watch: {
             form: {
@@ -126,7 +134,7 @@ add/edit dialog
                 deep: true
             },
             dialogVisible: function(){
-                this.copyFormData = this.copyArray(this.form);
+                this.copyFormData = deepCopyObject(this.form);
             }
         },
         methods: {
@@ -142,41 +150,63 @@ add/edit dialog
                     })
             },
             closeDialog(){
-                this.$emit('callbackParent');
-                this.$refs['formData'].resetFields();//仅close时执行
+                const _this = this;
+                _this.$emit('callbackParent');
+                setTimeout(function(){
+                    _this.$refs['formData'].resetFields();//仅close时执行
+                    _this.formData = {//配合resetFields()解决新建弹窗重置数据bug问题
+                        title: '新建用户',
+                        name : '',
+                        desc : '',
+                        roleId : '',
+                        orgId : '',
+                        pass:'',
+                        checkPass:'',
+                        type: 'add'
+                    };
+                },500);
+
             },
             resetForm(formName) {
-                //this.$refs[formName].resetFields();
                 //深浅拷贝-坑
-                this.formData = this.copyArray(this.copyFormData);
-                this.$refs[formName].validate('name');
+                this.formData = deepCopyObject(this.copyFormData);
+                if(this.formData.type === 'add'){
+                    this.$refs[formName].resetFields();
+                }
+                else{
+                    this.$refs[formName].validate('name');
+                }
+
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        const _this = this;
-                        this.closeDialog();
-                        setTimeout(function(){
-                            _this.$message({
-                                type: 'success',
-                                message: '提交成功',
-                                duration: '1500'
-                            });
-                        },300);
+                        console.log(this.formData);
+                        const _this = this,
+                               isChange = isObjectValueEqual(
+                                   JSON.parse(JSON.stringify(this.formData)),
+                                   JSON.parse(JSON.stringify(this.copyFormData))
+                               );
+
+                        if(isChange){
+                            //未修改
+                            _this.innerVisible = true;
+                        }
+                        else{
+                            this.closeDialog();
+                            setTimeout(function(){
+                                _this.$message({
+                                    type: 'success',
+                                    message: '提交成功',
+                                    duration: '1500'
+                                });
+                            },300);
+                        }
                     } else {
                         console.warn('error submit');
                         return false;
                     }
                 });
-            },
-            copyArray(obj){
-                let dst = {};
-                for (const prop in obj) {
-                    if (obj.hasOwnProperty(prop)) {
-                        dst[prop] = obj[prop];
-                    }
-                }
-                return dst;
             }
         }
     }

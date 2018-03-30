@@ -2,7 +2,7 @@ const Mock = require('mockjs');
 const Random = Mock.Random;
 
 /*
-* Login-表
+* 登录-账户表
 * */
 const userListData = function(data) {
     data = JSON.parse(data.body);
@@ -20,7 +20,14 @@ const userListData = function(data) {
 };
 
 /*
-* login-表
+ * 菜单
+ * */
+const menuList = function(){
+    return require( '../static/json/public/menu.json');
+};
+
+/*
+* home-数据表
 * */
 const homeListData = function( ) {
     let homeListJson = require('../static/json/home/home_database.json');
@@ -54,30 +61,29 @@ const businessListData = function( ) {
 
 
 /**
- *  获取角色列表
+ * public-获取role列表
  **/
 const roleList = function(){
-    const list = require('../static/json/public/role_database.json');
-    return list;
+    return require('../static/json/public/role_database.json');
 };
 
 /**
- *  获取部门列表
+ * public-获取department列表
  **/
 const departmentList = function(){
-    const list = require('../static/json/public/departments_database.json');
-    return list;
+    return require('../static/json/public/departments_database.json');
 };
-/*
-* 部门list
-* */
 
-/*table的数据*/
+/*
+* 用户管理-table列表
+* */
 const produceNewsData = function(data) {
     data = JSON.parse(data.body);
 	let articles = [];
 	let pageSize = data.pageSize || 15, curPage = data.curPage || 1; // 获取前台参数
-	for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
+
+	//for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
+    for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
         //const role_all = ['系统管理员','监管人员','租户管理员','云服务商','应用厂商'];
         const role_all = [
             {roleId:'1',roleName: '系统管理员'},
@@ -119,8 +125,9 @@ const produceNewsData = function(data) {
 	}
 };
 
-/*数据权限*/
-//请求
+/*
+ * 用户管理-数据权限
+ * */
 const getUserPower = function(data) {
     const params = JSON.parse(data.body); // 获取前台参数
     let orgPower = [];
@@ -132,17 +139,12 @@ const getUserPower = function(data) {
         orgPower: orgPower
     }
 };
-//提交
-const submitUserPower = function(data) {
 
-    return {
-        orgPower: orgPower
-    }
-};
-
-/*所有接口*/
-// Mock.mock( url, post/get , params)
-
+/*
+* 接口列表
+* Mock.mock( url, post/get , params)
+* */
+Mock.mock('/menuList','post', menuList);
 Mock.mock('/roleList','post', roleList);
 Mock.mock('/departmentList','post', departmentList);
 
@@ -151,6 +153,5 @@ Mock.mock('/getHomeList','post', homeListData);
 Mock.mock('/getHomeList/business','post', businessListData);
 Mock.mock('/userTable','post', produceNewsData);
 Mock.mock('/userTable/getUserPower','post', getUserPower);
-Mock.mock('/userTable/submitUserPower','post', submitUserPower);
 
 

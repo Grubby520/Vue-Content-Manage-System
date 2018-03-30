@@ -82,7 +82,7 @@
                 this.$refs[formName].validate((valid) => {
                     if(valid){
                         //模拟验证
-                        api.checkLogin('/validate_logon', this.ruleForm
+                        api.$http('/validate_logon', this.ruleForm
                             ).then(res => {
                                 if(res.result === 'success'){
                                     localStorage.setItem('username', this.ruleForm.username);
