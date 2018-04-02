@@ -319,6 +319,16 @@ color
 .el-form-item:first-child{
     margin-top: 22px;
 }
+.innerDialog{
+    margin: 0 auto;
+}
 .innerDialog, .innerDialog>div{
     width: 400px;
+}
+.innerDialog>div{
+    border: 1px solid #ccc;
+    box-shadow: #cdc6c6 5px 5px 8px;
+}
+.warn-text{
+    color: #f0ad4e;
 }

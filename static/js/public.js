@@ -14,26 +14,22 @@ export function deepCopyObject(obj){
     }
     return dst;
 }
-
 /*
 *  判断两个对象是否完全相等
 * */
 export function isObjectValueEqual(a, b){
-const aProps = Object.getOwnPropertyNames(a),
-    bProps = Object.getOwnPropertyNames(b);
-console.log(aProps.length);
-if (aProps.length !== bProps.length) {
-    return false;
-}
-for (let i = 0; i < aProps.length; i++) {
-    const propName = aProps[i];
-    console.log(a[propName] );
-    console.log(b[propName] );
-    if (a[propName] !== b[propName]) {
+    const aProps = Object.getOwnPropertyNames(a),
+        bProps = Object.getOwnPropertyNames(b);
+    if (aProps.length !== bProps.length) {
         return false;
     }
-}
-return true;
+    for (let i = 0; i < aProps.length; i++) {
+        const propName = aProps[i];
+        if (a[propName] !== b[propName]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 export function getRandomNumber(min, max){

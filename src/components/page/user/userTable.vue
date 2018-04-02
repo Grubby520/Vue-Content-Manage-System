@@ -8,7 +8,9 @@
         </div>
 
         <div class="time-task-logic">
+
             <div class="table-title">用户管理列表</div>
+
             <div class="handle-box">
                 <div class="box-left">
                     <el-button type="primary" icon="delete" class="handle-create mr10" @click="openAddDialog">新建</el-button>
@@ -16,23 +18,10 @@
                 </div>
 
                 <!--add/edit dialog-->
-                <user-dialog :dialogVisible="dialogVisible" :form="form" v-if="asyncLoading"  v-on:callbackParent="callbackFn"></user-dialog>
+                <user-dialog :dialogVisible="dialogVisible" :form="form" v-if="user_asyncLoading"  v-on:callbackParent="callbackFn('dialog')"></user-dialog>
 
-                <!-- power 数据权限弹窗-->
-                <el-dialog title="用户数据权限设置" :visible.sync="dialogPowerVisible">
-                    <span slot="title">用户数据权限设置<span style="color: #4db3ff;">（{{name}}）</span></span>
-                    <el-form :model="form">
-                        <el-transfer
-                            v-model="orgPower"
-                            :data="power_data"
-                            :titles="['源云平台','目的云平台']">
-                        </el-transfer>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogPowerCancel">取 消</el-button>
-                        <el-button type="primary" @click="dialogPowerSubmit">提 交</el-button>
-                    </div>
-                </el-dialog>
+                <!-- power dialog-->
+                <user-power-dialog :dialogPowerVisible="dialogPowerVisible" :form="form" v-if="power_asyncLoading"  v-on:callbackParent="callbackFn('power')"></user-power-dialog>
 
                 <div class="box-right">
                     <el-select v-model="select_role" placeholder="角色" class="handle-select mr10">
@@ -56,7 +45,7 @@
                 </div>
             </div>
 
-            <el-table :data="tableData" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table :data="tableData" border style="width: 100%" ref="multipleTable" @selection-change="checkboxChange">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="num" class="order-num" label="序号" width="80">
                 </el-table-column>
@@ -123,7 +112,7 @@
                 <el-table-column prop="power" label="数据权限" width="120">
                     <template slot-scope="scope">
                         <el-button size="small"
-                                   @click="dialogPowerOpen(scope.$index, scope.row)">设置</el-button>
+                                   @click="openPowerDialog(scope.$index, scope.row)">设置</el-button>
                     </template>
                     </el-table-column>
                 <el-table-column prop="isRun" label="激活状态">
@@ -145,15 +134,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+
             <div class="pagination">
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="cur_page"
-                    :page-sizes="[10, 15]"
-                    :page-size="15"
+                    :current-page="currentPage"
+                    :page-sizes="[10, 15, 20]"
+                    :page-size="pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="30">
+                    :total="total">
                 </el-pagination>
             </div>
 
@@ -164,45 +154,31 @@
 <script>
     import api from '../../../axios/api.js'
     import UserDialog from './user-dialog.vue'
+    import UserPowerDialog from './user_power_dialog.vue'
     export default {
         components: {
-            UserDialog
+            UserDialog,UserPowerDialog
         },
         data() {
-            //自定义方法
-            const getPowerData = () => {
-                const data = [];
-                data.push(
-                    {key:1,label:'移动-华三'},
-                    {key:2,label:'电信-腾讯'},
-                    {key:3,label:'联通-华为'}
-                    );
-                return data;
-            };
             return  {
-                asyncLoading: false,
-                tableData: [],
-                cur_page: 1,//当前页码
-                page_size: 15,//1页条数
-                multipleSelection: [],
-                roles: [],
-                select_role: '',
-                departments: [],
-                select_department: '',
-                select_word: '',
-                del_list: [],
-                is_search: false,
-                dialogAddVisible: false,
-                dialogVisible: false,
-                dialogPowerVisible: false,
-                name: '',
-                dialogUserVisible: false,
-                modal1: false,
-                roleId: '',
-                orgId: '',
-                desc: 'address-desac',
+                user_asyncLoading: false,//请求才初始化
+                power_asyncLoading: false,//请求才初始化
+                tableData: [],//table数据json
+                total: 65,//模拟
+                pageSize: 10,
+                currentPage: 1,
+                multipleSelection: [],//checkbox选中列表
+                roles: [],//查询-select-json
+                select_role: '',//selected-role角色
+                departments: [],//查询-select-json
+                select_department: '',//selected-department部门
+                select_word: '',//查询-用户名关键字
+                del_idList: [],//存放待删除的list-idArray
+                dialogVisible: false,//visible-dialog
+                dialogPowerVisible: false,//visible-powerDialog
                 form: {
                     title: '',
+                    id: '',
                     name: '',
                     pass: '',
                     checkPass: '',
@@ -210,26 +186,32 @@
                     orgId: '',
                     desc: '',
                     type: ''
-                },
-                formLabelWidth: '150px',
-                power_data:getPowerData(),
-                orgPower: [],//权限arr
-
+                }
             }
+        },
+        computed: {
+
         },
         created(){
             this.getTableData();
             this.getSelectSearchData();
         },
-        computed: {
-
-        },
         methods: {
-            //通信$emit
-            callbackFn: function(){
-                this.dialogVisible = !this.dialogVisible;
+            /*
+            * $emit通信
+            * */
+            callbackFn: function(type){
+                console.log(type);
+                if(type === 'dialog'){
+                    this.dialogVisible = !this.dialogVisible;
+                }
+                else if(type === 'power'){
+                    this.dialogPowerVisible = !this.dialogPowerVisible;
+                }
             },
-            //初始化下拉搜索
+            /*
+            * 初始化下拉搜索
+            * */
             getSelectSearchData(){
                 api.$http('/roleList', {})
                     .then(res => {
@@ -241,25 +223,34 @@
                         this.departments = res;
                     })
             },
-            //初始化table
+            /*
+            * 初始化table
+            * */
             getTableData() {
                 //api，获取table列表对象
                 api.$http('/userTable',
                     {
-                        curPage: this.cur_page,
-                        pageSize: this.page_size
+                        currentPage: this.currentPage,
+                        pageSize: this.pageSize,
+                        roleId: this.select_role,
+                        orgId: this.select_department,
+                        keyword: this.select_word,
+                        total : this.total
                     })
                     .then(res => {
                         this.tableData = res.articles;
                     });
             },
-            //新建dialog
+            /*
+            * 新建dialog
+            * */
             openAddDialog(){
-                if(!this.asyncLoading){
-                    this.asyncLoading = true;
+                if(!this.user_asyncLoading){
+                    this.user_asyncLoading = true;
                 }
                 this.form = {
                     title: '新建用户',
+                    id: '',
                     name : '',
                     desc : '',
                     roleId : '',
@@ -270,10 +261,13 @@
                 };
                 this.dialogVisible = true;
             },
-            //编辑dialog
+            /*
+            * 编辑dialog
+            * */
             openEditDialog(index, row) {
                 this.form = {
                     title: '编辑用户',
+                    id: row.id,
                     name : row.name,
                     desc : row.desc,
                     roleId : row.roleId,
@@ -282,73 +276,30 @@
                     checkPass:'',
                     type: 'edit'
                 };
-                if(!this.asyncLoading) this.asyncLoading = true;
+                if(!this.user_asyncLoading) this.user_asyncLoading = true;
                 // open dialog
                 this.dialogVisible = true;
             },
-            //搜索
-            search(){
-                this.is_search = true;
-            },
-
-            //per page number
-            handleSizeChange(val) {
-                this.page_size = val;
-                this.getTableData(val);
-            },
-            //goTo page
-            handleCurrentChange(val){
-                this.cur_page = val;
-                this.getTableData(val);
-            },
-
-
-
-
-
-            /*设置按钮*/
-            //open
-            dialogPowerOpen(index, row) {
-                //接口，获取当前orgId对应的orgPower的值
-                api.$http('/userTable/getUserPower',
-                    {
-                        orgId: row.orgId
-                    })
-                    .then(res => {
-                        this.orgPower = res.orgPower
-                    });
-                this.name = row.name;
+            /*
+            * 数据权限dialog
+            * */
+            openPowerDialog(index, row){
+                if(!this.power_asyncLoading){
+                    this.power_asyncLoading = true;
+                }
+                this.form.name = row.name;
+                this.form.id = row.id;
+                this.form.orgId = row.orgId;
                 this.dialogPowerVisible = true;//open dialog
             },
-            //submit
-            dialogPowerSubmit() {
-                this.dialogPowerVisible = false;
-                console.log(this.orgPower);
-                this.$message({
-                    type: 'success',
-                    message: '提交成功',
-                    duration: '1500'
-                });
-            },
-            //cancel
-            dialogPowerCancel() {
-                this.dialogPowerVisible = false;
-            },
-
-            formatter(row, column) {
-                return row.address;
-            },
-            filterTag(value, row) {
-                return row.tag === value;
-            },
-
-            //删除button
+            /*
+             * 删除列表
+             * */
             del() {
-                const self = this,
-                       length = self.multipleSelection.length;
-                //第二次选择时，出现bug？
+                const _this = this,
+                    length = _this.multipleSelection.length;
                 if(length === 0){
-                    self.$message({
+                    _this.$message({
                         type: 'warning',
                         message: '未勾选需要删除的用户',
                         duration: '1500'
@@ -356,41 +307,78 @@
                     return ;
                 }
                 let str = '';
-                self.del_list = self.del_list.concat(self.multipleSelection);
                 for (let i = 0; i < length; i++) {
-                    str += self.multipleSelection[i].name + ' ';
+                    str += _this.multipleSelection[i].name + ' ';
+                    _this.del_idList[i] = _this.multipleSelection[i].id;
                 }
-
-                self.$confirm('确定删除'+str+',是否继续?', '提示', {
+                const h = this.$createElement;
+                this.$msgbox({
+                    title: '删除',
+                    message: h('p', null, [
+                        h('span', null, '确定删除 '),
+                        h('span', { style: 'color: #03a9f4' }, str),
+                        h('span', null, ',是否继续? ')
+                    ]),
+                    showCancelButton: true,
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
-                    type: 'warning'
-                })
-                    .then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!',
-                        duration: '1500'
-                    });
-                })
-                    .catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除',
-                        duration: '1500'
-                    });
+                    beforeClose: (action, instance, done) => {
+                        //submit
+                        if (action === 'confirm') {
+                            console.info( _this.del_idList);
+                            _this.del_idList = [];
+                            instance.confirmButtonLoading = true;
+                            instance.confirmButtonText = '执行中...';
+                            setTimeout(() => {
+                                done(); // 关闭
+                                this.$message({ // 提交成功
+                                    type: 'success',
+                                    message: '删除成功!',
+                                    duration: '1500'
+                                });
+                                setTimeout(() => { //关闭loading
+                                    instance.confirmButtonLoading = false;
+                                }, 300);
+                            }, 1500);
+                        }
+                        else {
+                            done();
+                            this.$message({
+                                type: 'info',
+                                message: '已取消删除',
+                                duration: '1500'
+                            });
+                        }
+                    }
                 });
-                //self.multipleSelection = [];
             },
-            handleSelectionChange(val) {
+            /*
+             * checkbox-chang选中的list列表
+             * */
+            checkboxChange(val) {
                 this.multipleSelection = val;
             },
-
-            hideOver(){
-                console.log('close');
+            /*
+            * 分页-设置size
+            * */
+            handleSizeChange(val) {
+                this.pageSize = val;
+                this.getTableData();
+            },
+            /*
+            * 分页-设置page
+            * */
+            handleCurrentChange(val){
+                this.currentPage  = val;
+                this.getTableData(val);
+            },
+            /*
+            * 搜索-查询table
+            * */
+            search(){
+                this.getTableData();
             }
         }
-
     }
 </script>
 

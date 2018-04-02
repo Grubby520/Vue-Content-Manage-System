@@ -79,11 +79,17 @@ const departmentList = function(){
 * */
 const produceNewsData = function(data) {
     data = JSON.parse(data.body);
+    console.log(data);
 	let articles = [];
-	let pageSize = data.pageSize || 15, curPage = data.curPage || 1; // 获取前台参数
-
+	let pageSize = data.pageSize || 10,
+        curPage = data.currentPage || 1,
+        total = data.total,
+        lastPage = Math.ceil( total/pageSize),
+        start = pageSize*(curPage-1),
+        end = lastPage === curPage ? total : pageSize*curPage;
+    //模拟假数据
 	//for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
-    for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
+    for (let i =start; i < end; i++) { // 定义30条数据
         //const role_all = ['系统管理员','监管人员','租户管理员','云服务商','应用厂商'];
         const role_all = [
             {roleId:'1',roleName: '系统管理员'},
@@ -108,6 +114,7 @@ const produceNewsData = function(data) {
 
 		let newArticleObject = {
             num: i+1,
+            id: Random.id(),
             date: Random.date() + ' ' + Random.time(), // Random.date()指示生成的日期字符串的格式,默认为yyyy-MM-dd；Random.time() 返回一个随机的时间字符串
             name: Random.cname(), // 用户名
             org: randomUnit.orgName, // 单位

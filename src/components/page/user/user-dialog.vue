@@ -16,7 +16,7 @@ add/edit dialog
             :visible.sync="innerVisible"
             :modal=false
             >
-            <h3>您未做任何修改</h3>
+            <h3 class="warn-text">您未做任何修改</h3>
         </el-dialog>
 
         <el-form :model="formData" :rules="rules" ref="formData">
@@ -181,7 +181,6 @@ add/edit dialog
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        console.log(this.formData);
                         const _this = this,
                                isChange = isObjectValueEqual(
                                    JSON.parse(JSON.stringify(this.formData)),
@@ -194,6 +193,7 @@ add/edit dialog
                         }
                         else{
                             this.closeDialog();
+                            console.info(this.formData);
                             setTimeout(function(){
                                 _this.$message({
                                     type: 'success',
