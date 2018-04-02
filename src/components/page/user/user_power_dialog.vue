@@ -39,6 +39,7 @@
                 return data;
             };
             return {
+                isSubmit: false,
                 power_data:getPowerData(),
                 orgPower: []//权限arr
             }
@@ -66,12 +67,13 @@
                     });
             },
             closeDialog(){
-                this.$emit('callbackParent');
+                this.$emit('callbackParent', {type: 'power', isSubmit: this.isSubmit});
             },
             cancelForm() {
                 this.closeDialog();
             },
             submitForm() {
+                this.isSubmit = true;
                 this.closeDialog();
                 //接口提交- this.orgPower
                 this.$message({

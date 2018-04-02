@@ -61,7 +61,7 @@ add/edit dialog
 
         <div slot="footer" class="dialog-footer">
             <el-button @click="resetForm('formData')">重 置</el-button>
-            <el-button type="primary" @click="submitForm('formData')">创 建</el-button>
+            <el-button type="primary" @click="submitForm('formData')">提 交</el-button>
         </div>
 
     </el-dialog>
@@ -117,6 +117,7 @@ add/edit dialog
                 copyFormData : {},
                 roles: [],
                 departments: [],
+                isSubmit: false,
                 formLabelWidth: '150px',
                 innerVisible: false
             }
@@ -151,7 +152,7 @@ add/edit dialog
             },
             closeDialog(){
                 const _this = this;
-                _this.$emit('callbackParent');
+                _this.$emit('callbackParent',{type: 'dialog', isSubmit: this.isSubmit});
                 setTimeout(function(){
                     _this.$refs['formData'].resetFields();//仅close时执行
                     _this.formData = {//配合resetFields()解决新建弹窗重置数据bug问题
@@ -192,6 +193,7 @@ add/edit dialog
                             _this.innerVisible = true;
                         }
                         else{
+                            this.isSubmit = true;
                             this.closeDialog();
                             console.info(this.formData);
                             setTimeout(function(){

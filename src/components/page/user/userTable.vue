@@ -18,10 +18,10 @@
                 </div>
 
                 <!--add/edit dialog-->
-                <user-dialog :dialogVisible="dialogVisible" :form="form" v-if="user_asyncLoading"  v-on:callbackParent="callbackFn('dialog')"></user-dialog>
+                <user-dialog :dialogVisible="dialogVisible" :form="form" v-if="user_asyncLoading"  @callbackParent="callbackFn"></user-dialog>
 
                 <!-- power dialog-->
-                <user-power-dialog :dialogPowerVisible="dialogPowerVisible" :form="form" v-if="power_asyncLoading"  v-on:callbackParent="callbackFn('power')"></user-power-dialog>
+                <user-power-dialog :dialogPowerVisible="dialogPowerVisible" :form="form" v-if="power_asyncLoading"  @callbackParent="callbackFn"></user-power-dialog>
 
                 <div class="box-right">
                     <el-select v-model="select_role" placeholder="角色" class="handle-select mr10">
@@ -200,13 +200,19 @@
             /*
             * $emit通信
             * */
-            callbackFn: function(type){
-                console.log(type);
-                if(type === 'dialog'){
+            callbackFn: function(args){
+                console.log(args);
+                if(args.type === 'dialog'){
                     this.dialogVisible = !this.dialogVisible;
+                    if(args.isSubmit){
+                        this.getTableData();
+                    }
                 }
-                else if(type === 'power'){
+                else if(args.type === 'power'){
                     this.dialogPowerVisible = !this.dialogPowerVisible;
+                    if(args.isSubmit){
+                        this.getTableData();
+                    }
                 }
             },
             /*
