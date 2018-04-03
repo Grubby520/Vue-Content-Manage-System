@@ -1,19 +1,21 @@
 [
     {
-        "icon": "icon iconfont icon-login",
+        "icon": "icon iconfont icon-1st-homepage",
         "index": "home",
         "title": "首页"
     },
     {
-        "icon": "el-icon-menu",
+        "icon": "icon iconfont icon-1st-system-management",
         "index": "2",
         "title": "系统管理",
         "subs": [
             {
+                "icon": "icon iconfont icon-2nd-user-management",
                 "index": "userTable",
                 "title": "用户管理"
             },
             {
+                "icon": "icon iconfont icon-2nd-tenant-management",
                 "index": "tenantTable",
                 "title": "租户管理"
             }

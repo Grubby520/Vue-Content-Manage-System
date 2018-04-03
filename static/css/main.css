@@ -21,6 +21,21 @@ html,body,#app,.wrapper{
 a{
     text-decoration: none
 }
+.menu-1st{
+    font-size: 14px;
+}
+.menu-1st>.icon.iconfont{
+    font-size: 14px;
+}
+.menu-1st>.el-submenu__title .icon.iconfont{
+    font-size: 14px;
+}
+.menu-2nd{
+    font-size: 12px;
+}
+.menu-2nd>.icon.iconfont{
+    font-size: 12px;
+}
 .content{
     margin-left: 203px;
 }
