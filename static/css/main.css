@@ -36,6 +36,9 @@ a{
 .menu-2nd>.icon.iconfont{
     font-size: 12px;
 }
+.el-breadcrumb__item__inner>i{
+    font-size: 14px;
+}
 .content{
     margin-left: 203px;
 }

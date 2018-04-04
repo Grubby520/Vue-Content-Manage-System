@@ -21,19 +21,15 @@ add/edit dialog
 
         <el-form :model="formData" :rules="rules" ref="formData">
             <el-form-item label="用户名 :" :label-width="formLabelWidth" prop="name">
-                <i class="iconfont icon-must"></i>
                 <el-input v-model="formData.name" placeholder="请输入2-8位用户名称" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item v-if="formData.type === 'add'" label="用户密码 :" :label-width="formLabelWidth" prop="pass">
-                <i class="iconfont icon-must"></i>
                 <el-input type="password" v-model="formData.pass" placeholder="密码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item v-if="formData.type === 'add'" label="确认密码 :" :label-width="formLabelWidth" prop="checkPass" >
-                <i class="iconfont icon-must"></i>
                 <el-input type="password" v-model="formData.checkPass" placeholder="确认密码" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="角色 :" :label-width="formLabelWidth"  prop="roleId">
-                <i class="iconfont icon-must"></i>
                 <el-select v-model="formData.roleId" placeholder="请选择角色">
                     <el-option
                         v-for="item in roles"
@@ -44,7 +40,6 @@ add/edit dialog
                 </el-select>
             </el-form-item>
             <el-form-item label="所属机构 :" :label-width="formLabelWidth" prop="orgId">
-                <i class="iconfont icon-must"></i>
                 <el-select v-model="formData.orgId" filterable placeholder="请选择所属机构">
                     <el-option
                         v-for="item in departments"
@@ -136,6 +131,7 @@ add/edit dialog
             },
             dialogVisible: function(){
                 this.copyFormData = deepCopyObject(this.form);
+                this.isSubmit = false;
             }
         },
         methods: {

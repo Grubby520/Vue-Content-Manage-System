@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i> 系统管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="icon iconfont icon-1st-system-management"></i> 系统管理</el-breadcrumb-item>
                 <el-breadcrumb-item>用户管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -13,8 +13,8 @@
 
             <div class="handle-box">
                 <div class="box-left">
-                    <el-button type="primary" icon="delete" class="handle-create mr10" @click="openAddDialog">新建</el-button>
-                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="del">删除</el-button>
+                    <el-button type="primary" icon="icon iconfont icon-add" class="handle-create mr10" @click="openAddDialog">新建</el-button>
+                    <el-button type="primary" icon="icon iconfont icon-delete" class="handle-del mr10" @click="del">删除</el-button>
                 </div>
 
                 <!--add/edit dialog-->
@@ -22,6 +22,10 @@
 
                 <!-- power dialog-->
                 <user-power-dialog :dialogPowerVisible="dialogPowerVisible" :form="form" v-if="power_asyncLoading"  @callbackParent="callbackFn"></user-power-dialog>
+
+                <!-- pwd dialog-->
+                <pwd-dialog :pwdDialogVisible="pwdDialogVisible" :form="form" v-if="password_asyncLoading"  @callbackParent="callbackFn"></pwd-dialog>
+
 
                 <div class="box-right">
                     <el-select v-model="select_role" placeholder="角色" class="handle-select mr10">
@@ -49,11 +53,11 @@
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="num" class="order-num" label="序号" width="80">
                 </el-table-column>
-                <el-table-column prop="date" label="创建日期">
+                <el-table-column prop="date" label="创建日期" width="200">
                 </el-table-column>
                 <el-table-column prop="name" label="用户名" width="120">
                     <template slot-scope="scope">
-                        <!-- bug!-->
+                        <!-- popover-->
                         <el-popover
                             ref="popoverUser"
                             placement="right"
@@ -127,10 +131,16 @@
                         <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未绑定</p>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="180">
+                <el-table-column label="操作" :width="handleWidth">
                     <template slot-scope="scope">
-                        <el-button size="small" class="handle-edit"
+                        <el-button size="small" icon="icon iconfont icon-edit" class="handle-edit"
                                    @click="openEditDialog(scope.$index, scope.row)">编辑</el-button>
+                        <el-button v-if="!scope.row.isRun" size="small" icon="icon iconfont icon-activation" class="handle-edit"
+                                   @click="openRunDialog(scope.$index, scope.row)">激活</el-button>
+                        <el-button v-if="!scope.row.isBind" size="small" icon="icon iconfont icon-binding" class="handle-edit"
+                                   @click="openBindDialog(scope.$index, scope.row)">绑定证书</el-button>
+                        <el-button size="small" icon="icon iconfont icon-password" class="handle-edit"
+                                   @click="openPasswordDialog(scope.$index, scope.row)">密码重置</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -155,14 +165,25 @@
     import api from '../../../axios/api.js'
     import UserDialog from './user-dialog.vue'
     import UserPowerDialog from './user_power_dialog.vue'
+    import pwdDialog from './pwd-dialog.vue'
     export default {
         components: {
-            UserDialog,UserPowerDialog
+            UserDialog,
+            UserPowerDialog,
+            pwdDialog
         },
         data() {
+            let getHandleWidth = function(){
+
+            };
             return  {
+                handleWidth: 290,//操作列宽度值
                 user_asyncLoading: false,//请求才初始化
                 power_asyncLoading: false,//请求才初始化
+                password_asyncLoading: false,//请求才初始化
+                dialogVisible: false,//visible-dialog
+                dialogPowerVisible: false,//visible-powerDialog
+                pwdDialogVisible: false,//visible-passwordDialog
                 tableData: [],//table数据json
                 total: 65,//模拟
                 pageSize: 10,
@@ -174,9 +195,7 @@
                 select_department: '',//selected-department部门
                 select_word: '',//查询-用户名关键字
                 del_idList: [],//存放待删除的list-idArray
-                dialogVisible: false,//visible-dialog
-                dialogPowerVisible: false,//visible-powerDialog
-                form: {
+                form: {//form表单
                     title: '',
                     id: '',
                     name: '',
@@ -195,6 +214,7 @@
         created(){
             this.getTableData();
             this.getSelectSearchData();
+            this.handleWidth = 450;
         },
         methods: {
             /*
@@ -210,6 +230,12 @@
                 }
                 else if(args.type === 'power'){
                     this.dialogPowerVisible = !this.dialogPowerVisible;
+                    if(args.isSubmit){
+                        this.getTableData();
+                    }
+                }
+                else if(args.type === 'password'){
+                    this.pwdDialogVisible = !this.pwdDialogVisible;
                     if(args.isSubmit){
                         this.getTableData();
                     }
@@ -287,6 +313,115 @@
                 this.dialogVisible = true;
             },
             /*
+             * 激活dialog
+             * */
+            openRunDialog(index, row){
+                const h = this.$createElement;
+                this.$msgbox({
+                    title: '激活',
+                    message: h('p',null,[
+                        h('span', null, '确定激活 '),
+                        h('span', {style: 'color: #03a9f4'}, row.name),
+                        h('span', null, '，是否继续？')
+                    ]),
+                    showCancelButton: true,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    beforeClose: (action, instance, done) => {
+                        //submit
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true;
+                            instance.confirmButtonText = '执行中...';
+                            setTimeout(() => {
+                                done(); // 关闭
+                                console.info( 'id: '+row.id);
+                                this.$message({ // 提交成功
+                                    type: 'success',
+                                    message: '激活成功!',
+                                    duration: '1500'
+                                });
+                                this.getTableData();
+                                setTimeout(() => { //关闭loading
+                                    instance.confirmButtonLoading = false;
+                                }, 300);
+                            }, 1500);
+                        }
+                        else {
+                            done();
+                            this.$message({
+                                type: 'info',
+                                message: '已取消激活',
+                                duration: '1500'
+                            });
+                        }
+                    }
+                })
+            },
+            /*
+             * 证书绑定dialog
+             * */
+            openBindDialog(index, row){
+                const h = this.$createElement;
+                this.$msgbox({
+                    title: '绑定证书',
+                    message: h('p',null,[
+                        h('span', null, '确定绑定 '),
+                        h('span', {style: 'color: #03a9f4'}, row.name),
+                        h('span', null, '，是否继续？')
+                    ]),
+                    showCancelButton: true,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    beforeClose: (action, instance, done) => {
+                        //submit
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true;
+                            instance.confirmButtonText = '执行中...';
+                            setTimeout(() => {
+                                done(); // 关闭
+                                console.info( 'id: '+row.id);
+                                this.$message({ // 提交成功
+                                    type: 'success',
+                                    message: '绑定成功!',
+                                    duration: '1500'
+                                });
+                                this.getTableData();
+                                setTimeout(() => { //关闭loading
+                                    instance.confirmButtonLoading = false;
+                                }, 300);
+                            }, 1500);
+                        }
+                        else {
+                            done();
+                            this.$message({
+                                type: 'info',
+                                message: '已取消绑定',
+                                duration: '1500'
+                            });
+                        }
+                    }
+                })
+            },
+            /*
+             * 密码重置dialog
+             * */
+            openPasswordDialog(index, row){
+                this.form = {
+                    title: '密码重置',
+                    id: row.id,
+                    name : row.name,
+                    desc : '',
+                    roleId : '',
+                    orgId : '',
+                    pass:'',
+                    checkPass:'',
+                    type: 'password'
+                };
+                if(!this.password_asyncLoading) this.password_asyncLoading = true;
+                // open dialog
+                this.pwdDialogVisible = true;
+            },
+            /*
             * 数据权限dialog
             * */
             openPowerDialog(index, row){
@@ -323,7 +458,7 @@
                     message: h('p', null, [
                         h('span', null, '确定删除 '),
                         h('span', { style: 'color: #03a9f4' }, str),
-                        h('span', null, ',是否继续? ')
+                        h('span', null, '，是否继续? ')
                     ]),
                     showCancelButton: true,
                     confirmButtonText: '确定',
@@ -389,6 +524,7 @@
 </script>
 
 <style scoped>
+/*没法自适应么？*/
 .handle-select{
     width: 120px;
 }

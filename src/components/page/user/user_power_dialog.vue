@@ -53,6 +53,9 @@
                     this.initData(val.orgId);
                 },
                 deep: true
+            },
+            dialogPowerVisible: function(){
+                this.isSubmit = false;
             }
         },
         methods: {
