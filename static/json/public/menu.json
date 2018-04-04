@@ -5,8 +5,20 @@
         "title": "首页"
     },
     {
-        "icon": "icon iconfont icon-1st-system-management",
+        "icon": "icon iconfont icon-1st-operation-management",
         "index": "2",
+        "title": "运营管理",
+        "subs": [
+            {
+                "icon": "icon iconfont icon-2nd-code-management",
+                "index": "codeTable",
+                "title": "码表管理"
+            }
+        ]
+    },
+    {
+        "icon": "icon iconfont icon-1st-system-management",
+        "index": "3",
         "title": "系统管理",
         "subs": [
             {
@@ -20,38 +32,5 @@
                 "title": "租户管理"
             }
         ]
-    },
-    {
-        "icon": "el-icon-date",
-       "index": "3",
-        "title": "表单",
-        "subs": [
-            {
-                "index": "baseform",
-                "title": "基本表单"
-            },
-            {
-                "index": "vueeditor",
-                "title": "编辑器"
-            },
-            {
-                "index": "markdown",
-                "title": "markdown"
-            },
-            {
-                "index": "upload",
-                "title": "文件上传"
-            }
-        ]
-    },
-    {
-        "icon": "el-icon-star-on",
-        "index": "basecharts",
-        "title": "图表"
-    },
-    {
-        "icon": "el-icon-upload2",
-        "index": "drag",
-        "title": "拖拽"
     }
 ]

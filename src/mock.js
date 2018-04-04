@@ -18,14 +18,12 @@ const userListData = function(data) {
         result: result
     };
 };
-
 /*
  * 菜单
  * */
 const menuList = function(){
     return require( '../static/json/public/menu.json');
 };
-
 /*
 * home-数据表
 * */
@@ -58,22 +56,18 @@ const businessListData = function( ) {
         business_busyness: Random.integer(5, 100)
     }
 };
-
-
 /**
  * public-获取role列表
  **/
 const roleList = function(){
     return require('../static/json/public/role_database.json');
 };
-
 /**
  * public-获取department列表
  **/
 const departmentList = function(){
     return require('../static/json/public/departments_database.json');
 };
-
 /*
 * 用户管理-table列表
 * */
@@ -131,7 +125,6 @@ const produceNewsData = function(data) {
 		articles: articles
 	}
 };
-
 /*
  * 用户管理-数据权限
  * */
@@ -146,19 +139,72 @@ const getUserPower = function(data) {
         orgPower: orgPower
     }
 };
+/*
+ * 租户管理-table列表
+ * */
+const tenantListData = function(data) {
+    data = JSON.parse(data.body);
+    console.log(data);
+    let articles = [];
+    let pageSize = data.pageSize || 10,
+        curPage = data.currentPage || 1,
+        total = data.total,
+        lastPage = Math.ceil( total/pageSize),
+        start = pageSize*(curPage-1),
+        end = lastPage === curPage ? total : pageSize*curPage;
+    //模拟假数据
+    //for (let i = pageSize*(curPage-1); i < pageSize*curPage; i++) { // 定义30条数据
+    for (let i =start; i < end; i++) { // 定义30条数据
+        const unit_all = [
+            {orgId:'1',orgName: '省办公厅'},
+            {orgId:'2',orgName: '省政协'},
+            {orgId:'3',orgName: '省政法委'},
+            {orgId:'4',orgName: '省公安厅消防总队'},
+            {orgId:'5',orgName: '省地税局'},
+            {orgId:'6',orgName: '省国税局'},
+            {orgId:'7',orgName: '省工商局'},
+            {orgId:'8',orgName: '省审计厅'},
+            {orgId:'9',orgName: '省商务厅'}
+        ];
+        let randomUnit = Mock.mock({"randomOne|1": unit_all}).randomOne;
+        let newArticleObject = {
+            num: i+1,
+            id: Random.id(),
+            createTime: Random.date() + ' ' + Random.time(), // Random.date()指示生成的日期字符串的格式,默认为yyyy-MM-dd；Random.time() 返回一个随机的时间字符串
+            name: Random.cname() + randomUnit.orgName, // 用户名
+            org: randomUnit.orgName, // 单位
+            orgId: randomUnit.orgId, // 单位id
+            publicCloud: randomUnit.orgId,
+            privateCloud_mobile: randomUnit.orgId,
+            privateCloud_unicom: randomUnit.orgId,
+            remark: Random.csentence(10, 20) // 描述信息
+        };
+        articles.push(newArticleObject);
+    }
+    return {
+        articles: articles
+    }
+};
+
 
 /*
 * 接口列表
 * Mock.mock( url, post/get , params)
 * */
+Mock.mock('/validate_logon','post', userListData);
+
 Mock.mock('/menuList','post', menuList);
+
+Mock.mock('/getHomeList','post', homeListData);
+Mock.mock('/getHomeList/business','post', businessListData);
+
 Mock.mock('/roleList','post', roleList);
 Mock.mock('/departmentList','post', departmentList);
 
-Mock.mock('/validate_logon','post', userListData);
-Mock.mock('/getHomeList','post', homeListData);
-Mock.mock('/getHomeList/business','post', businessListData);
+
 Mock.mock('/userTable','post', produceNewsData);
 Mock.mock('/userTable/getUserPower','post', getUserPower);
+
+Mock.mock('/tenantTable','post', tenantListData);
 
 

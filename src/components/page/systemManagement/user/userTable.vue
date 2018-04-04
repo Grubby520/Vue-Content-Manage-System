@@ -83,15 +83,15 @@
                                 <tr>
                                     <td>激活状态</td>
                                     <td>
-                                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已绑定</p>
-                                        <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未绑定</p>
+                                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../../../static/img/cg.png" alt=""> 已绑定</p>
+                                        <p v-else class="table-fail"><img src="../../../../../static/img/fail.png" alt="">未绑定</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>证书状态</td>
                                     <td>
-                                        <p v-if="scope.row.isRun" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已激活</p>
-                                        <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未激活</p>
+                                        <p v-if="scope.row.isRun" class="table-success"><img src="../../../../../static/img/cg.png" alt=""> 已激活</p>
+                                        <p v-else class="table-fail"><img src="../../../../../static/img/fail.png" alt="">未激活</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -121,14 +121,14 @@
                     </el-table-column>
                 <el-table-column prop="isRun" label="激活状态">
                     <template slot-scope="scope">
-                            <p v-if="scope.row.isRun" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已激活</p>
-                            <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未激活</p>
+                            <p v-if="scope.row.isRun" class="table-success"><img src="../../../../../static/img/cg.png" alt=""> 已激活</p>
+                            <p v-else class="table-fail"><img src="../../../../../static/img/fail.png" alt="">未激活</p>
                     </template>
                 </el-table-column>
                 <el-table-column prop="isBind" label="证书状态" class-name="todo">
                     <template slot-scope="scope">
-                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../../static/img/cg.png" alt=""> 已绑定</p>
-                        <p v-else class="table-fail"><img src="../../../../static/img/fail.png" alt="">未绑定</p>
+                        <p v-if="scope.row.isBind" class="table-success"><img src="../../../../../static/img/cg.png" alt=""> 已绑定</p>
+                        <p v-else class="table-fail"><img src="../../../../../static/img/fail.png" alt="">未绑定</p>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" :width="handleWidth">
@@ -162,7 +162,7 @@
 </template>
 
 <script>
-    import api from '../../../axios/api.js'
+    import api from '../../../../axios/api.js'
     import UserDialog from './user-dialog.vue'
     import UserPowerDialog from './user_power_dialog.vue'
     import pwdDialog from './pwd-dialog.vue'
@@ -221,7 +221,6 @@
             * $emit通信
             * */
             callbackFn: function(args){
-                console.log(args);
                 if(args.type === 'dialog'){
                     this.dialogVisible = !this.dialogVisible;
                     if(args.isSubmit){
@@ -477,6 +476,7 @@
                                     message: '删除成功!',
                                     duration: '1500'
                                 });
+                                this.getTableData();
                                 setTimeout(() => { //关闭loading
                                     instance.confirmButtonLoading = false;
                                 }, 300);

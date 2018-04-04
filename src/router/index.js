@@ -19,12 +19,17 @@ export default new Router({
                 },
                 {
                     path: '/userTable',
-                    component: resolve => require(['../components/page/user/userTable.vue'], resolve)
+                    component: resolve => require(['../components/page/systemManagement/user/userTable.vue'], resolve)
                 },
                 {
                     path: '/tenantTable',
-                    component: resolve => require(['../components/page/tenantTable.vue'], resolve)     // vue-datasource组件
+                    component: resolve => require(['../components/page/systemManagement/tenant/tenantTable.vue'], resolve)     // vue-datasource组件
                 },
+                {
+                    path: '/codeTable',
+                    component: resolve => require(['../components/page/operationManagement/code/codeTable.vue'], resolve)     // vue-datasource组件
+                },
+
                 {
                     path: '/baseform',
                     component: resolve => require(['../components/page/BaseForm.vue'], resolve)

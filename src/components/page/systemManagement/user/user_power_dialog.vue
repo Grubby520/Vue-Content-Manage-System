@@ -21,7 +21,7 @@
     </el-dialog>
 </template>
 <script>
-    import api from '../../../axios/api.js'
+    import api from '../../../../axios/api.js'
     export default {
         props: {
             dialogPowerVisible: {type: Boolean},

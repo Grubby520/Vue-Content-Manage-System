@@ -63,8 +63,8 @@ add/edit dialog
 </template>
 
 <script>
-    import api from '../../../axios/api.js'
-    import {deepCopyObject, isObjectValueEqual} from '../../../../static/js/public.js'
+    import api from '../../../../axios/api.js'
+    import {deepCopyObject, isObjectValueEqual} from '../../../../../static/js/public.js'
     export default {
         props: {
             dialogVisible: {type: Boolean},
@@ -151,17 +151,7 @@ add/edit dialog
                 _this.$emit('callbackParent',{type: 'dialog', isSubmit: this.isSubmit});
                 setTimeout(function(){
                     _this.$refs['formData'].resetFields();//仅close时执行
-                    _this.formData = {//配合resetFields()解决新建弹窗重置数据bug问题
-                        title: '新建用户',
-                        name : '',
-                        desc : '',
-                        roleId : '',
-                        orgId : '',
-                        pass:'',
-                        checkPass:'',
-                        type: 'add'
-                    };
-                },500);
+                },1000);
 
             },
             resetForm(formName) {
@@ -190,14 +180,24 @@ add/edit dialog
                         }
                         else{
                             this.isSubmit = true;
-                            this.closeDialog();
                             console.info(this.formData);
+                            this.closeDialog();
                             setTimeout(function(){
                                 _this.$message({
                                     type: 'success',
                                     message: '提交成功',
                                     duration: '1500'
                                 });
+                                _this.formData = {//初始化
+                                    title: '',
+                                    name : '',
+                                    desc : '',
+                                    roleId : '',
+                                    orgId : '',
+                                    pass:'',
+                                    checkPass:'',
+                                    type: ''
+                                };
                             },300);
                         }
                     } else {
