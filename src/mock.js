@@ -185,26 +185,73 @@ const tenantListData = function(data) {
         articles: articles
     }
 };
+/*
+*  码表管理-tree列表
+* */
+const codeTreeList = function(){
+        return require('../static/json/codeTable/codeTree.json');
+};
+const codeTableListData = function(data){
+    data = JSON.parse(data.body);
+    console.log(data);
+    let articles = [];
+    let pageSize = data.pageSize || 10,
+        curPage = data.currentPage || 1,
+        total = 0,
+        lastPage = Math.ceil( total/pageSize),
+        start = pageSize*(curPage-1),
+        end = lastPage === curPage ? total : pageSize*curPage,
+        id = data.id;
+    const thisArray =  data.children;
+    if(data.children){
+    // if(data.children){
+        total = data.children.length;
+        for(let i=0; i<thisArray.length; i++){
+            let newArticleObject = {
+                sortNo: i+1, // 序号
+                dictId: thisArray[i].id, //id
+                dictName: thisArray[i].label, // 名称
+                dictCode: Random.string('lower', 5, 8 ),// 编码
+                parentName: data.label,// 上级名称
+                isEffect: Random.boolean() // 是否生效
+            };
+            articles.push(newArticleObject);
+        }
+    }
 
+    return {
+        articles: articles,
+        total: total
+    }
+};
 
 /*
 * 接口列表
 * Mock.mock( url, post/get , params)
 * */
+//登录账户表
 Mock.mock('/validate_logon','post', userListData);
 
+//菜单列表
 Mock.mock('/menuList','post', menuList);
 
+//主页
 Mock.mock('/getHomeList','post', homeListData);
 Mock.mock('/getHomeList/business','post', businessListData);
 
+//公共接口
 Mock.mock('/roleList','post', roleList);
 Mock.mock('/departmentList','post', departmentList);
 
-
+//用户管理
 Mock.mock('/userTable','post', produceNewsData);
 Mock.mock('/userTable/getUserPower','post', getUserPower);
 
+//租户管理
 Mock.mock('/tenantTable','post', tenantListData);
+
+//码表管理
+Mock.mock('/codeTree', 'post', codeTreeList);
+Mock.mock('/codeTable','post', codeTableListData);
 
 

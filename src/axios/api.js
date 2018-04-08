@@ -29,7 +29,7 @@ export function fetch(url, params) {
   })
 }
 
-//接口地址
+//拦截地址
 export default {
 
     $http(url,params){
