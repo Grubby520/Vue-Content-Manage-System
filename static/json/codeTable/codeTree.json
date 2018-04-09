@@ -2,6 +2,7 @@
     {
         "id": "sysCode",
         "label": "系统码表",
+        "is-expand": true,
         "table":{},
         "data": [
             {
@@ -674,7 +675,7 @@
                                 "children": [
                                     {
                                         "id": "9a761fe2-aae9-4987-8d22-27ba7bee1708",
-                                        "label": "测试软件111",
+                                        "label": "测试软件-test",
                                         "iconCls": null,
                                         "state": null,
                                         "children": [

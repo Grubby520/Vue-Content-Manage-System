@@ -195,18 +195,21 @@ const codeTableListData = function(data){
     data = JSON.parse(data.body);
     console.log(data);
     let articles = [];
-    let pageSize = data.pageSize || 10,
-        curPage = data.currentPage || 1,
+    let pageSize = data.page.pageSize || 10,
+        curPage = data.page.currentPage || 1,
         total = 0,
-        lastPage = Math.ceil( total/pageSize),
-        start = pageSize*(curPage-1),
-        end = lastPage === curPage ? total : pageSize*curPage,
+        lastPage = 0,
+        start = 0,
+        end = 0,
         id = data.id;
-    const thisArray =  data.children;
-    if(data.children){
+    const thisArray =  data.table.children;
+    if(data.table.children){
     // if(data.children){
-        total = data.children.length;
-        for(let i=0; i<thisArray.length; i++){
+        total = data.table.children.length;
+        lastPage = Math.ceil( total/pageSize);
+        start = pageSize*(curPage-1);
+        end = lastPage === curPage ? total : pageSize*curPage;
+        for(let i=start; i<end; i++){
             let newArticleObject = {
                 sortNo: i+1, // 序号
                 dictId: thisArray[i].id, //id

@@ -6,6 +6,9 @@
                 <el-button type="primary" icon="icon iconfont icon-edit" class="handle-edit mr10" @click="openEditDialog">编辑</el-button>
                 <el-button type="primary" icon="icon iconfont icon-delete" class="handle-del mr10" @click="del">删除</el-button>
             </div>
+            <!--add/edit dialog-->
+            <code-table-dialog :dialogVisible="dialogVisible" :form="form" v-if="asyncLoading"  @callbackParent="callbackFn"></code-table-dialog>
+
         </div>
         <el-table :data="table_sys.tableData" border style="width: 100%" ref="multipleTable" @selection-change="checkboxChange">
             <el-table-column type="selection" width="55"></el-table-column>
@@ -18,6 +21,10 @@
             <el-table-column prop="parentName" label="上级名">
             </el-table-column>
             <el-table-column prop="isEffect" label="是否生效">
+                <template slot-scope="scope">
+                    <p v-if="scope.row.isEffect" class="table-success"><img src="../../../../../static/img/cg.png" alt=""> 已生效</p>
+                    <p v-else class="table-fail"><img src="../../../../../static/img/fail.png" alt=""> 未生效</p>
+                </template>
             </el-table-column>
         </el-table>
         <div class="pagination">
@@ -36,9 +43,13 @@
 
 <script>
     import api from '../../../../axios/api.js'
+    import codeTableDialog from './codeTable-dialog.vue'
     export default {
         props: {
             request_sys: {type:Object}
+        },
+        components: {
+            codeTableDialog
         },
         data() {
             return {
@@ -48,18 +59,22 @@
                     currentPage: 1,
                     codeType: 'sysCode',
                     id: '',
-                    tableData: [
-                        {
-                            sortNo: 1,
-                            dictId: '1231df',
-                            dictName: 'zhangsan',
-                            dictCode: 'sys-ff',
-                            parentName: 'sdf',
-                            isEffect: true
-                        }
-                ],
+                    tableData: [],
                 },
-                setTableData: {}// 接受父组件参数
+                setTableData: {},// 接受父组件参数
+                form: { // form列表
+                    title: '',
+                    dictId: '',
+                    dictName: '',
+                    dictCode: '',
+                    isEffect: false,
+                    type:'',
+                    codeType: 'sysCode'
+                },
+                asyncLoading: true,
+                dialogVisible: false,
+                multipleSelection: [],//checkbox选中列表
+                del_idList: [],//存放待删除的list-idArray
             };
         },
         computed: {
@@ -72,7 +87,6 @@
         watch: {
             request_sys: {
                 handler: function(val, oldVal){
-                    console.log('change');
                     this.setTableData = val;
                     this.initTableData();
                 },
@@ -85,12 +99,24 @@
              * */
             initTableData() {
                 //api，获取table列表对象
-                api.$http('/codeTable', this.setTableData)
+                api.$http('/codeTable',
+                    {
+                        table: this.setTableData,
+                        page: this.table_sys
+                    })
                     .then(res => {
-                        console.log(res);
                         this.table_sys.tableData = res.articles;
                         this.table_sys.total = res.total;
                     });
+            },
+            /*
+            *  $emit 父子通信
+            * */
+            callbackFn(args){
+                this.dialogVisible = !this.dialogVisible;
+                if(args.isSubmit){
+                    this.initTableData();
+                }
             },
             /*
              * 新建dialog
@@ -100,15 +126,13 @@
                     this.asyncLoading = true;
                 }
                 this.form = {
-                    title: '新建租户',
-                    id: '',
-                    name: '',
-                    orgId: '',
-                    publicCloud: '',
-                    privateCloud_mobile: '',
-                    privateCloud_unicom: '',
-                    remark: '',
-                    type: 'add'
+                    title: '新建系统码表',
+                    dictId: '',
+                    dictName: '',
+                    dictCode: '',
+                    isEffect: false,
+                    type:'add',
+                    codeType: 'sysCode'
                 };
                 this.dialogVisible = true;
             },
@@ -120,28 +144,26 @@
                 if(length === 0){
                     this.$message({
                         type: 'warning',
-                        message: '未勾选需要编辑的租户',
+                        message: '未勾选需要编辑的码表',
                         duration: '1500'
                     });
                 }
                 else if(length > 1){
                     this.$message({
                         type: 'warning',
-                        message: '不能同时编辑多个租户',
+                        message: '不能同时编辑多个码表',
                         duration: '1500'
                     });
                 }
                 else{
                     this.form = {
-                        title: '编辑用户',
-                        id: this.multipleSelection[0].id,
-                        name: this.multipleSelection[0].name,
-                        orgId: this.multipleSelection[0].orgId,
-                        remark: this.multipleSelection[0].remark,
-                        publicCloud: this.multipleSelection[0].publicCloud,
-                        privateCloud_mobile: this.multipleSelection[0].privateCloud_mobile,
-                        privateCloud_unicom: this.multipleSelection[0].privateCloud_unicom,
-                        type: 'edit'
+                        title: '编辑系统码表',
+                        dictId: this.multipleSelection[0].dictId,
+                        dictName: this.multipleSelection[0].dictName,
+                        dictCode: this.multipleSelection[0].dictCode,
+                        isEffect: this.multipleSelection[0].isEffect,
+                        type: 'edit',
+                        codeType: 'sysCode'
                     };
                     if(!this.asyncLoading) this.asyncLoading = true;
                     // open dialog
@@ -157,15 +179,15 @@
                 if(length === 0){
                     _this.$message({
                         type: 'warning',
-                        message: '未勾选需要删除的租户',
+                        message: '未勾选需要删除的码表',
                         duration: '1500'
                     });
                     return ;
                 }
                 let str = '';
                 for (let i = 0; i < length; i++) {
-                    str += _this.multipleSelection[i].name + ' ';
-                    _this.del_idList[i] = _this.multipleSelection[i].id;
+                    str += _this.multipleSelection[i].dictName + ' ';
+                    _this.del_idList[i] = _this.multipleSelection[i].dictId;
                 }
                 const h = this.$createElement;
                 this.$msgbox({
