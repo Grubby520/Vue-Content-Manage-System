@@ -68,12 +68,454 @@ const roleList = function(){
 const departmentList = function(){
     return require('../static/json/public/departments_database.json');
 };
+const specificSetList = function(){
+  return   [
+      {
+          "id": "06fe8c71-6551-425f-9370-73a41fc94ebc",
+          "label": "普通",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      },
+      {
+          "id": "e50b5153-3cf9-4ec0-8e85-d37cafa82937",
+          "label": "高性能",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      },
+      {
+          "id": "5c53a197-ad0f-48f8-b21b-7661bb76359f",
+          "label": "Oracle数据库一体机",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      },
+      {
+          "id": "5981cdc5-32b3-4d8b-b8bc-0ba2f49daa59",
+          "label": "虚拟数据中心",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      },
+      {
+          "id": "acf606ec-b56e-4f83-b3c4-546f5eab7f85",
+          "label": "普通",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      },
+      {
+          "id": "bfcfa108-c521-4832-9e55-0b9c4bfd673e",
+          "label": "数据库一体机",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      },
+      {
+          "id": "49ed4aad-a056-4374-a8a6-af378525243a",
+          "label": "云主机（ECS）",
+          "iconCls": null,
+          "state": null,
+          "children": [
+
+          ],
+          "attributes": {
+              "isLeaf": true
+          },
+          "leaf": true
+      }
+  ]
+};
+const priceUnitList = function () {
+    return [
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ffa8",
+            "label": "台",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ffa9",
+            "label": "TB",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff10",
+            "label": "100GB",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff11",
+            "label": "10GB",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff12",
+            "label": "核",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff13",
+            "label": "PVU",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff14",
+            "label": "CPU",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff15",
+            "label": "GB",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff16",
+            "label": "CPU/4G",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff17",
+            "label": "每实例",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff18",
+            "label": "每客户端",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff19",
+            "label": "每VM、节点",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff20",
+            "label": "每VM",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff21",
+            "label": "每个",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "54d7dd40-b06d-46b3-9c5e-dea0765aeaf9",
+            "label": "机柜单位",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff23",
+            "label": "人次",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "5f905112-8a7e-4866-b9e7-155028449b90",
+            "label": "VM每网站",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "f379b79b-1e3e-4bfd-bbea-3d03f85561f5",
+            "label": "管理50个资产",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "47146968-5439-4a4c-a882-6ba1f58b9d2d",
+            "label": "每条",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "862a8404-5b12-4a16-ae50-fbd3f6f509a1",
+            "label": "每节点",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "775828aa-0ae5-41e4-aa22-94a24b6458cf",
+            "label": "MB",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        }
+    ];
+};
+const pricePeriodList = function () {
+    return [
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2f2a7",
+            "label": "每月",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2f3a7",
+            "label": "一次性",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "73a5aa3e-466e-11e7-b988-fa163ec2f4a7",
+            "label": "每天",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "9a6b22f3-a8d6-41a0-9b80-630e0d4be4f0",
+            "label": "每季度",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        },
+        {
+            "id": "2afd53cf-478a-489c-86e3-00a7100912f9",
+            "label": "每年",
+            "iconCls": null,
+            "state": null,
+            "children": [
+
+            ],
+            "attributes": {
+                "isLeaf": true
+            },
+            "leaf": true
+        }
+    ];
+};
+
+
 /*
 * 用户管理-table列表
 * */
 const produceNewsData = function(data) {
     data = JSON.parse(data.body);
-    console.log(data);
 	let articles = [];
 	let pageSize = data.pageSize || 10,
         curPage = data.currentPage || 1,
@@ -144,7 +586,6 @@ const getUserPower = function(data) {
  * */
 const tenantListData = function(data) {
     data = JSON.parse(data.body);
-    console.log(data);
     let articles = [];
     let pageSize = data.pageSize || 10,
         curPage = data.currentPage || 1,
@@ -193,7 +634,6 @@ const codeTreeList = function(){
 };
 const codeTableListData = function(data){
     data = JSON.parse(data.body);
-    console.log(data);
     let articles = [];
     let pageSize = data.page.pageSize || 10,
         curPage = data.page.currentPage || 1,
@@ -229,6 +669,479 @@ const codeTableListData = function(data){
 };
 
 /*
+*  服务目录
+* */
+const getTabList = function () {
+    return require('../static/json/serviceCatalog/serviceCatalog-list.json');
+};
+const getComputingServiceTable = function (data) {
+    data = JSON.parse(data.body);
+    let articles = [];
+    let pageSize = data.pageSize || 10,
+        curPage = data.currentPage || 1,
+        total = 63,
+        end = 0,
+        lastPage = Math.ceil( total/pageSize),
+        start = pageSize*(curPage-1);
+        end = lastPage === curPage ? total : pageSize*curPage;
+        const specificSetName = [
+            {
+                "id": "06fe8c71-6551-425f-9370-73a41fc94ebc",
+                "label": "普通",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "e50b5153-3cf9-4ec0-8e85-d37cafa82937",
+                "label": "高性能",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "5c53a197-ad0f-48f8-b21b-7661bb76359f",
+                "label": "Oracle数据库一体机",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "5981cdc5-32b3-4d8b-b8bc-0ba2f49daa59",
+                "label": "虚拟数据中心",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "acf606ec-b56e-4f83-b3c4-546f5eab7f85",
+                "label": "普通",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "bfcfa108-c521-4832-9e55-0b9c4bfd673e",
+                "label": "数据库一体机",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "49ed4aad-a056-4374-a8a6-af378525243a",
+                "label": "云主机（ECS）",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            }
+        ];
+        const cores = [2,4,8,16,32,64];
+        const memoryCapacity = [4,8,16,32,64,128,256];
+        const priceUnitName = [
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ffa8",
+                "label": "台",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ffa9",
+                "label": "TB",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff10",
+                "label": "100GB",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff11",
+                "label": "10GB",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff12",
+                "label": "核",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff13",
+                "label": "PVU",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff14",
+                "label": "CPU",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff15",
+                "label": "GB",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff16",
+                "label": "CPU/4G",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff17",
+                "label": "每实例",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff18",
+                "label": "每客户端",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff19",
+                "label": "每VM、节点",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff20",
+                "label": "每VM",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff21",
+                "label": "每个",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "54d7dd40-b06d-46b3-9c5e-dea0765aeaf9",
+                "label": "机柜单位",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2ff23",
+                "label": "人次",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "5f905112-8a7e-4866-b9e7-155028449b90",
+                "label": "VM每网站",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "f379b79b-1e3e-4bfd-bbea-3d03f85561f5",
+                "label": "管理50个资产",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "47146968-5439-4a4c-a882-6ba1f58b9d2d",
+                "label": "每条",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "862a8404-5b12-4a16-ae50-fbd3f6f509a1",
+                "label": "每节点",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "775828aa-0ae5-41e4-aa22-94a24b6458cf",
+                "label": "MB",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            }
+        ];
+        const pricePeriodName = [
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2f2a7",
+                "label": "每月",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2f3a7",
+                "label": "一次性",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "73a5aa3e-466e-11e7-b988-fa163ec2f4a7",
+                "label": "每天",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "9a6b22f3-a8d6-41a0-9b80-630e0d4be4f0",
+                "label": "每季度",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            },
+            {
+                "id": "2afd53cf-478a-489c-86e3-00a7100912f9",
+                "label": "每年",
+                "iconCls": null,
+                "state": null,
+                "children": [
+
+                ],
+                "attributes": {
+                    "isLeaf": true
+                },
+                "leaf": true
+            }
+        ];
+        for(let i=start; i<end; i++){
+            let newArticleObject = {
+                sortNo: i+1,
+                specificSetName: specificSetName[Random.natural(0,specificSetName.length-1)].label,
+                cores: cores[Random.natural(0,cores.length-1)],
+                memoryCapacity: memoryCapacity[Random.natural(0,memoryCapacity.length-1)],
+                priceUnitName: priceUnitName[Random.natural(0,priceUnitName.length-1)].label,
+                unitCost: Random.natural(1000, 20000),
+                pricePeriodName: pricePeriodName[Random.natural(0,pricePeriodName.length-1)].label,
+                createDate:  Random.date() + ' ' + Random.time()
+            };
+            articles.push(newArticleObject);
+        }
+
+    return {
+        articles: articles,
+        total: total
+    }
+};
+
+/*
 * 接口列表
 * Mock.mock( url, post/get , params)
 * */
@@ -245,6 +1158,11 @@ Mock.mock('/getHomeList/business','post', businessListData);
 //公共接口
 Mock.mock('/roleList','post', roleList);
 Mock.mock('/departmentList','post', departmentList);
+Mock.mock('/specificSetList','post', specificSetList);
+Mock.mock('/priceUnitList','post', priceUnitList);
+Mock.mock('/pricePeriodList','post', pricePeriodList);
+
+
 
 //用户管理
 Mock.mock('/userTable','post', produceNewsData);
@@ -256,5 +1174,9 @@ Mock.mock('/tenantTable','post', tenantListData);
 //码表管理
 Mock.mock('/codeTree', 'post', codeTreeList);
 Mock.mock('/codeTable','post', codeTableListData);
+
+//服务目录
+Mock.mock('/serviceCatalog/getTabList', 'post', getTabList);
+Mock.mock('/serviceCatalog/getComputingServiceTable', 'post', getComputingServiceTable);
 
 

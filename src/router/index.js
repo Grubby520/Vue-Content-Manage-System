@@ -26,6 +26,11 @@ export default new Router({
                     component: resolve => require(['../components/page/systemManagement/tenant/tenantTable.vue'], resolve)     // vue-datasource组件
                 },
                 {
+                    path: '/serviceCatalog',
+                    component: resolve => require(['../components/page/operationManagement/serviceCatalog/serviceCatalog-list.vue'], resolve)     // vue-datasource组件
+                },
+
+                {
                     path: '/codeTable',
                     component: resolve => require(['../components/page/operationManagement/code/codeTable.vue'], resolve)     // vue-datasource组件
                 },

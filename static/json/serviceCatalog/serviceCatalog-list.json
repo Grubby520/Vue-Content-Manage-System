@@ -1,0 +1,26 @@
+[
+    {
+        "id": "computingService",
+        "label": "计算服务"
+    },
+    {
+        "id": "storageService",
+        "label": "存储服务"
+    },
+    {
+        "id": "softwareService",
+        "label": "软件服务"
+    },
+    {
+        "id": "networkSecurityService",
+        "label": "网络安全服务"
+    },
+    {
+        "id": "thirdSecurityService",
+        "label": "第三方安全服务"
+    },
+    {
+        "id": "otherService",
+        "label": "其他服务"
+    }
+]

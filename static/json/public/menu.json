@@ -10,6 +10,11 @@
         "title": "运营管理",
         "subs": [
             {
+                "icon": "icon iconfont icon-2nd-service-directory",
+                "index": "serviceCatalog",
+                "title": "服务目录"
+            },
+            {
                 "icon": "icon iconfont icon-2nd-code-management",
                 "index": "codeTable",
                 "title": "码表管理"
