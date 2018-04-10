@@ -3,58 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <title>testing</title>
-</head>
-<body>
-<script>
-    const obj1 = {
-        a:1,
-        b:'2',
-        c:'string'
-    };
-
-    const obj2= {
-        b:'2',
-        a:1,
-        c:'string'
-    };
-    const obj21= {
-        b:'22',
-        a:1,
-        c:'string'
-    };
-    const obj3= {
-        b:'2',
-        a:1,
-        c:'string',
-        d:'new'
-    };
-    const result = isObjectValueEqual(obj1, obj2);
-    const result2 = isObjectValueEqual(obj1, obj21);
-    const result3 = isObjectValueEqual(obj1, obj3);
-
-    function isObjectValueEqual(a, b) {
-        const aProps = Object.getOwnPropertyNames(a),
-               bProps = Object.getOwnPropertyNames(b);
-        if (aProps.length !== bProps.length) {
-            return false;
+    <style>
+        /*   rgb(231, 236, 240)  65c83f   */
+        #loading{
+            background-color: rgb(231, 236, 240);
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 1;
+            margin-top: 0px;
+            top: 0px;
         }
-        for (let i = 0; i < aProps.length; i++) {
-            let propName = aProps[i];
-            if (a[propName] !== b[propName]) {
-                return false;
+        #loading-center{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        #loading-center-absolute {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 60px;
+            width: 60px;
+            margin-top: -30px;
+            margin-left: -30px;
+            -webkit-animation: loading-center-absolute 1s infinite;
+            animation: loading-center-absolute 1s infinite;
+
+        }
+        .object{
+            width: 20px;
+            height: 20px;
+            background-color: #65c83f;
+            float: left;
+            -moz-border-radius: 50% 50% 50% 50%;
+            -webkit-border-radius: 50% 50% 50% 50%;
+            border-radius: 50% 50% 50% 50%;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        .object:nth-child(2n+0) {
+            margin-right: 0px;
+
+        }
+        #object_one{
+            -webkit-animation: object_one 1s infinite;
+            animation: object_one 1s infinite;
+        }
+        #object_two{
+            -webkit-animation: object_two 1s infinite;
+            animation: object_two 1s infinite;
+        }
+        #object_three{
+            -webkit-animation: object_three 1s infinite;
+            animation: object_three 1s infinite;
+        }
+        #object_four{
+            -webkit-animation: object_four 1s infinite;
+            animation: object_four 1s infinite;
+        }
+
+        @-webkit-keyframes loading-center-absolute{
+            100% {
+                -ms-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+
+        }
+        @keyframes loading-center-absolute{
+            100% {
+                -ms-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
             }
         }
-        return true;
+
+
+
+
+        @-webkit-keyframes object_one{
+            50% {
+                -ms-transform: translate(20px,20px);
+                -webkit-transform: translate(20px,20px);
+                transform: translate(20px,20px);
+            }
+        }
+        @keyframes object_one{
+            50% {
+                -ms-transform: translate(20px,20px);
+                -webkit-transform: translate(20px,20px);
+                transform: translate(20px,20px);
+            }
+        }
+
+
+        @-webkit-keyframes object_two{
+            50% {
+                -ms-transform: translate(-20px,20px);
+                -webkit-transform: translate(-20px,20px);
+                transform: translate(-20px,20px);
+            }
+        }
+        @keyframes object_two{
+            50% {
+                -ms-transform: translate(-20px,20px);
+                -webkit-transform: translate(-20px,20px);
+                transform: translate(-20px,20px);
+            }
+        }
+
+
+
+        @-webkit-keyframes object_three{
+            50% {
+                -ms-transform: translate(20px,-20px);
+                -webkit-transform: translate(20px,-20px);
+                transform: translate(20px,-20px);
+            }
+        }
+        @keyframes object_three{
+            50% {
+                -ms-transform: translate(20px,-20px);
+                -webkit-transform: translate(20px,-20px);
+                transform: translate(20px,-20px);
+            }
+        }
+
+
+
+        @-webkit-keyframes object_four{
+            50% {
+                -ms-transform: translate(-20px,-20px);
+                -webkit-transform: translate(-20px,-20px);
+                transform: translate(-20px,-20px);
+            }
+        }
+        @keyframes object_four{
+            50% {
+                -ms-transform: translate(-20px,-20px);
+                -webkit-transform: translate(-20px,-20px);
+                transform: translate(-20px,-20px);
+            }
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div class="object" id="object_one"></div>
+            <div class="object" id="object_two"></div>
+            <div class="object" id="object_three"></div>
+            <div class="object" id="object_four"></div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+//    const obj1 = {
+//        a:1,
+//        b:'2',
+//        c:'string'
+//    };
+//
+//    const obj2= {
+//        b:'2',
+//        a:1,
+//        c:'string'
+//    };
+//    const obj21= {
+//        b:'22',
+//        a:1,
+//        c:'string'
+//    };
+//    const obj3= {
+//        b:'2',
+//        a:1,
+//        c:'string',
+//        d:'new'
+//    };
+//    const result = isObjectValueEqual(obj1, obj2);
+//    const result2 = isObjectValueEqual(obj1, obj21);
+//    const result3 = isObjectValueEqual(obj1, obj3);
+//
+//    function isObjectValueEqual(a, b) {
+//        const aProps = Object.getOwnPropertyNames(a),
+//               bProps = Object.getOwnPropertyNames(b);
+//        if (aProps.length !== bProps.length) {
+//            return false;
+//        }
+//        for (let i = 0; i < aProps.length; i++) {
+//            let propName = aProps[i];
+//            if (a[propName] !== b[propName]) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    function getRandomNumber(min, max){
+//        let r = Math.random() * (max - min);
+//        let re = Math.round(r + min);
+//        return Math.max(Math.min(re, max), min);
+//
+//    }
+//
+//    console.log(getRandomNumber(0,100));
+
+//    let o1 = { a: 1 };
+//    let o2 = { b: 2 };
+//    let o3 = { c: 3 };
+//
+//    let obj = Object.assign(o1, o2, o3);
+//    console.log(obj); // { a: 1, b: 2, c: 3 }
+//    console.log(o1);  // { a: 1, b: 2, c: 3 }, 且目标对象自身也会改变。　
+//    console.log(o2);
+//    o2.k = 22;
+//    console.log(o2);
+//    console.log(o1);//o2,o3改变，并不影响o1；
+//        o1.m = 56;
+//        console.log(o1);
+//    console.log(obj);//o1和obj是共同的地址，所以o1改变，obj也会改变
+
+    function deepCopyObject(obj){
+        let dst = {};
+        for (const prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                dst[prop] = obj[prop];
+            }
+        }
+        return dst;
     }
 
-    function getRandomNumber(min, max){
-        let r = Math.random() * (max - min);
-        let re = Math.round(r + min);
-        return Math.max(Math.min(re, max), min);
+    let obj1 = {a:1,b:2};
+    let obj2 = deepCopyObject(obj1);
+    let obj3 = obj1;
+    console.log(obj2); // {a: 1, b: 2}
+    obj1.a = 11;
+    console.log(obj2); // 深拷贝 {a: 1, b: 2}
+    console.log(obj3); //浅拷贝 {a: 11, b: 2}
 
-    }
-
-    console.log(getRandomNumber(0,100));
 
 </script>
 </body>

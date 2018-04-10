@@ -75,6 +75,18 @@
                   pricePeriodName: '',
                   createDate: ''
               },
+              tableForm_edit: {
+                  type:'',
+                  title:'',
+                  id: '',
+                  specificSetName: '',
+                  cores: '',
+                  memoryCapacity: '',
+                  priceUnitName: '',
+                  unitCost: '',
+                  pricePeriodName: '',
+                  createDate: ''
+              },
               tableList: [],
               dialogVisible: false,
               asyncLoading: false,
@@ -105,6 +117,9 @@
                     this.initTable();
                 }
             },
+            /*
+            *  创建
+            * */
             openAddDialog(){
                 if(!this.asyncLoading){
                     this.asyncLoading = true;
@@ -123,12 +138,38 @@
                 };
                 this.dialogVisible = true;
             },
+            /*
+            *  checkbox
+            * */
             checkboxChange(val){
                 this.multipleSelection = val;
             },
+            /*
+            *  编辑
+            * */
             openEditDialog(){
-
+                const length = this.multipleSelection.length;
+                if(length === 0){
+                    this.$message({
+                        type: 'warning',
+                        message: '未勾选需要编辑的列表',
+                        duration: '1500'
+                    });
+                }
+                else if(length > 1){
+                    this.$message({
+                        type: 'warning',
+                        message: '不能同时编辑多个列表',
+                        duration: '1500'
+                    });
+                }
+                else{
+                    Object.assign(this.tableForm, this.multipleSelection[0],{type:'edit',title:'编辑计算服务'});
+                    if(!this.asyncLoading) this.asyncLoading = true;
+                    this.dialogVisible = true;
+                }
             },
+
             del(){
 
             },

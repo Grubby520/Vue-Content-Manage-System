@@ -33,6 +33,7 @@ add/edit dialog
             <el-form-item label="核数(个) :" :label-width="formLabelWidth" prop="cores">
                 <el-input v-model.number="formData.cores"  placeholder="请输入核数" auto-complete="off"></el-input>
             </el-form-item>
+            <div>{{formData.cores}}</div>
             <el-form-item label="内存(GB) :" :label-width="formLabelWidth" prop="memoryCapacity">
                 <el-input v-model.number="formData.memoryCapacity" placeholder="请输入内存大小" auto-complete="off"></el-input>
             </el-form-item>
@@ -93,8 +94,21 @@ add/edit dialog
                     }
                 }
             };
+            const checkUnitCost = (rule, value, callback) => { // 验证正整数
+                if (!value) {
+                    return callback(new Error('值不能为空'));
+                }
+                else if (!Number.isInteger(value)) {
+                    callback(new Error('请输入数字'));
+                } else {
+                    if (value < 1000 || value >20000) {
+                        callback(new Error('单价应在1000-20000之间'));
+                    } else {
+                        callback();
+                    }
+                }
+            };
             return  {
-
                 rules: {
                     specificSetName: [
                         { required: true, message: '请选择规格集名称', trigger: 'change' }
@@ -106,7 +120,7 @@ add/edit dialog
                         {required: true, validator: checkInteger, trigger: 'blur'}
                     ],
                     unitCost: [
-                        {required: true, validator: checkInteger, trigger: 'blur'}
+                        {required: true, validator: checkUnitCost, trigger: 'blur'}
                     ],
                     priceUnitName: [
                         { required: true, message: '请选择计价单位', trigger: 'change' }
@@ -115,33 +129,54 @@ add/edit dialog
                         { required: true, message: '请选择计价周期', trigger: 'change' }
                     ]
                 },
+
                 formData: {},
                 copyFormData : {},
 
                 specificSetList: [],
                 priceUnitList: [],
                 pricePeriodList: [],
-
                 isSubmit: false,
                 formLabelWidth: '150px',
                 innerVisible: false
             }
         },
         created(){
-            this.formData = this.tableForm;
-            this.copyFormData = deepCopyObject(this.tableForm);
-            this.initData();
+            //初始化-为空
+            this.formData = this.tableForm; // copy props
+            this.copyFormData = deepCopyObject(this.tableForm);//copy props for resetForm
+            this.initData();//获取下拉列表
         },
         watch: {
             tableForm: {
                 handler: function(val, oldVal){
-                    this.formData = deepCopyObject(val);
+                    console.log('change');
+                    this.formData = val; // v-model changes
+                    this.copyFormData = deepCopyObject(this.tableForm); // for resetForm
+                    this.isSubmit = false;
+                    console.log(this.copyFormData);
                 },
                 deep: true
             },
-            dialogVisible: function(){
-                this.copyFormData = deepCopyObject(this.tableForm);
-                this.isSubmit = false;
+            //数据同步是ok的
+            dialogVisible: function(val, oldVal){
+//                if(val === true){
+//
+//                }
+//                else{
+//                    this.copyFormData = { // when closeDialog,reset it
+//                        type:'',
+//                        title:'',
+//                        id: '',
+//                        specificSetName: '',
+//                        cores: '',
+//                        memoryCapacity: '',
+//                        priceUnitName: '',
+//                        unitCost: '',
+//                        pricePeriodName: '',
+//                        createDate: ''
+//                    }
+//                }
             }
         },
         methods: {
@@ -182,6 +217,7 @@ add/edit dialog
 
             },
             submitForm(formName) {
+                console.info(this.formData);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         const _this = this,
@@ -196,8 +232,7 @@ add/edit dialog
                         }
                         else{
                             this.isSubmit = true;
-                            //this.formData = JSON.parse(JSON.stringify(this.formData));
-
+                            console.info(_this.formData);
                             this.closeDialog();
                             setTimeout(function(){
                                 _this.$message({
@@ -205,10 +240,6 @@ add/edit dialog
                                     message: '提交成功',
                                     duration: '1500'
                                 });
-                                console.info(_this.formData);
-                                for(const key in _this.formData){
-                                    console.log(_this.formData[key]);
-                                }
                             },300);
                         }
                     } else {
