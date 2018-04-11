@@ -4,11 +4,27 @@
             <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
                 <template v-for="item in items">
                     <template v-if="item.subs">
+
                         <el-submenu :index="item.index" class="menu-1st">
                             <template slot="title"><i :class="item.icon"></i>{{ item.title }}</template>
-                            <el-menu-item v-for="(subItem, i) in item.subs" :key="i" :index="subItem.index" class="menu-2nd"><i :class="subItem.icon"></i>{{ subItem.title }}
-                            </el-menu-item>
+                            <template v-for="(inner, i) in item.subs">
+
+                                <template v-if="inner.subs">
+
+                                    <el-submenu :index="inner.index" class="menu-2nd">
+                                        <template slot="title"><i :class="inner.icon"></i>{{inner.title}}</template>
+                                        <el-menu-item v-for="(subItem, i) in inner.subs" :key="i" :index="subItem.index" class="menu-3rd"><i :class="subItem.icon"></i>{{ subItem.title }}
+                                        </el-menu-item>
+                                    </el-submenu>
+                                </template>
+                                <template v-else>
+                                    <el-menu-item :key="i" :index="inner.index" class="menu-2nd"><i :class="inner.icon"></i>{{ inner.title }}
+                                    </el-menu-item>
+                                </template>
+
+                            </template>
                         </el-submenu>
+
                     </template>
                     <template v-else>
                         <el-menu-item :index="item.index" class="menu-1st">

@@ -5,8 +5,47 @@
         "title": "首页"
     },
     {
-        "icon": "icon iconfont icon-1st-operation-management",
+        "icon": "icon iconfont icon-1st-resource-supervise",
         "index": "2",
+        "title": "资源监管",
+        "subs": [
+            {
+                "icon": "icon iconfont icon-2nd-Infrastructure",
+                "index": "2-1",
+                "title": "基础设施",
+                "subs": [
+                    {
+                        "icon": "icon iconfont icon-3rd-server",
+                        "index": "server",
+                        "title": "服务器"
+                    },
+                    {
+                        "icon": "icon iconfont icon-3rd-storage-device",
+                        "index": "storageDevice",
+                        "title": "存储设备"
+                    },
+                    {
+                        "icon": "icon iconfont icon-3rd-network-equipment",
+                        "index": "networkEquipment",
+                        "title": "网络设备"
+                    },
+                    {
+                        "icon": "icon iconfont icon-3rd-ip-resource",
+                        "index": "ipResource",
+                        "title": "IP资源"
+                    }
+                ]
+            },
+            {
+                "icon": "icon iconfont icon-2nd-virtual-resource",
+                "index": "virtualResource",
+                "title": "虚拟资源"
+            }
+        ]
+    },
+    {
+        "icon": "icon iconfont icon-1st-operation-management",
+        "index": "3",
         "title": "运营管理",
         "subs": [
             {
@@ -23,7 +62,7 @@
     },
     {
         "icon": "icon iconfont icon-1st-system-management",
-        "index": "3",
+        "index": "4",
         "title": "系统管理",
         "subs": [
             {

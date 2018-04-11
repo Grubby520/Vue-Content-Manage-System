@@ -36,6 +36,12 @@ a{
 .menu-2nd>.icon.iconfont{
     font-size: 14px;
 }
+.menu-3rd{
+    font-size: 12px;
+}
+.menu-3rd>.icon.iconfont{
+    font-size: 12px;
+}
 .el-breadcrumb__item__inner>i{
     font-size: 14px;
 }
