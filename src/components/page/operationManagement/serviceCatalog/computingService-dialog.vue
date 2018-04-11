@@ -33,7 +33,6 @@ add/edit dialog
             <el-form-item label="核数(个) :" :label-width="formLabelWidth" prop="cores">
                 <el-input v-model.number="formData.cores"  placeholder="请输入核数" auto-complete="off"></el-input>
             </el-form-item>
-            <div>{{formData.cores}}</div>
             <el-form-item label="内存(GB) :" :label-width="formLabelWidth" prop="memoryCapacity">
                 <el-input v-model.number="formData.memoryCapacity" placeholder="请输入内存大小" auto-complete="off"></el-input>
             </el-form-item>
@@ -109,6 +108,7 @@ add/edit dialog
                 }
             };
             return  {
+                //验算规则
                 rules: {
                     specificSetName: [
                         { required: true, message: '请选择规格集名称', trigger: 'change' }
@@ -129,54 +129,40 @@ add/edit dialog
                         { required: true, message: '请选择计价周期', trigger: 'change' }
                     ]
                 },
-
-                formData: {},
-                copyFormData : {},
-
+                //异步请求的数据
                 specificSetList: [],
                 priceUnitList: [],
                 pricePeriodList: [],
+                //必须的
+                formData: {},
+                copyFormData : {},
                 isSubmit: false,
                 formLabelWidth: '150px',
                 innerVisible: false
             }
         },
         created(){
-            //初始化-为空
-            this.formData = this.tableForm; // copy props
+            //first open-init
+            this.formData = this.tableForm; // copy props,不能深拷贝
             this.copyFormData = deepCopyObject(this.tableForm);//copy props for resetForm
             this.initData();//获取下拉列表
         },
         watch: {
             tableForm: {
                 handler: function(val, oldVal){
-                    console.log('change');
-                    this.formData = val; // v-model changes
-                    this.copyFormData = deepCopyObject(this.tableForm); // for resetForm
-                    this.isSubmit = false;
-                    console.log(this.copyFormData);
+                    this.formData = val; // v-model changes，,不能深拷贝,否则无法触发watch
                 },
                 deep: true
             },
-            //数据同步是ok的
             dialogVisible: function(val, oldVal){
-//                if(val === true){
-//
-//                }
-//                else{
-//                    this.copyFormData = { // when closeDialog,reset it
-//                        type:'',
-//                        title:'',
-//                        id: '',
-//                        specificSetName: '',
-//                        cores: '',
-//                        memoryCapacity: '',
-//                        priceUnitName: '',
-//                        unitCost: '',
-//                        pricePeriodName: '',
-//                        createDate: ''
-//                    }
-//                }
+                this.isSubmit = false;
+                if(val){
+                    /*
+                    *  1.不能放在tableForm中，因为每次v-model触发，就会触发watch
+                    *  2.需要深拷贝
+                    * */
+                    this.copyFormData = deepCopyObject(this.tableForm); // for resetForm
+                }
             }
         },
         methods: {
@@ -199,39 +185,34 @@ add/edit dialog
             },
             closeDialog(){
                 const _this = this;
-                _this.$emit('callbackParent',{type: 'add', isSubmit: this.isSubmit});
-                setTimeout(function(){
-                    _this.$refs['formData'].resetFields();//仅close时执行
-                },1000);
-
+                _this.$emit('callbackParent',{isSubmit: this.isSubmit});
+                //关闭需初始化默认验证，否则已经为is-error的验证，关闭后，下次open还会显示
+                this.resetForm('formData');
             },
             resetForm(formName) {
-                //深浅拷贝-坑
-                this.formData = deepCopyObject(this.copyFormData);
-                if(this.formData.type === 'add'){
-                    this.$refs[formName].resetFields();
-                }
-                else{
-                    this.$refs[formName].validate('cores');
-                }
-
+                /*
+                *  1.重置-resetField
+                *  2.赋初值-assign
+                *  3.完美解决重置bug
+                * */
+                this.$refs[formName].resetFields();
+                Object.assign(this.formData, this.copyFormData);
             },
             submitForm(formName) {
-                console.info(this.formData);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         const _this = this,
-                            isChange = isObjectValueEqual(
+                            isEqual = isObjectValueEqual(
                                 JSON.parse(JSON.stringify(this.formData)),
                                 JSON.parse(JSON.stringify(this.copyFormData))
                             );
-
-                        if(isChange){
+                        if(isEqual){
                             //未修改
                             _this.innerVisible = true;
                         }
                         else{
                             this.isSubmit = true;
+                            console.log('submit data:');
                             console.info(_this.formData);
                             this.closeDialog();
                             setTimeout(function(){
@@ -240,10 +221,10 @@ add/edit dialog
                                     message: '提交成功',
                                     duration: '1500'
                                 });
-                            },300);
+                            },500);
                         }
                     } else {
-                        console.warn('error submit');
+                        console.warn('validate false');
                         return false;
                     }
                 });

@@ -242,13 +242,19 @@
         return dst;
     }
 
+//    let obj1 = {a:1,b:2};
+//    let obj2 = deepCopyObject(obj1);
+//    let obj3 = obj1;
+//    console.log(obj2); // {a: 1, b: 2}
+//    obj1.a = 11;
+//    console.log(obj2); // 深拷贝 {a: 1, b: 2}
+//    console.log(obj3); //浅拷贝 {a: 11, b: 2}
+
     let obj1 = {a:1,b:2};
-    let obj2 = deepCopyObject(obj1);
-    let obj3 = obj1;
-    console.log(obj2); // {a: 1, b: 2}
-    obj1.a = 11;
-    console.log(obj2); // 深拷贝 {a: 1, b: 2}
-    console.log(obj3); //浅拷贝 {a: 11, b: 2}
+    let obj2 = {a:1,b:3,c:3};
+    Object.assign(obj1, obj2);
+    console.log(obj1);
+
 
 
 </script>

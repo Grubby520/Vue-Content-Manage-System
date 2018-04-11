@@ -75,22 +75,12 @@
                   pricePeriodName: '',
                   createDate: ''
               },
-              tableForm_edit: {
-                  type:'',
-                  title:'',
-                  id: '',
-                  specificSetName: '',
-                  cores: '',
-                  memoryCapacity: '',
-                  priceUnitName: '',
-                  unitCost: '',
-                  pricePeriodName: '',
-                  createDate: ''
-              },
+              //必须的
               tableList: [],
               dialogVisible: false,
               asyncLoading: false,
               multipleSelection: [],
+              del_idList: []
 
           }
         },
@@ -139,12 +129,6 @@
                 this.dialogVisible = true;
             },
             /*
-            *  checkbox
-            * */
-            checkboxChange(val){
-                this.multipleSelection = val;
-            },
-            /*
             *  编辑
             * */
             openEditDialog(){
@@ -169,11 +153,76 @@
                     this.dialogVisible = true;
                 }
             },
-
+            /*
+            *  删除
+            * */
             del(){
-
+                const _this = this,
+                    length = _this.multipleSelection.length;
+                if(length === 0){
+                    _this.$message({
+                        type: 'warning',
+                        message: '未勾选需要删除的列表',
+                        duration: '1500'
+                    });
+                    return ;
+                }
+                let str = '';
+                for (let i = 0; i < length; i++) {
+                    str += _this.multipleSelection[i].sortNo + ' ';
+                    _this.del_idList[i] = _this.multipleSelection[i].id;
+                }
+                const h = _this.$createElement;
+                _this.$msgbox({
+                    title: '删除',
+                    message: h('p', null, [
+                        h('span', null, '确定删除序号为 '),
+                        h('span', { style: 'color: #03a9f4' }, str),
+                        h('span', null, '，是否继续? ')
+                    ]),
+                    showCancelButton: true,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    beforeClose: (action, instance, done) => {
+                        //submit
+                        if (action === 'confirm') {
+                            console.info(this.multipleSelection);
+                            _this.del_idList = [];
+                            instance.confirmButtonLoading = true;
+                            instance.confirmButtonText = '执行中...';
+                            setTimeout(() => {
+                                done(); // 关闭
+                                _this.$message({ // 提交成功
+                                    type: 'success',
+                                    message: '删除成功!',
+                                    duration: '1500'
+                                });
+                                _this.initTable();//刷新table
+                                setTimeout(() => { //关闭loading
+                                    instance.confirmButtonLoading = false;
+                                }, 300);
+                            }, 1500);
+                        }
+                        else {
+                            done();
+                            _this.$message({
+                                type: 'info',
+                                message: '已取消删除',
+                                duration: '1500'
+                            });
+                        }
+                    }
+                });
             },
-
+            /*
+             *  checkbox
+             * */
+            checkboxChange(val){
+                this.multipleSelection = val;
+            },
+            /*
+            *  翻页
+            * */
             handleSizeChange(val){
                 this.tableArgs.pageSize = val;
                 this.initTable();
