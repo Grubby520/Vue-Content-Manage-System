@@ -634,6 +634,7 @@ const codeTreeList = function(){
 };
 const codeTableListData = function(data){
     data = JSON.parse(data.body);
+    console.log(data);
     let articles = [];
     let pageSize = data.page.pageSize || 10,
         curPage = data.page.currentPage || 1,
@@ -643,7 +644,7 @@ const codeTableListData = function(data){
         end = 0,
         id = data.id;
     const thisArray =  data.table.children;
-    if(data.table.children){
+    if(data.table.children && data.table.children.length){
     // if(data.children){
         total = data.table.children.length;
         lastPage = Math.ceil( total/pageSize);

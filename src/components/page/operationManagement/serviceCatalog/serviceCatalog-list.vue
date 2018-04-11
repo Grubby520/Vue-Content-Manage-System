@@ -18,37 +18,36 @@
                                     <div class="table-title">{{item.label}}列表</div>
                                     <!--计算服务-->
                                     <computing-service-table></computing-service-table>
-                                    <!--<code-table-sys :request_sys="request_sys"></code-table-sys>-->
                                 </div>
 
                                 <div class="tree-content" v-else-if="item.id === 'storageService' ">
                                     <div class="table-title">{{item.label}}列表</div>
                                     <!--存储服务-->
-                                    <!--<code-table-user :request_user="request_user"></code-table-user>-->
+                                    <storage-service-table></storage-service-table>
                                 </div>
 
                                 <div class="tree-content" v-else-if="item.id === 'softwareService' ">
                                     <div class="table-title">{{item.label}}列表</div>
                                     <!--软件服务-->
-                                    <!--<code-table-user :request_user="request_user"></code-table-user>-->
+                                    <software-service-table></software-service-table>
                                 </div>
 
                                 <div class="tree-content" v-else-if="item.id === 'networkSecurityService' ">
                                     <div class="table-title">{{item.label}}列表</div>
                                     <!--网络安全服务-->
-                                    <!--<code-table-user :request_user="request_user"></code-table-user>-->
+                                    <network-security-service-table></network-security-service-table>
                                 </div>
 
                                 <div class="tree-content" v-else-if="item.id === 'thirdSecurityService' ">
                                     <div class="table-title">{{item.label}}列表</div>
                                     <!--第三方安全服务-->
-                                    <!--<code-table-user :request_user="request_user"></code-table-user>-->
+                                    <third-security-service-table></third-security-service-table>
                                 </div>
 
                                 <div class="tree-content" v-else-if="item.id === 'otherService' ">
                                     <div class="table-title">{{item.label}}列表</div>
                                     <!--其他服务-->
-                                    <!--<code-table-user :request_user="request_user"></code-table-user>-->
+                                    <other-service-table></other-service-table>
                                 </div>
 
                             </div></el-col>
@@ -64,12 +63,20 @@
 <script>
     import api from '../../../../axios/api.js'
     import computingServiceTable from './computingService-table.vue'
-//    import codeTableUser from './codeTable-user.vue'
+    import storageServiceTable from './storageService-table.vue'
+    import softwareServiceTable from './softwareService-table.vue'
+    import networkSecurityServiceTable from './networkSecurityService-table.vue'
+    import thirdSecurityServiceTable from './thirdSecurityService-table.vue'
+    import otherServiceTable from './otherService-table.vue'
 
     export default {
         components: {
             computingServiceTable,
-//            codeTableUser
+            storageServiceTable,
+            softwareServiceTable,
+            networkSecurityServiceTable,
+            thirdSecurityServiceTable,
+            otherServiceTable
         },
         data() {
             return {
