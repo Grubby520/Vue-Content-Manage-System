@@ -509,7 +509,44 @@ const pricePeriodList = function () {
         }
     ];
 };
+const cloudPlatformList = function() {
+    return [
+        {
+            id: '1',
+            name: '移动-华三'
+        },
+        {
+            id: '2',
+            name: '电信-腾讯'
+        },
+        {
+            id: '3',
+            name: '电信-华为备份云'
+        },
+        {
+            id: '4',
+            name: '联通'
+        },
+        {
+            id: '5',
+            name: '浪潮'
+        }
+    ]
 
+};
+const cloudResourcePoolList = function() {
+    return [
+        {
+            id: '1',
+            name: '互联网资源池'
+        },
+        {
+            id: '2',
+            name: '政务外网资源池'
+        }
+    ]
+
+};
 
 /*
 * 用户管理-table列表
@@ -1163,7 +1200,8 @@ Mock.mock('/specificSetList','post', specificSetList);
 Mock.mock('/priceUnitList','post', priceUnitList);
 Mock.mock('/pricePeriodList','post', pricePeriodList);
 
-
+Mock.mock('/cloudPlatformList','post', cloudPlatformList);
+Mock.mock('/cloudResourcePoolList','post', cloudResourcePoolList);
 
 //用户管理
 Mock.mock('/userTable','post', produceNewsData);
@@ -1179,5 +1217,6 @@ Mock.mock('/codeTable','post', codeTableListData);
 //服务目录
 Mock.mock('/serviceCatalog/getTabList', 'post', getTabList);
 Mock.mock('/serviceCatalog/getComputingServiceTable', 'post', getComputingServiceTable);
+
 
 

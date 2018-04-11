@@ -18,6 +18,10 @@ export default new Router({
                     component: resolve => require(['../components/page/home.vue'], resolve)
                 },
                 {
+                    path: '/server',
+                    component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-list.vue'], resolve)
+                },
+                {
                     path: '/userTable',
                     component: resolve => require(['../components/page/systemManagement/user/userTable.vue'], resolve)
                 },
