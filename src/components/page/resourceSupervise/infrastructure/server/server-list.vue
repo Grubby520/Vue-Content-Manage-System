@@ -16,7 +16,7 @@
                 <div class="box-left">
 
                 </div>
-                <div class="box-right">
+                <div class="box-right not-box-left">
                     <el-select v-model="select_cloudPlatform_id" placeholder="云平台" class="handle-select mr10">
                         <el-option
                             v-for="item in cloudPlatform"
@@ -271,3 +271,8 @@
         }
     }
 </script>
+<style scoped>
+  .handle-select{
+    width: 160px;
+  }
+</style>

@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="icon iconfont icon-home"></i> 首页</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="icon iconfont icon-1st-homepage"></i> 首页</el-breadcrumb-item>
                 <el-breadcrumb-item>管理员首页</el-breadcrumb-item>
             </el-breadcrumb>
         </div>

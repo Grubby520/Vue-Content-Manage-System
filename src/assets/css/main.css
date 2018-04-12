@@ -201,7 +201,13 @@ color
     display: inline-block;
 }
 .box-right{
-    float: right;
+    /*float: right;*/
+}
+.not-box-left{
+  margin-left: -14px;
+}
+.box-right>.handle-select, .box-right>.el-button, .box-right>.el-input{
+    margin-left: 10px;
 }
 .handle-input{
     width: 200px;
