@@ -58,7 +58,7 @@
 </template>
 
 <script>
-    import api from '../../../../axios/api.js'
+    import api from '@/axios/api.js'
     import TenantDialog from './tenant-dialog.vue'
     export default {
         components: {

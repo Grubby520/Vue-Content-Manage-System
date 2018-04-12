@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import api from '../../../../axios/api.js'
+    import api from '@/axios/api.js'
     import computingServiceDialog from './computingService-dialog.vue'
     export default {
         components: {

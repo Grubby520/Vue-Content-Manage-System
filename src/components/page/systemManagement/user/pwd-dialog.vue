@@ -30,7 +30,7 @@ pwd dialog
 </template>
 
 <script>
-    import {deepCopyObject} from '../../../../../static/js/public.js'
+    import {deepCopyObject} from '../../../../assets/js/public.js'
     export default {
         props: {
             pwdDialogVisible: {type: Boolean},

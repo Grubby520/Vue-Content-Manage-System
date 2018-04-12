@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import api from '../../../../axios/api.js'
+    import api from '@/axios/api.js'
     import codeTableSys from './codeTable-sys.vue'
     import codeTableUser from './codeTable-user.vue'
 

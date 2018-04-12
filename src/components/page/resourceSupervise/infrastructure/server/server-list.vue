@@ -41,19 +41,27 @@
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="sortNo" class="order-num" label="序号" width="80">
                 </el-table-column>
-                <el-table-column prop="specificSetName" class="order-num" label="规格集名称">
+                <el-table-column prop="hostName" label="服务器名称">
                 </el-table-column>
-                <el-table-column prop="cores" label="核数(个)">
+                <el-table-column prop="groupRole" label="角色">
                 </el-table-column>
-                <el-table-column prop="memoryCapacity" label="内存(GB)">
+                <el-table-column prop="ip" label="服务器IP">
                 </el-table-column>
-                <el-table-column prop="priceUnitName" label="计价单位">
+                <el-table-column prop="cloudPlatformName" label="所属云平台">
                 </el-table-column>
-                <el-table-column prop="unitCost" label="单价">
+                <el-table-column prop="cloudResourcePoolName" label="所属云资源池">
                 </el-table-column>
-                <el-table-column prop="pricePeriodName" label="计费周期">
+                <el-table-column prop="manufacturer" label="设备厂商">
                 </el-table-column>
-                <el-table-column prop="createDate" label="创建日期">
+                <el-table-column prop="modelNo" label="设备型号">
+                </el-table-column>
+                <el-table-column prop="instanceCounts" label="承载云主机(个)">
+                </el-table-column>
+                <el-table-column prop="healthStatus" label="状态">
+                    <template slot-scope="scope">
+                        <p v-if="scope.row.healthStatus" class="table-success"><img :src="imgSrc.cg" alt=""> 正常</p>
+                        <p v-else class="table-fail"><img :src="imgSrc.fail" alt=""> 异常</p>
+                    </template>
                 </el-table-column>
             </el-table>
 
@@ -73,13 +81,20 @@
 </template>
 
 <script>
-    import api from '../../../../../axios/api.js'
+
+    import api from '@/axios/api.js'
+    import cg from '@/assets/images/cg.png'
+    import fail from '@/assets/images/fail.png'
     export default {
         components: {
 
         },
         data(){
             return {
+                imgSrc: {
+                    cg: cg,
+                    fail: fail
+                },
                 //查询table的参数
                 tableArgs: {
                     currentPage: 1,
@@ -117,7 +132,7 @@
              *  渲染table
              * */
             initTable(){
-                api.$http('/serviceCatalog/getComputingServiceTable', this.tableArgs)
+                api.$http('/serverList', this.tableArgs)
                     .then(res => {
                         this.tableList = res.articles;
                         this.tableArgs.total = res.total;

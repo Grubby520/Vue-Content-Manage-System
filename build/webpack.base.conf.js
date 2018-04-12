@@ -5,7 +5,7 @@ var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+    return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
@@ -27,9 +27,7 @@ module.exports = {
     ],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
-      'src': resolve('src'),
-      'assets': resolve('src/assets'),
-      'components': resolve('src/components')
+      '@': resolve('src')
     }
   },
   module: {

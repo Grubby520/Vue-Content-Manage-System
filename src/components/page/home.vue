@@ -136,9 +136,9 @@
 </template>
 
 <script>
-    import '../../../static/css/home.css'
-    import api from '../../axios/api.js'
-    import {Chart,getColor,business_monitor_option,business_status} from '../../../static/js/components/charts'
+    import '../../assets/css/home.css'
+    import api from '@/axios/api.js'
+    import {Chart,getColor,business_monitor_option,business_status} from '../../assets/js/components/charts'
     export default {
         data(){
             return {

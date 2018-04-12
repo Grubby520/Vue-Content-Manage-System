@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import api from '../../../../axios/api.js'
+    import api from '@/axios/api.js'
     import computingServiceTable from './computingService-table.vue'
     import storageServiceTable from './storageService-table.vue'
     import softwareServiceTable from './softwareService-table.vue'

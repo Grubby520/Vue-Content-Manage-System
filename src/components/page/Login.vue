@@ -37,8 +37,8 @@
 </template>
 
 <script>
-    import '../../../static/css/login.css'
-    import api from '../../axios/api.js'
+    import '../../assets/css/login.css'
+    import api from '@/axios/api.js'
     export default {
         data: function(){
             //自定义验证规则

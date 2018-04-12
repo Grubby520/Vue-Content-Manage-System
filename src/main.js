@@ -8,12 +8,12 @@ import axios from 'axios'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-import '../static/css/main.css'// 重置样式
+import './assets/css/main.css'// 重置样式
 
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'; // 使用CSS
 
-import '../static/icon-fonts/iconfont.css'
+import './assets/icon-fonts/iconfont.css'
 
 require('./mock.js')
 Vue.config.productionTip = false
