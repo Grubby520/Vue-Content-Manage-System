@@ -1163,6 +1163,7 @@ const getComputingServiceTable = function (data) {
             let newArticleObject = {
                 sortNo: i+1,
                 specificSetName: specificSetName[Random.natural(0,specificSetName.length-1)].label,
+                cores: cores[Random.natural(0,cores.length-1)],
                 memoryCapacity: memoryCapacity[Random.natural(0,memoryCapacity.length-1)],
                 priceUnitName: priceUnitName[Random.natural(0,priceUnitName.length-1)].label,
                 unitCost: Random.natural(1000, 20000),

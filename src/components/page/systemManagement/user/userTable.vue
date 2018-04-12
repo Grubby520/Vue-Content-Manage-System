@@ -83,15 +83,15 @@
                                 <tr>
                                     <td>激活状态</td>
                                     <td>
-                                        <p v-if="scope.row.isBind" class="table-success"><img src="@/assets/images/cg.png" alt=""> 已绑定</p>
-                                        <p v-else class="table-fail"><img src="@/assets/images/fail.png" alt="">未绑定</p>
+                                        <p v-if="scope.row.isBind" class="table-success"><i class="icon iconfont icon-success"></i> 已绑定</p>
+                                        <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i>未绑定</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>证书状态</td>
                                     <td>
-                                        <p v-if="scope.row.isRun" class="table-success"><img src="@/assets/images/cg.png" alt=""> 已激活</p>
-                                        <p v-else class="table-fail"><img src="@/assets/images/fail.png" alt="">未激活</p>
+                                        <p v-if="scope.row.isRun" class="table-success"><i class="icon iconfont icon-success"></i> 已激活</p>
+                                        <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i>未激活</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -121,26 +121,26 @@
                     </el-table-column>
                 <el-table-column prop="isRun" label="激活状态">
                     <template slot-scope="scope">
-                            <p v-if="scope.row.isRun" class="table-success"><img src="@/assets/images/cg.png" alt=""> 已激活</p>
-                            <p v-else class="table-fail"><img src="@/assets/images/fail.png" alt="">未激活</p>
+                            <p v-if="scope.row.isRun" class="table-success"><i class="icon iconfont icon-success"></i> 已激活</p>
+                            <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i>未激活</p>
                     </template>
                 </el-table-column>
                 <el-table-column prop="isBind" label="证书状态" class-name="todo">
                     <template slot-scope="scope">
-                        <p v-if="scope.row.isBind" class="table-success"><img src="@/assets/images/cg.png" alt=""> 已绑定</p>
-                        <p v-else class="table-fail"><img src="@/assets/images/fail.png" alt="">未绑定</p>
+                        <p v-if="scope.row.isBind" class="table-success"><i class="icon iconfont icon-success"></i> 已绑定</p>
+                        <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i>未绑定</p>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" :width="handleWidth">
                     <template slot-scope="scope">
                         <el-button size="small" icon="icon iconfont icon-edit" class="handle-edit"
-                                   @click="openEditDialog(scope.$index, scope.row)">编辑</el-button>
+                                   @click="openEditDialog(scope.$index, scope.row)"> 编辑</el-button>
                         <el-button v-if="!scope.row.isRun" size="small" icon="icon iconfont icon-activation" class="handle-edit"
-                                   @click="openRunDialog(scope.$index, scope.row)">激活</el-button>
+                                   @click="openRunDialog(scope.$index, scope.row)"> 激活</el-button>
                         <el-button v-if="!scope.row.isBind" size="small" icon="icon iconfont icon-binding" class="handle-edit"
-                                   @click="openBindDialog(scope.$index, scope.row)">绑定证书</el-button>
+                                   @click="openBindDialog(scope.$index, scope.row)"> 绑定证书</el-button>
                         <el-button size="small" icon="icon iconfont icon-password" class="handle-edit"
-                                   @click="openPasswordDialog(scope.$index, scope.row)">密码重置</el-button>
+                                   @click="openPasswordDialog(scope.$index, scope.row)"> 密码重置</el-button>
                     </template>
                 </el-table-column>
             </el-table>

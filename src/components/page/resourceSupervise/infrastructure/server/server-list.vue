@@ -59,8 +59,8 @@
                 </el-table-column>
                 <el-table-column prop="healthStatus" label="状态">
                     <template slot-scope="scope">
-                        <p v-if="scope.row.healthStatus" class="table-success"><img :src="imgSrc.cg" alt=""> 正常</p>
-                        <p v-else class="table-fail"><img :src="imgSrc.fail" alt=""> 异常</p>
+                        <p v-if="scope.row.healthStatus" class="table-success"><i class="icon iconfont icon-success"></i> 正常</p>
+                        <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i> 异常</p>
                     </template>
                 </el-table-column>
             </el-table>
@@ -83,18 +83,12 @@
 <script>
 
     import api from '@/axios/api.js'
-    import cg from '@/assets/images/cg.png'
-    import fail from '@/assets/images/fail.png'
     export default {
         components: {
 
         },
         data(){
             return {
-                imgSrc: {
-                    cg: cg,
-                    fail: fail
-                },
                 //查询table的参数
                 tableArgs: {
                     currentPage: 1,

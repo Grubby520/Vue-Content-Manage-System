@@ -11,7 +11,7 @@ add/edit dialog
     >
         <el-dialog
             class="innerDialog"
-            width="50%"
+
             title="提示"
             :visible.sync="innerVisible"
             :modal=false

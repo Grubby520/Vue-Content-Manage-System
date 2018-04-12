@@ -22,8 +22,8 @@
             </el-table-column>
             <el-table-column prop="isEffect" label="是否生效">
                 <template slot-scope="scope">
-                    <p v-if="scope.row.isEffect" class="table-success"><img src="@/assets/images/cg.png" alt=""> 已生效</p>
-                    <p v-else class="table-fail"><img src="@/assets/images/fail.png" alt=""> 未生效</p>
+                    <p v-if="scope.row.isEffect" class="table-success"><i class="icon iconfont icon-success"></i> 已生效</p>
+                    <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i> 未生效</p>
                 </template>
             </el-table-column>
         </el-table>

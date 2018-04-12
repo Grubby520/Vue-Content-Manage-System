@@ -5,7 +5,7 @@
 }
 body{
     font-family:"Helvetica Neue",Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
-    font-size: 16px;
+    font-size: 12px;
 }
 html,body,#app{
     height: 100%;
@@ -23,6 +23,9 @@ a{
 }
 .menu-1st{
     font-size: 16px;
+}
+.menu-1st>div.el-submenu__title{
+  font-size: 16px;
 }
 .menu-1st>.icon.iconfont{
     font-size: 16px;
@@ -128,6 +131,8 @@ color
 }
 .el-table__footer-wrapper thead div, .el-table__header-wrapper thead div{
     background-color: #fff;
+    color: #1f2d3d;
+
 }
 .el-table th{
     background-color: #fff;
@@ -265,7 +270,7 @@ color
     margin-top: 20px;
 }
 /*弹窗样式*/
-.el-dialog--small{
+.el-dialog, .el-dialog--small{
     width: 600px;
 }
 .el-dialog__header{
@@ -345,6 +350,8 @@ color
 }
 .innerDialog{
     margin: 0 auto;
+    width: 85%;
+    top: 11vh;
 }
 .innerDialog, .innerDialog>div{
     width: 400px;

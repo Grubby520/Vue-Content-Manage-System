@@ -7,11 +7,8 @@ import router from './router'
 import axios from 'axios'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/main.css'// 重置样式
-
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'; // 使用CSS
 
 import './assets/icon-fonts/iconfont.css'
 
@@ -21,7 +18,7 @@ Vue.config.productionTip = false
 import "babel-polyfill"; // babel垫片，编译新的API
 
 Vue.use(ElementUI);
-Vue.use(iView);
+
 
 Vue.prototype.$axios = axios;
 new Vue({
