@@ -3,24 +3,28 @@
         {
             "name": "服务器",
             "icon": "icon iconfont icon-3rd-server",
+            "menu": "server",
             "total": 200,
             "error": 2
         },
         {
             "name": "存储设备",
             "icon": "icon iconfont icon-3rd-storage-device",
+            "menu": "storageDevice",
             "total": 210,
             "error": 2
         },
         {
             "name": "网络设备",
             "icon": "icon iconfont icon-3rd-network-equipment",
+            "menu": "networkEquipment",
             "total": 220,
             "error": 2
         },
         {
             "name": "IP资源",
             "icon": "icon iconfont icon-3rd-ip-resource",
+            "menu": "ipResource",
             "total": 240,
             "error": 2
         }
@@ -29,24 +33,28 @@
         {
             "name": "云主机",
             "icon": "icon iconfont icon-3rd-cloud-host",
+            "menu": "cloudHost",
             "total": 200,
             "error": 2
         },
         {
             "name": "云存储",
             "icon": "icon iconfont icon-storage-capacity",
+            "menu": "storageCapacity",
             "total": 210,
             "error": 2
         },
         {
             "name": "云防火墙",
             "icon": "icon iconfont icon-3rd-cloud-firewall",
+            "menu": "cloudFirewall",
             "total": 220,
             "error": 2
         },
         {
             "name": "负载均衡",
             "icon": "icon iconfont icon-3rd-load-balancing",
+            "menu": "loadBalancing",
             "total": 240,
             "error": 2
         }

@@ -61,6 +61,18 @@ a{
     margin: 15px;
     padding: 0 15px 15px;
 }
+.time-task-logic.noBg, .noBg{
+  background-color: transparent;
+}
+.noPadding{
+  padding: 0;
+}
+.whiteBg{
+  background-color: #fff;
+}
+.padding-15{
+ padding: 15px;
+}
 .table-title{
     height: 45px;
     line-height: 45px;

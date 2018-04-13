@@ -76,16 +76,33 @@
                         :total="tableArgs.total">
                     </el-pagination>
                 </div>
+
+
         </div>
+        <div class="time-task-logic noBg noPadding">
+          <el-row  :gutter="15" class="noBg">
+            <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
+              <top-five></top-five>
+            </div></el-col>
+            <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
+              <top-five></top-five>
+            </div></el-col>
+            <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
+              <top-five></top-five>
+            </div></el-col>
+          </el-row>
+        </div>
+
     </div>
 </template>
 
 <script>
 
     import api from '@/axios/api.js'
+    import topFive from '@/components/common/TopFive.vue'
     export default {
         components: {
-
+          topFive
         },
         data(){
             return {

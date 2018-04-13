@@ -17,7 +17,7 @@
                                 <span>{{value.name}}</span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
-                                <span class="font-lg col-green cursor">{{value.total}}</span>
+                                <span class="font-lg col-green cursor" @click="jumpToInfrastructure(value.menu)">{{value.total}}</span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
                                 <span>总数/台</span>
@@ -28,7 +28,7 @@
                                 <span><i class="icon iconfont col-blue font-lg" :class="[value.icon]"></i></span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
-                                <span class="col-red cursor">{{value.error}}</span>
+                                <span class="col-red cursor" @click="jumpToInfrastructure(value.menu)">{{value.error}}</span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
                                 <span>异常/台</span>
@@ -46,7 +46,7 @@
                                 <span>{{value.name}}</span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
-                                <span class="font-lg col-green cursor">{{value.total}}</span>
+                                <span class="font-lg col-green cursor" @click="jumpToInfrastructure(value.menu)">{{value.total}}</span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
                                 <span>总数/台</span>
@@ -57,7 +57,7 @@
                                 <span><i class="icon iconfont col-blue font-lg" :class="[value.icon]"></i></span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
-                                <span class="col-red cursor">{{value.error}}</span>
+                                <span class="col-red cursor" @click="jumpToInfrastructure(value.menu)">{{value.error}}</span>
                             </div></el-col>
                             <el-col :span="8"><div class="grid-content bg-purple">
                                 <span>异常/台</span>
@@ -230,6 +230,12 @@
 
         },
         methods: {
+            /*
+            *  页面跳转
+            * */
+          jumpToInfrastructure(args){
+            this.$router.push('/'+args);
+          }
 
         }
     }
