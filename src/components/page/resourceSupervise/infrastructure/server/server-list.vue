@@ -37,8 +37,7 @@
                 </div>
             </div>
 
-            <el-table :data="tableList" border style="width: 100%" ref="multipleTable" @selection-change="checkboxChange">
-                <el-table-column type="selection" width="55"></el-table-column>
+            <el-table :data="tableList" border style="width: 100%" ref="multipleTable">
                 <el-table-column prop="sortNo" class="order-num" label="序号" width="80">
                 </el-table-column>
                 <el-table-column prop="hostName" label="服务器名称">
@@ -77,18 +76,17 @@
                     </el-pagination>
                 </div>
 
-
         </div>
         <div class="time-task-logic noBg noPadding">
           <el-row  :gutter="15" class="noBg">
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
-              <top-five></top-five>
+              <top-five :topData="usageRateData.cpu"></top-five>
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
-              <top-five></top-five>
+              <top-five :topData="usageRateData.memory"></top-five>
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
-              <top-five></top-five>
+              <top-five :topData="usageRateData.storage"></top-five>
             </div></el-col>
           </el-row>
         </div>
@@ -118,12 +116,42 @@
                 select_cloudPlatform_id: '',
                 select_cloudResourcePool_id: '',
                 cloudPlatform: [],
-                cloudResourcePool: []
+                cloudResourcePool: [],
+                //top5
+                usageRateData: {
+                    cpu: {
+                        title: 'CPU使用率TOP5',
+                        valueType: 'value',
+                        unit: 'GB',
+                        dataList: [
+                          {name: 'small', value: 300},
+                          {name: 'big', value: 1200},
+                          {name: 'middle', value: 800},
+                          {name: 'xx', value: 10}
+                        ]
+                    },
+                  memory: {
+                    title: '内存使用率TOP5',
+                    valueType: 'value',
+                    unit: 'GB',
+                    dataList: []
+                  },
+                  storage: {
+                    title: '存储使用率TOP5',
+                    valueType: 'rate', //比例
+                    unit: '%',
+                    dataList: [
+                      {name: 'small', value: 20},
+                      {name: 'big', value: 70},
+                      {name: 'middle', value: 30}
+                    ]
+                  }
+                }
             }
         },
         created(){
-            this.initData();
-            this.initTable();
+          this.initData();
+          this.initTable();
         },
         methods: {
             /*
@@ -147,6 +175,17 @@
                     .then(res => {
                         this.tableList = res.articles;
                         this.tableArgs.total = res.total;
+                        console.log(res.articles);
+                        for (const key in this.usageRateData) {
+                          for (const inner in this.usageRateData[key].dataList) {
+                                console.log(this.usageRateData[key].dataList[inner].name);
+                              if(this.usageRateData[key].dataList[inner].name != '-'){
+                                this.usageRateData[key].dataList[inner].name = res.articles[inner].hostName;
+                              }else{
+                                this.usageRateData[key].dataList[inner].name = '-';
+                              }
+                          }
+                        }
                     });
             },
             /*
@@ -157,119 +196,6 @@
                 if(args.isSubmit){
                     this.initTable();
                 }
-            },
-            /*
-             *  创建
-             * */
-            openAddDialog(){
-                if(!this.asyncLoading){
-                    this.asyncLoading = true;
-                }
-                this.tableForm = {
-                    type:'add',
-                    title:'创建计算服务',
-                    id: '',
-                    specificSetName: '',
-                    cores: '',
-                    memoryCapacity: '',
-                    priceUnitName: '',
-                    unitCost: '',
-                    pricePeriodName: '',
-                    createDate: ''
-                };
-                this.dialogVisible = true;
-            },
-            /*
-             *  编辑
-             * */
-            openEditDialog(){
-                const length = this.multipleSelection.length;
-                if(length === 0){
-                    this.$message({
-                        type: 'warning',
-                        message: '未勾选需要编辑的列表',
-                        duration: '1500'
-                    });
-                }
-                else if(length > 1){
-                    this.$message({
-                        type: 'warning',
-                        message: '不能同时编辑多个列表',
-                        duration: '1500'
-                    });
-                }
-                else{
-                    Object.assign(this.tableForm, this.multipleSelection[0],{type:'edit',title:'编辑计算服务'});
-                    if(!this.asyncLoading) this.asyncLoading = true;
-                    this.dialogVisible = true;
-                }
-            },
-            /*
-             *  删除
-             * */
-            del(){
-                const _this = this,
-                    length = _this.multipleSelection.length;
-                if(length === 0){
-                    _this.$message({
-                        type: 'warning',
-                        message: '未勾选需要删除的列表',
-                        duration: '1500'
-                    });
-                    return ;
-                }
-                let str = '';
-                for (let i = 0; i < length; i++) {
-                    str += _this.multipleSelection[i].sortNo + ' ';
-                    _this.del_idList[i] = _this.multipleSelection[i].id;
-                }
-                const h = _this.$createElement;
-                _this.$msgbox({
-                    title: '删除',
-                    message: h('p', null, [
-                        h('span', null, '确定删除序号为 '),
-                        h('span', { style: 'color: #03a9f4' }, str),
-                        h('span', null, '，是否继续? ')
-                    ]),
-                    showCancelButton: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    beforeClose: (action, instance, done) => {
-                        //submit
-                        if (action === 'confirm') {
-                            console.info(this.multipleSelection);
-                            _this.del_idList = [];
-                            instance.confirmButtonLoading = true;
-                            instance.confirmButtonText = '执行中...';
-                            setTimeout(() => {
-                                done(); // 关闭
-                                _this.$message({ // 提交成功
-                                    type: 'success',
-                                    message: '删除成功!',
-                                    duration: '1500'
-                                });
-                                _this.initTable();//刷新table
-                                setTimeout(() => { //关闭loading
-                                    instance.confirmButtonLoading = false;
-                                }, 300);
-                            }, 1500);
-                        }
-                        else {
-                            done();
-                            _this.$message({
-                                type: 'info',
-                                message: '已取消删除',
-                                duration: '1500'
-                            });
-                        }
-                    }
-                });
-            },
-            /*
-             *  checkbox
-             * */
-            checkboxChange(val){
-                this.multipleSelection = val;
             },
             /*
              *  翻页

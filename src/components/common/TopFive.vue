@@ -1,23 +1,28 @@
 <template>
     <div class="el-top5">
-        <div class="top5-title">{{title}}</div>
+        <div class="top5-title">{{topData.title}}</div>
         <div class="top5-content">
-            <div class="progress-plugin" v-for="(item, index) in data">
+            <div v-if="isNoData" class="noData">
+            </div>
+            <div v-else class="progress-plugin" v-for="(item, index) in topData.dataList">
                 <div class="progress-text clearfix">
-                  <span class="text-name">{{item.name}}</span>
-                  <span class="text-value" v-if="item.name === '-'">{{item.value}}</span>
-                  <span class="text-value" v-else>{{item.value}}{{unit}}</span>
+                    <span class="text-name">{{item.name}}</span>
+                    <span class="text-value" v-if="item.name === '-'">{{item.value}}</span>
+                    <span class="text-value" v-else>{{item.value}}{{topData.unit}}</span>
                 </div>
                 <div class="progress-container"  @mouseover.stop="showTooltip(this)" @mouseout.stop="hideTooltip">
-                  <div :class="'progress-innercore progress-suject-bgcolor-'+(index+1)" :style="{width: item.percentage}" >
-                  </div>
-                  <div class="progress-tip" style="left: 380px; bottom: 13px; display: none;">
-                    <ul>
-                      <li>
-                        <span class="tip-title-icon progress-suject-bgcolor-index"></span>{{item.name}} : {{item.value}}{{unit}}
-                      </li>
-                    </ul>
-                  </div>
+                    <div :class="'progress-innercore progress-suject-bgcolor-'+(index+1)" :style="{width: item.percentage}" >
+                    </div>
+                    <div class="progress-tip">
+                        <ul>
+                            <li v-if="item.name === '-'">
+                                <span class="tip-title-icon progress-suject-bgcolor-index"></span>{{item.name}} : {{item.value}}
+                            </li>
+                          <li v-else>
+                            <span> class="tip-title-icon progress-suject-bgcolor-index"></span>{{item.name}} : {{item.value}}{{topData.unit}}
+                          </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,57 +31,64 @@
 
 <script>
   export default {
+
     name: 'ExTopFive',
 
     props: {
-
-    },
-    data(){
-        return {
-            title: '这是title',
-            valueType: 'value',
-            //valueType: 'percentage',
-            unit:'GB',
-            data: [
-              {name: 'small', value: 300},
-              {name: 'big', value: 1200},
-              {name: 'middle', value: 800}
-            ],
-          indexClass: 'sss'
+      topData: {
+        type: Object,
+        default: function() {
+          return {};
         }
+      }
+    },
+
+    data(){
+      return {
+          isNoData : false
+      }
     },
     created(){
-        this.sortData(this.data);
+        this.sortTopData(this.topData.dataList);
+
 
     },
     methods: {
         /*
         *  数据格式化
         * */
-        sortData(data){
-          data = data.sort(function (a, b) {//降序排列
-            return b.value - a.value;
-          });
+        sortTopData(data){
+            if(!data.length){
+                this.isNoData = true;
+            }
 
-          for(const i in data){
-            data[i].percentage = Number(100 * data[i].value / data[0].value).toFixed(2)+'%';
-          }
+          data.sort((a, b) => {
+               return a.value < b.value;
+            });
 
-          if(data.length < 5){
-              while(5> data.length){
-                data.push({
-                  name: '-',
-                  value: '-',
-                  percentage: 0
-                });
-                data.splice(data.length+1);
-              }
-          }
+            for(const i in data){
+                if(this.topData.valueType === 'value'){
+                  data[i].percentage = Number(100 * data[i].value / data[0].value).toFixed(2)+'%';
+                }
+                else if(this.topData.valueType === 'rate'){
+                  data[i].percentage = data[i].value.toFixed(2)+'%';
+                }
+            }
+
+            if(data.length < 5){
+                while(5> data.length){
+                  data.push({
+                    name: '-',
+                    value: '-',
+                    percentage: 0
+                  });
+                  data.splice(data.length+1);
+                }
+            }
         },
 
       showTooltip(e){
           let self = this;
-          console.log(e);
 
       },
       hideTooltip(){
