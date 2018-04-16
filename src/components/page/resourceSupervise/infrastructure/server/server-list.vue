@@ -80,13 +80,19 @@
         <div class="time-task-logic noBg noPadding">
           <el-row  :gutter="15" class="noBg">
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
+
               <top-five :topData="usageRateData.cpu"></top-five>
+
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
+
               <top-five :topData="usageRateData.memory"></top-five>
+
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
+
               <top-five :topData="usageRateData.storage"></top-five>
+
             </div></el-col>
           </el-row>
         </div>
@@ -175,10 +181,8 @@
                     .then(res => {
                         this.tableList = res.articles;
                         this.tableArgs.total = res.total;
-                        console.log(res.articles);
                         for (const key in this.usageRateData) {
                           for (const inner in this.usageRateData[key].dataList) {
-                                console.log(this.usageRateData[key].dataList[inner].name);
                               if(this.usageRateData[key].dataList[inner].name != '-'){
                                 this.usageRateData[key].dataList[inner].name = res.articles[inner].hostName;
                               }else{

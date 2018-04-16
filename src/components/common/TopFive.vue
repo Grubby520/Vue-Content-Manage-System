@@ -10,16 +10,22 @@
                     <span class="text-value" v-if="item.name === '-'">{{item.value}}</span>
                     <span class="text-value" v-else>{{item.value}}{{topData.unit}}</span>
                 </div>
-                <div class="progress-container"  @mouseover.stop="showTooltip(this)" @mouseout.stop="hideTooltip">
+                <div class="progress-container"
+                     @mouseover.stop="showTooltip(index)"
+                     @mouseout.stop="hideTooltip(index)"
+                      ref="container"
+                >
                     <div :class="'progress-innercore progress-suject-bgcolor-'+(index+1)" :style="{width: item.percentage}" >
                     </div>
-                    <div class="progress-tip">
+                    <div class="progress-tip"
+                         ref="tip"
+                    >
                         <ul>
                             <li v-if="item.name === '-'">
                                 <span class="tip-title-icon progress-suject-bgcolor-index"></span>{{item.name}} : {{item.value}}
                             </li>
                           <li v-else>
-                            <span> class="tip-title-icon progress-suject-bgcolor-index"></span>{{item.name}} : {{item.value}}{{topData.unit}}
+                            <span class="tip-title-icon progress-suject-bgcolor-index"></span>{{item.name}} : {{item.value}}{{topData.unit}}
                           </li>
                         </ul>
                     </div>
@@ -87,12 +93,12 @@
             }
         },
 
-      showTooltip(e){
-          let self = this;
-
+      showTooltip(index){
+        this.$refs.tip[index].style.display = 'block';
       },
-      hideTooltip(){
 
+      hideTooltip(index){
+        this.$refs.tip[index].style.display = 'none';
       }
 
     }
