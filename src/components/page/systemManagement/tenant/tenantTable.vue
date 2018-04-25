@@ -59,10 +59,10 @@
 
 <script>
     import api from '@/axios/api.js'
-    import TenantDialog from './tenant-dialog.vue'
+    import tenantDialog from './tenant-dialog.vue'
     export default {
         components: {
-            TenantDialog
+          tenantDialog
         },
         data() {
             let getHandleWidth = function(){

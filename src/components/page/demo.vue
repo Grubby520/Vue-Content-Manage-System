@@ -14,9 +14,79 @@
     </el-form-item>
 </el-form>
 <script>
+  import  {
+    Pagination,
+    Dialog,
+    Autocomplete,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+    Menu,
+    Submenu,
+    MenuItem,
+    MenuItemGroup,
+    Input,
+    InputNumber,
+    Radio,
+    RadioGroup,
+    RadioButton,
+    Checkbox,
+    CheckboxButton,
+    CheckboxGroup,
+    Switch,
+    Select,
+    Option,
+    OptionGroup,
+    Button,
+    ButtonGroup,
+    Table,
+    TableColumn,
+    DatePicker,
+    TimeSelect,
+    TimePicker,
+    Popover,
+    Tooltip,
+    Breadcrumb,
+    BreadcrumbItem,
+    Form,
+    FormItem,
+    Tabs,
+    TabPane,
+    Tag,
+    Tree,
+    Alert,
+    Slider,
+    Icon,
+    Row,
+    Col,
+    Upload,
+    Progress,
+    Badge,
+    Card,
+    Rate,
+    Steps,
+    Step,
+    Carousel,
+    CarouselItem,
+    Collapse,
+    CollapseItem,
+    Cascader,
+    ColorPicker,
+    Transfer,
+    Container,
+    Header,
+    Aside,
+    Main,
+    Footer,
+    Loading,
+    MessageBox,
+    Message,
+    Notification
+  }
     export default {
         data() {
-            var checkAge = (rule, value, callback) => {
+
+            let checkAge = (rule, value, callback) => {
                 if (!value) {
                     return callback(new Error('年龄不能为空'));
                 }
@@ -32,7 +102,7 @@
                     }
                 }, 1000);
             };
-            var validatePass = (rule, value, callback) => {
+            let validatePass = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入密码'));
                 } else {
@@ -42,7 +112,7 @@
                     callback();
                 }
             };
-            var validatePass2 = (rule, value, callback) => {
+            let validatePass2 = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请再次输入密码'));
                 } else if (value !== this.ruleForm2.pass) {

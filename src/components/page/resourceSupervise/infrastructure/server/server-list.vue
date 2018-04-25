@@ -103,7 +103,8 @@
 <script>
 
     import api from '@/axios/api.js'
-    import topFive from '@/components/common/TopFive.vue'
+    import topFive from '@/components/common/topfive/src/topfive.vue'
+
     export default {
         components: {
           topFive

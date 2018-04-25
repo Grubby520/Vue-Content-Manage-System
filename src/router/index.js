@@ -22,6 +22,10 @@ export default new Router({
           component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-list.vue'], resolve)
         },
         {
+          path: '/storageDevice',
+          component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-list.vue'], resolve)
+        },
+        {
           path: '/userTable',
           component: resolve => require(['../components/page/systemManagement/user/userTable.vue'], resolve)
         },
@@ -56,7 +60,7 @@ export default new Router({
           component: resolve => require(['../components/page/Upload.vue'], resolve)       // Vue-Core-Image-Upload组件
         },
         {
-          path: '/drag',
+          path: '/DragList',
           component: resolve => require(['../components/page/DragList.vue'], resolve)    // 拖拽列表组件
         }
       ]
