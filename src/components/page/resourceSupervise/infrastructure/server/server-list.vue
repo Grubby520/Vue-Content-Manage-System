@@ -81,17 +81,17 @@
           <el-row  :gutter="15" class="noBg">
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
 
-              <top-five :topData="usageRateData.cpu"></top-five>
+              <top-five v-bind="usageRateData.cpu"></top-five>
 
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
 
-              <top-five :topData="usageRateData.memory"></top-five>
+              <top-five v-bind="usageRateData.memory"></top-five>
 
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
 
-              <top-five :topData="usageRateData.storage"></top-five>
+              <top-five v-bind="usageRateData.storage"></top-five>
 
             </div></el-col>
           </el-row>
@@ -103,120 +103,121 @@
 <script>
 
     import api from '@/axios/api.js'
-    import topFive from '@/components/common/topfive/src/topfive.vue'
+    import topFive from '@/components/common/topfive/topfive.vue'
 
     export default {
-        components: {
-          topFive
-        },
-        data(){
-            return {
-                //查询table的参数
-                tableArgs: {
-                    currentPage: 1,
-                    pageSize: 10,
-                    total: 0,
-                    args: {}
-                },
-                //async-data
-                tableList: [],
-                select_cloudPlatform_id: '',
-                select_cloudResourcePool_id: '',
-                cloudPlatform: [],
-                cloudResourcePool: [],
-                //top5
-                usageRateData: {
-                    cpu: {
-                        title: 'CPU使用率TOP5',
-                        valueType: 'value',
-                        unit: 'GB',
-                        dataList: [
-                          {name: 'small', value: 300},
-                          {name: 'big', value: 1200},
-                          {name: 'middle', value: 800},
-                          {name: 'xx', value: 10}
-                        ]
-                    },
-                  memory: {
-                    title: '内存使用率TOP5',
-                    valueType: 'value',
-                    unit: 'GB',
-                    dataList: []
+      components: {
+        topFive
+      },
+      data(){
+          return {
+            //查询table的参数
+            tableArgs: {
+                currentPage: 1,
+                pageSize: 10,
+                total: 0,
+                args: {}
+            },
+            //async-data
+            tableList: [],
+            select_cloudPlatform_id: '',
+            select_cloudResourcePool_id: '',
+            cloudPlatform: [],
+            cloudResourcePool: [],
+            //top5
+            usageRateData: {
+                cpu: {
+                      title: 'CPU使用率TOP5',
+                      valueType: 'value',//数值
+                      unit: 'GB',
+                      dataList: [
+                        {name: 'small', value: 300},
+                        {name: 'big', value: 1200},
+                        {name: 'middle', value: 800},
+                        {name: 'xx', value: 10}
+                      ]
                   },
-                  storage: {
-                    title: '存储使用率TOP5',
-                    valueType: 'rate', //比例
-                    unit: '%',
-                    dataList: [
-                      {name: 'small', value: 20},
-                      {name: 'big', value: 70},
-                      {name: 'middle', value: 30}
-                    ]
-                  }
+                memory: {
+                  title: '内存使用率TOP5',
+                  valueType: 'value',
+                  unit: 'GB',
+                  dataList: []
+                },
+                storage: {
+                  title: '存储使用率TOP5',
+                  valueType: 'rate', //比例
+                  unit: '%',
+                  dataList: [
+                    {name: 'small', value: 20},
+                    {name: 'big', value: 70},
+                    {name: 'middle', value: 30}
+                  ]
                 }
-            }
-        },
-        created(){
-          this.initData();
-          this.initTable();
-        },
-        methods: {
-            /*
-            *  渲染search-select
-            * */
-            initData(){
-                api.$http('/cloudPlatformList', {})
-                    .then(res => {
-                        this.cloudPlatform = res;
-                    });
-                api.$http('/cloudResourcePoolList', {})
-                    .then(res => {
-                        this.cloudResourcePool = res;
-                    });
-            },
-            /*
-             *  渲染table
-             * */
-            initTable(){
-                api.$http('/serverList', this.tableArgs)
-                    .then(res => {
-                        this.tableList = res.articles;
-                        this.tableArgs.total = res.total;
-                        for (const key in this.usageRateData) {
-                          for (const inner in this.usageRateData[key].dataList) {
-                              if(this.usageRateData[key].dataList[inner].name != '-'){
-                                this.usageRateData[key].dataList[inner].name = res.articles[inner].hostName;
-                              }else{
-                                this.usageRateData[key].dataList[inner].name = '-';
-                              }
-                          }
+              },
+            titles:'who are you'
+          }
+      },
+      created(){
+        this.initData();
+        this.initTable();
+      },
+      methods: {
+          /*
+          *  渲染search-select
+          * */
+          initData(){
+              api.$http('/cloudPlatformList', {})
+                  .then(res => {
+                      this.cloudPlatform = res;
+                  });
+              api.$http('/cloudResourcePoolList', {})
+                  .then(res => {
+                      this.cloudResourcePool = res;
+                  });
+          },
+          /*
+           *  渲染table
+           * */
+          initTable(){
+              api.$http('/serverList', this.tableArgs)
+                  .then(res => {
+                      this.tableList = res.articles;
+                      this.tableArgs.total = res.total;
+                      for (const key in this.usageRateData) {
+                        for (const inner in this.usageRateData[key].dataList) {
+                            if(this.usageRateData[key].dataList[inner].name != '-'){
+                              this.usageRateData[key].dataList[inner].name = res.articles[inner].hostName;
+                            }else{
+                              this.usageRateData[key].dataList[inner].name = '-';
+                            }
                         }
-                    });
-            },
-            /*
-             *  $emit
-             * */
-            emitParent(args){
-                this.dialogVisible = !this.dialogVisible;
-                if(args.isSubmit){
-                    this.initTable();
-                }
-            },
-            /*
-             *  翻页
-             * */
-            handleSizeChange(val){
-                this.tableArgs.pageSize = val;
-                this.initTable();
-            },
-            handleCurrentChange(val){
-                this.tableArgs.currentPage  = val;
-                this.initTable(val);
-            },
-            search(){
+                      }
+                  });
+          },
+          /*
+           *  $emit
+           * */
+          emitParent(args){
+              this.dialogVisible = !this.dialogVisible;
+              if(args.isSubmit){
+                  this.initTable();
+              }
+          },
+          /*
+           *  翻页
+           * */
+          handleSizeChange(val){
+              this.tableArgs.pageSize = val;
+              this.initTable();
+          },
+          handleCurrentChange(val){
+              this.tableArgs.currentPage  = val;
+              this.initTable(val);
+          },
+          search(){
 
-            }
-        }
+          }
+      }
     }
 </script>
 <style scoped>

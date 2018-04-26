@@ -45,7 +45,9 @@
 .progress-plugin {
   margin-bottom: 0.5em;
 }
-
+.progress-plugin>div{
+  margin-bottom: 0.5em;
+}
 .progress-text {
   margin-bottom: 0.25em;
 }
@@ -69,13 +71,13 @@
 }
 
 .progress-tip {
-  position: absolute;
+  position: fixed;
   display:none;
   min-width:200px;
   background-color: #fff;
-  opacity: 0.8;
+  opacity: 0.9;
   box-shadow: 0 0 5px #ccc;
-  padding: 1em;
+  padding: 0.5em;
   z-index: 1000;
 }
 

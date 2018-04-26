@@ -61,10 +61,10 @@
                     })
             }
         },
-        mounted: function () {
+        mounted(){
             this.$nextTick(function () {
-                const self = this;
                 let dom_nav = this.$refs.nav.offsetHeight;
+                console.log(dom_nav);
             });
         }
     }
