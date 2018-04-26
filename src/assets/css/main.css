@@ -389,3 +389,7 @@ color
     background: url("../images/noData.png") no-repeat center;
     background-size: 25% ;
 }
+.jump-detail{
+  color:#25a4f6;
+  cursor: pointer;
+}

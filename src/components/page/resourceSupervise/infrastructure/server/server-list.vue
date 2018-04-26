@@ -38,9 +38,12 @@
             </div>
 
             <el-table :data="tableList" border style="width: 100%" ref="multipleTable">
-                <el-table-column prop="sortNo" class="order-num" label="序号" width="80">
+                <el-table-column prop="sortNo" label="序号" width="80">
                 </el-table-column>
-                <el-table-column prop="hostName" label="服务器名称">
+                <el-table-column prop="hostName" class="jump-detail" label="服务器名称">
+                  <template slot-scope="scope">
+                    <p class="jump-detail" @click="jumpDetail(scope)">{{scope.row.hostName}}</p>
+                  </template>
                 </el-table-column>
                 <el-table-column prop="groupRole" label="角色">
                 </el-table-column>
@@ -216,7 +219,13 @@
           },
           search(){
 
-          }
+          },
+          /* 跳转至详情页 */
+        jumpDetail(scope){
+          console.log(scope);
+          this.$router.push('/server/serverDetail');
+
+        },
       }
     }
 </script>
