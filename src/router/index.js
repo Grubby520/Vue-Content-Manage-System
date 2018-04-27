@@ -19,11 +19,11 @@ export default new Router({
         },
         {
           path: '/server',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-list.vue'], resolve)
+          component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-list.vue'], resolve),
         },
         {
-          path: '/server/serverDetail',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-detail-list.vue'], resolve)
+          path: '/server/:hostName',
+          component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-detail-list.vue'], resolve),
         },
         {
           path: '/storageDevice',

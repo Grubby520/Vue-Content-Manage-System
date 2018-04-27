@@ -4,7 +4,7 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="icon iconfont icon-1st-resource-supervise"></i> 资源监管</el-breadcrumb-item>
                 <el-breadcrumb-item><i class="icon iconfont icon-2nd-Infrastructure"></i> 基础设施</el-breadcrumb-item>
-                <el-breadcrumb-item>服务器</el-breadcrumb-item>
+                <el-breadcrumb-item><span class="current">服务器</span></el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
@@ -222,9 +222,7 @@
           },
           /* 跳转至详情页 */
         jumpDetail(scope){
-          console.log(scope);
-          this.$router.push('/server/serverDetail');
-
+          this.$router.push( '/server/'+scope.row.hostName);
         },
       }
     }
