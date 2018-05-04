@@ -229,10 +229,55 @@ function getColor(value, order='up'){
     return color;
 }
 
+/*
+* 曲线图
+* */
+function initLine(obj){
+  let option =  {
+    tooltip : {
+      trigger: 'axis'
+    },
+    legend: {
+      data:['意向','成交']
+    },
+    calculable : true,
+    xAxis : [
+      {
+        type : 'category',
+        boundaryGap : false,
+        data : ['周一','周二','周三','周四','周五','周六','周日']
+      }
+    ],
+    yAxis : [
+      {
+        type : 'value'
+      }
+    ],
+    series : [
+      {
+        name:'意向',
+        type:'line',
+        smooth:true,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        data:[5, 7, 42, 20, 140, 650, 560]
+      },
+      {
+        name:'成交',
+        type:'line',
+        smooth:true,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        data:[10, 12, 21, 54, 260, 830, 710]
+      }
+    ]
+  };
+  return new Chart(obj.id).setOption(option);
+}
+
 export {
-    Chart,
-    getColor,
-    business_monitor_option,
-    business_status
+  Chart,
+  getColor,
+  business_monitor_option,
+  business_status,
+  initLine
 }
 

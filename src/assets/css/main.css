@@ -396,3 +396,7 @@ color
 .current{
   color: #409EFF;
 }
+/*详情页*/
+.chart-lg{
+  height: 260px;
+}

@@ -1,7 +1,7 @@
 [
     {
         "icon": "icon iconfont icon-1st-homepage",
-        "index": "home",
+        "index": "/home",
         "title": "首页"
     },
     {
@@ -16,49 +16,49 @@
                 "subs": [
                     {
                         "icon": "icon iconfont icon-3rd-server",
-                        "index": "server",
+                        "index": "/server",
                         "title": "服务器"
                     },
                     {
                         "icon": "icon iconfont icon-3rd-storage-device",
-                        "index": "storageDevice",
+                        "index": "/storageDevice",
                         "title": "存储设备"
                     },
                     {
                         "icon": "icon iconfont icon-3rd-network-equipment",
-                        "index": "networkEquipment",
+                        "index": "/networkEquipment",
                         "title": "网络设备"
                     },
                     {
                         "icon": "icon iconfont icon-3rd-ip-resource",
-                        "index": "ipResource",
+                        "index": "/ipResource",
                         "title": "IP资源"
                     }
                 ]
             },
             {
                 "icon": "icon iconfont icon-2nd-virtual-resource",
-                "index": "virtualResource",
+                "index": "/virtualResource",
                 "title": "虚拟资源",
               "subs": [
                 {
                   "icon": "icon iconfont icon-3rd-cloud-host",
-                  "index": "cloudHost",
+                  "index": "/cloudHost",
                   "title": "虚拟机"
                 },
                 {
                   "icon": "icon iconfont icon-storage-capacity",
-                  "index": "storageCapacity",
+                  "index": "/storageCapacity",
                   "title": "虚拟硬盘"
                 },
                 {
                   "icon": "icon iconfont icon-3rd-cloud-firewall",
-                  "index": "cloudFirewall",
+                  "index": "/cloudFirewall",
                   "title": "虚拟防火墙"
                 },
                 {
                   "icon": "icon iconfont icon-3rd-load-balancing",
-                  "index": "loadBalancing",
+                  "index": "/loadBalancing",
                   "title": "虚拟负载均衡"
                 }
               ]
@@ -72,12 +72,12 @@
         "subs": [
             {
                 "icon": "icon iconfont icon-2nd-service-directory",
-                "index": "serviceCatalog",
+                "index": "/serviceCatalog",
                 "title": "服务目录"
             },
             {
                 "icon": "icon iconfont icon-2nd-code-management",
-                "index": "codeTable",
+                "index": "/codeTable",
                 "title": "码表管理"
             }
         ]
@@ -89,12 +89,12 @@
         "subs": [
             {
                 "icon": "icon iconfont icon-2nd-user-management",
-                "index": "userTable",
+                "index": "/userTable",
                 "title": "用户管理"
             },
             {
                 "icon": "icon iconfont icon-2nd-tenant-management",
-                "index": "tenantTable",
+                "index": "/tenantTable",
                 "title": "租户管理"
             }
         ]
