@@ -14,6 +14,9 @@
 
       }
     },
+    created(){
+      console.log(this.id);
+    },
     mounted(){
       const myChart = eCharts.init(this.$refs.chart);
       myChart.setOption(this.option);

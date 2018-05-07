@@ -16,10 +16,14 @@
           <service-detail-basicInfo></service-detail-basicInfo>
         </el-tab-pane>
         <el-tab-pane label="性能" name="second">
-          <service-detail-property></service-detail-property>
+          <service-detail-property v-if="initSecond"></service-detail-property>
         </el-tab-pane>
-        <el-tab-pane label="资源变更" name="third">角色管理</el-tab-pane>
-        <el-tab-pane label="告警事件" name="fourth">角色管理</el-tab-pane>
+        <el-tab-pane label="资源变更" name="third">
+
+        </el-tab-pane>
+        <el-tab-pane label="告警事件" name="fourth">
+
+        </el-tab-pane>
       </el-tabs>
 
 
@@ -41,6 +45,7 @@
       return {
         hostname: '',
         activeName: 'first',
+        initSecond: false,
       };
     },
 
@@ -51,7 +56,9 @@
     methods: {
       /* tab切换 */
       handleClick(tab, event){
-
+        if(tab.name === 'second' && !this.initSecond){
+          this.initSecond = true;
+        }
       },
 
     },

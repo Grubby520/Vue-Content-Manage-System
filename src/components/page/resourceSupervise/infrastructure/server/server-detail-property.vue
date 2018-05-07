@@ -40,6 +40,7 @@
   </div>
 </template>
 <script>
+  import eCharts from 'echarts'
   import {initLine} from '@/assets/js/components/charts'
   import chartsLine from '@/components/common/eCharts/charts-line'
   export default {
@@ -60,7 +61,16 @@
         ],
         option:{
           tooltip : {
-            trigger: 'axis'
+            trigger: 'axis',
+            formatter: '{a}<br/>{b}:{c}%',
+            backgroundColor: '#0ec1ee',
+            axisPointer: {
+              type: 'line',
+              lineStyle: {
+                color: '#0ec1ee',
+                width: 1
+              },
+            }
           },
           legend: {
             data:['意向','成交']
@@ -69,13 +79,54 @@
           xAxis : [
             {
               type : 'category',
-              boundaryGap : false,
+              axisLine : {
+                show : true,
+                lineStyle : {
+                  width : 0,
+                  color : '#999',
+                  type : 'dashed'
+                }
+              },
+              splitLine : {
+                show : true,
+                lineStyle : {
+                  width : 0,
+                  color : [ '#f00' ],
+                  type : 'none'
+                }
+              },
+              axisLable : {
+                show : false
+              },
+              axisTick : {
+                show : false
+              },
               data : ['周一','周二','周三','周四','周五','周六','周日']
             }
           ],
           yAxis : [
             {
-              type : 'value'
+              type : 'value',
+              min: '0',
+              axisLabel : {
+                formatter : '{value}%'
+              },
+              axisLine : {
+                show : true,
+                lineStyle : {
+                  width : 0,
+                  color : '#999',
+                  type : 'dashed'
+                }
+              },
+              splitLine : {
+                show : true,
+                lineStyle : {
+                  width : 1,
+                  color : [ '#e4e9ec' ],
+                  type : 'dashed'
+                }
+              }
             }
           ],
           series : [
@@ -83,15 +134,30 @@
               name:'意向',
               type:'line',
               smooth:true,
-              itemStyle: {normal: {areaStyle: {type: 'default'}}},
+              symbol : 'emptyCircle',
+              symbolSize: 3,
+              itemStyle : {
+                normal : {
+                  color : '#0ec1ee'
+                }
+              },
+              markPoint : {
+                symbol : 'rect'
+              },
+              areaStyle : {
+                normal : {
+                  color : new eCharts.graphic.LinearGradient(0, 0, 0, 1,
+                    [ {
+                      offset : 0,
+                      color : '#0ec1ee'
+                    }, {
+                      offset : 1,
+                      color : '#fff'
+                    } ], false)
+
+                }
+              },
               data:[5, 7, 42, 20, 140, 650, 560]
-            },
-            {
-              name:'成交',
-              type:'line',
-              smooth:true,
-              itemStyle: {normal: {areaStyle: {type: 'default'}}},
-              data:[10, 12, 21, 54, 260, 830, 710]
             }
           ]
         },
