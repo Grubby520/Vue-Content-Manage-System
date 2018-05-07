@@ -27,7 +27,7 @@
       <el-row class="outer">
         <el-col :span="12">
           <div class="table-title">CPU使用率</div>
-            <charts-line id="cpuRate" :option="option" class="chart-lg"></charts-line>
+            <charts-line id="cpuRate" :option="cpuData" class="chart-lg"></charts-line>
         </el-col>
         <el-col :span="12">
           <div class="table-title">CPU负载</div>
@@ -59,117 +59,22 @@
             manufacturer: '20/60'
           }
         ],
-        option:{
-          tooltip : {
-            trigger: 'axis',
-            formatter: '{a}<br/>{b}:{c}%',
-            backgroundColor: '#0ec1ee',
-            axisPointer: {
-              type: 'line',
-              lineStyle: {
-                color: '#0ec1ee',
-                width: 1
-              },
-            }
-          },
-          legend: {
-            data:['意向','成交']
-          },
-          calculable : true,
-          xAxis : [
-            {
-              type : 'category',
-              axisLine : {
-                show : true,
-                lineStyle : {
-                  width : 0,
-                  color : '#999',
-                  type : 'dashed'
-                }
-              },
-              splitLine : {
-                show : true,
-                lineStyle : {
-                  width : 0,
-                  color : [ '#f00' ],
-                  type : 'none'
-                }
-              },
-              axisLable : {
-                show : false
-              },
-              axisTick : {
-                show : false
-              },
-              data : ['周一','周二','周三','周四','周五','周六','周日']
-            }
-          ],
-          yAxis : [
-            {
-              type : 'value',
-              min: '0',
-              axisLabel : {
-                formatter : '{value}%'
-              },
-              axisLine : {
-                show : true,
-                lineStyle : {
-                  width : 0,
-                  color : '#999',
-                  type : 'dashed'
-                }
-              },
-              splitLine : {
-                show : true,
-                lineStyle : {
-                  width : 1,
-                  color : [ '#e4e9ec' ],
-                  type : 'dashed'
-                }
-              }
-            }
-          ],
-          series : [
-            {
-              name:'意向',
-              type:'line',
-              smooth:true,
-              symbol : 'emptyCircle',
-              symbolSize: 3,
-              itemStyle : {
-                normal : {
-                  color : '#0ec1ee'
-                }
-              },
-              markPoint : {
-                symbol : 'rect'
-              },
-              areaStyle : {
-                normal : {
-                  color : new eCharts.graphic.LinearGradient(0, 0, 0, 1,
-                    [ {
-                      offset : 0,
-                      color : '#0ec1ee'
-                    }, {
-                      offset : 1,
-                      color : '#fff'
-                    } ], false)
 
-                }
-              },
-              data:[5, 7, 42, 20, 140, 650, 560]
+        cpuData: {
+          xAxisData: ['22:00','00:00','02:00','04:00','06:00','08:00','10：00','12：00','14：00','16：00','18：00','20：00','22：00'],
+          seriesData: [
+            {
+              name: 'cpu',
+              data:[20, 70, 42, 20, 40, 65, 56,21,3,42,10,18,32]
             }
           ]
         },
       }
     },
     mounted(){
-//      this.$nextTick(function(){
-//        initLine({
-//          id: 'cpuRate'
-//        })
-//
-//      });
+      this.$nextTick(function(){
+
+      });
     }
 
   }
