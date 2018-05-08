@@ -19,7 +19,7 @@
           <service-detail-property v-if="initSecond"></service-detail-property>
         </el-tab-pane>
         <el-tab-pane label="资源变更" name="third">
-          <service-detail-change></service-detail-change>
+          <service-detail-change :hostname="hostname"></service-detail-change>
         </el-tab-pane>
         <el-tab-pane label="告警事件" name="fourth">
           <service-detail-warn></service-detail-warn>

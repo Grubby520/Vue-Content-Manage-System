@@ -1267,6 +1267,93 @@ const serverList = function (data) {
     }
 };
 /*
+ *  基础设施 - 服务器-资源变更
+ * */
+/**
+ * 获取type列表
+ **/
+const changeTypeList = function(data){
+  return [
+    {
+      id:'1',
+      name:'虚拟化服务器总数量'
+    },
+    {
+      id:'2',
+      name:'虚拟化服务器CPU总数量'
+    },
+    {
+      id:'3',
+      name:'虚拟化服务器内存总数量'
+    },
+    {
+      id:'4',
+      name:'虚拟化服务器存储总数量'
+    },
+    {
+      id:'5',
+      name:'虚拟化服务器网络总数量'
+    },
+  ];
+};
+
+const changeList = function (data) {
+  data = JSON.parse(data.body);
+  console.log(data);
+  let articles = [];
+  let pageSize = data.pageSize || 10,
+    curPage = data.currentPage || 1,
+    total = 36,
+    end = 0,
+    lastPage = Math.ceil( total/pageSize),
+    start = pageSize*(curPage-1);
+  end = lastPage === curPage ? total : pageSize*curPage;
+
+  const typeList = [
+    {
+      id:'1',
+      name:'虚拟化服务器总数量'
+    },
+    {
+      id:'2',
+      name:'虚拟化服务器CPU总数量'
+    },
+    {
+      id:'3',
+      name:'虚拟化服务器内存总数量'
+    },
+    {
+      id:'4',
+      name:'虚拟化服务器存储总数量'
+    },
+    {
+      id:'5',
+      name:'虚拟化服务器网络总数量'
+    },
+  ];
+
+
+  for(let i=start; i<end; i++){
+    let newArticleObject = {
+      sortNo: i+1,
+      time:Random.date() + ' ' + Random.time(),
+      type: typeList[Random.natural(0,typeList.length-1)].name,
+      resourceBefore: 'xx',
+      resourceAfter: 'xx',
+      author: Random.cname()
+    };
+    articles.push(newArticleObject);
+  }
+
+  return {
+    articles: articles,
+    total: total
+  }
+};
+
+
+
+/*
 * 接口列表
 * Mock.mock( url, post/get , params)
 * */
@@ -1307,6 +1394,10 @@ Mock.mock('/serviceCatalog/getComputingServiceTable', 'post', getComputingServic
 
 //服务器
 Mock.mock('/serverList', 'post', serverList);
+
+//服务器-详情页：资源变更
+Mock.mock('/changeTypeList','post', changeTypeList);
+Mock.mock('/changeList', 'post', changeList);
 
 
 
