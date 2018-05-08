@@ -9,7 +9,7 @@
 
         <div class="time-task-logic">
 
-            <div class="table-title">用户管理列表</div>
+            <div class="lg-title">用户管理列表</div>
 
             <div class="handle-box">
                 <div class="box-left">

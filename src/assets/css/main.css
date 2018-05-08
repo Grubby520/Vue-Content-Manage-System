@@ -76,11 +76,29 @@ a{
 .padding-15{
  padding: 15px;
 }
-.table-title{
+.lg-title{
     height: 45px;
     line-height: 45px;
     font-size: 1em;
+    padding-left: 15px;
+    position: relative;
 }
+.lg-title:before{
+  position: absolute;
+  content: '';
+  left: 0;
+  top: 15px;
+  width: 3px;
+  height: 15px;
+  background-color: #25a4f6;
+}
+.sm-title{
+  height: 45px;
+  line-height: 45px;
+  font-size: .875em;
+  padding-left: 15px;
+}
+
 /*
 整体布局
 */

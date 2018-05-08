@@ -10,7 +10,7 @@
 
         <div class="time-task-logic">
 
-            <div class="table-title">服务器列表</div>
+            <div class="lg-title">服务器列表</div>
 
             <div class="handle-box">
                 <div class="box-left">

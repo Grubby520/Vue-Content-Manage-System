@@ -37,14 +37,14 @@
                             <el-col :span="18" class="left-border"><div class="grid-content bg-purple-light">
 
                                 <div class="tree-content" v-if="item.id === 'sysCode' ">
-                                    <div class="table-title">{{item.label}}列表</div>
+                                    <div class="lg-title">{{item.label}}列表</div>
                                     <!--系统码表-->
                                     <code-table-sys :request_sys="request_sys"></code-table-sys>
 
                                 </div>
 
                                 <div class="tree-content" v-else-if="item.id === 'userCode' ">
-                                    <div class="table-title">{{item.label}}列表</div>
+                                    <div class="lg-title">{{item.label}}列表</div>
                                     <!--用户码表-->
                                     <code-table-user :request_user="request_user"></code-table-user>
 

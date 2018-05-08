@@ -473,12 +473,120 @@
 //    console.log(obj2); // 深拷贝 {a: 1, b: 2}
 //    console.log(obj3); //浅拷贝 {a: 11, b: 2}
 
-    let obj1 = {a:1,b:2};
-    let obj2 = {a:1,b:3,c:3};
-    Object.assign(obj1, obj2);
-    console.log(obj1);
+//    let obj1 = {a:1,b:2};
+//    let obj2 = {a:1,b:3,c:3};
+//    Object.assign(obj1, obj2);
+//    console.log(obj1);
 
+  let obj1 = {
+    tooltip : {
+      trigger: 'axis',
+      formatter: '{a}<br/>{b}  :  {c}%',
+      backgroundColor: '#0ec1ee',
+      axisPointer: {
+        type: 'line',
+        lineStyle: {
+          color: '#0ec1ee',
+          width: 1
+        },
+      }
+    },
+    legend: {
+      data:[], // change
+      x: 'center',
+      y: 'bottom'
+    },
+    calculable : true,
 
+    xAxis : [
+      {
+        type : 'category',
+        boundaryGap: false,
+        axisLine : {
+          show : true,
+          lineStyle : {
+            width : 1,
+            color : '#999',
+            type : 'solid'
+          }
+        },
+        splitLine : {
+          show : true,
+          lineStyle : {
+            width : 0,
+            color : [ '#999' ],
+            type : 'none'
+          }
+        },
+        axisLable : {
+          show : false
+        },
+        axisTick : {
+          show : false
+        },
+        data : [] // change
+      }
+    ],
+    yAxis : [
+      {
+        type : 'value',
+        boundaryGap: false,
+        min: 0,
+        max: 100,
+        axisLabel : {
+          formatter : '{value}%'
+        },
+        axisLine : {
+          show : true,
+          lineStyle : {
+            width : 1,
+            color : '#999',
+            type : 'solid'
+          }
+        },
+        splitLine : {
+          show : true,
+          lineStyle : {
+            width : 1,
+            color : [ '#e4e9ec' ],
+            type : 'dashed'
+          }
+        }
+      }
+    ],
+    series : []
+  };
+
+  let obj2 = {
+    tooltip: {
+      formatter: '{a}<br/>{b}  :  {c}'
+    },
+    yAxis: [
+      {
+        max: 20,
+        axisLabel : {
+          formatter : '{value}'
+        }
+      }
+    ]
+  };
+
+  let a1 = {
+    a: {
+      k: 1,
+      p: 2
+    },
+    b:2
+  };
+  let a2 = {
+    a: {
+      m: 3
+    },
+    c: 2
+  };
+
+  Object.assign(a1, a2);
+console.log(a1);
 
 </script>
 </body>

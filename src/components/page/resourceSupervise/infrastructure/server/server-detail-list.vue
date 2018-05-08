@@ -19,10 +19,10 @@
           <service-detail-property v-if="initSecond"></service-detail-property>
         </el-tab-pane>
         <el-tab-pane label="资源变更" name="third">
-
+          <service-detail-change></service-detail-change>
         </el-tab-pane>
         <el-tab-pane label="告警事件" name="fourth">
-
+          <service-detail-warn></service-detail-warn>
         </el-tab-pane>
       </el-tabs>
 
@@ -35,11 +35,15 @@
   import api from '@/axios/api.js'
   import serviceDetailBasicInfo from './server-detail-basicInfo'
   import serviceDetailProperty from './server-detail-property'
+  import serviceDetailChange from './server-detail-change.vue'
+  import serviceDetailWarn from './server-detail-warn.vue'
 
   export default {
     components: {
       serviceDetailBasicInfo,
-      serviceDetailProperty
+      serviceDetailProperty,
+      serviceDetailChange,
+      serviceDetailWarn
     },
     data() {
       return {

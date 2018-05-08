@@ -11,11 +11,11 @@
     props: ['option','id','className'],
     data(){
       return {
-
+        // 默认值
         defaultOption: {
           tooltip : {
             trigger: 'axis',
-            formatter: '{a}<br/>{b}:{c}%',
+//            formatter: '{a}<br/>{b}  :  {c}%',
             backgroundColor: '#0ec1ee',
             axisPointer: {
               type: 'line',
@@ -66,7 +66,6 @@
               type : 'value',
               boundaryGap: false,
               min: 0,
-              max: 100,
               axisLabel : {
                 formatter : '{value}%'
               },
@@ -93,23 +92,20 @@
       }
     },
     created(){
-      this.init();
+      this.initOption();
     },
     mounted(){
       const myChart = eCharts.init(this.$refs.chart);
-      console.log(this.defaultOption);
       myChart.setOption(this.defaultOption);
     },
     methods:{
 
-        init(){
+        initOption(){
+          const _this = this;
+          _this.defaultOption.xAxis[0].data = _this.option.xAxisData;
 
-          this.defaultOption.xAxis[0].data = this.option.xAxisData;
-
-          this.option.seriesData.forEach(function(value, index){
-
-            this.defaultOption.legend.data.push(value.name);
-
+          _this.option.seriesData.forEach(function(value, index){
+            _this.defaultOption.legend.data.push(value.name);
             let seriesStyle = {
               name:value.name, // change
               type:'line',
@@ -139,11 +135,14 @@
               },
               data:value.data // change
             };
-
-            this.defaultOption.series.push(seriesStyle);
-
+            _this.defaultOption.series.push(seriesStyle);
           });
 
+          if(_this.option.unit && _this.option.unit !== '%'){
+            _this.defaultOption.yAxis[0].axisLabel.formatter = '{value}'+_this.option.unit;
+          }else{
+            _this.defaultOption.yAxis[0].max = 100;
+          }
 
         }
     }
