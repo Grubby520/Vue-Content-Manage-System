@@ -30,6 +30,10 @@ export default new Router({
           component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-list.vue'], resolve)
         },
         {
+          path: '/storageDevice/:hostName',
+          component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
+        },
+        {
           path: '/userTable',
           component: resolve => require(['../components/page/systemManagement/user/userTable.vue'], resolve)
         },

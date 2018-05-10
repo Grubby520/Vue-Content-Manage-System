@@ -418,3 +418,10 @@ color
 .chart-lg{
   height: 260px;
 }
+/*溢出使用...*/
+.text-overflow{
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

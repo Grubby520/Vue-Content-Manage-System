@@ -671,7 +671,6 @@ const codeTreeList = function(){
 };
 const codeTableListData = function(data){
     data = JSON.parse(data.body);
-    console.log(data);
     let articles = [];
     let pageSize = data.page.pageSize || 10,
         curPage = data.page.currentPage || 1,
@@ -1266,6 +1265,82 @@ const serverList = function (data) {
         total: total
     }
 };
+const storageDeviceList = function (data) {
+  data = JSON.parse(data.body);
+  let articles = [];
+  let pageSize = data.pageSize || 10,
+    curPage = data.currentPage || 1,
+    total = 6,
+    end = 0,
+    lastPage = Math.ceil( total/pageSize),
+    start = pageSize*(curPage-1);
+  end = lastPage === curPage ? total : pageSize*curPage;
+  
+  const storageType = [
+    {
+      id: '1',
+      name: 'DAS'
+    },
+    {
+      id: '2',
+      name: 'NAS'
+    },
+    {
+      id: '3',
+      name: 'SAN'
+    }
+  ];
+  const cloudPlatformName = [
+    {
+      id: '1',
+      name: '移动-华三'
+    },
+    {
+      id: '2',
+      name: '电信-腾讯'
+    },
+    {
+      id: '3',
+      name: '电信-华为备份云'
+    },
+    {
+      id: '4',
+      name: '联通'
+    },
+    {
+      id: '5',
+      name: '浪潮'
+    }
+  ];
+  const cloudResourcePoolName = [
+    {
+      id: '1',
+      name: '互联网资源池'
+    },
+    {
+      id: '2',
+      name: '政务外网资源池'
+    }
+  ];
+  for(let i=start; i<end; i++){
+    let newArticleObject = {
+      sortNo: i+1,
+      hostName: Random.character('upper')+Random.natural(10, 99)+'-'+Random.string('upper',3)+'-'+Random.natural(0, 100),
+      storageType: storageType[Random.natural(0,storageType.length-1)].name,
+      cloudPlatformName: cloudPlatformName[Random.natural(0,cloudPlatformName.length-1)].name,
+      cloudResourcePoolName: cloudResourcePoolName[Random.natural(0,cloudResourcePoolName.length-1)].name,
+      manufacturer: Random.character('upper')+Random.natural(10, 99)+'-'+Random.character('upper')+Random.natural(1, 10),
+      instanceCounts:  Random.natural(0, 90)+'GB/'+Random.natural(100, 1000)+'GB',
+      healthStatus: Random.boolean(8, 9, true)
+    };
+    articles.push(newArticleObject);
+  }
+  
+  return {
+    articles: articles,
+    total: total
+  }
+};
 /*
  *  基础设施 - 服务器-资源变更
  * */
@@ -1351,6 +1426,90 @@ const changeList = function (data) {
   }
 };
 
+/*
+ *  基础设施 - 服务器-资源变更
+ * */
+/**
+ * 获取type列表
+ **/
+const warnTypeList = function(data){
+  return [
+    {
+      id:'1',
+      name:'虚拟化服务器总数量'
+    },
+    {
+      id:'2',
+      name:'虚拟化服务器CPU总数量'
+    },
+    {
+      id:'3',
+      name:'虚拟化服务器内存总数量'
+    },
+    {
+      id:'4',
+      name:'虚拟化服务器存储总数量'
+    },
+    {
+      id:'5',
+      name:'虚拟化服务器网络总数量'
+    },
+  ];
+};
+
+const warnList = function (data) {
+  data = JSON.parse(data.body);
+  console.log(data);
+  let articles = [];
+  let pageSize = data.pageSize || 10,
+    curPage = data.currentPage || 1,
+    total = 12,
+    end = 0,
+    lastPage = Math.ceil( total/pageSize),
+    start = pageSize*(curPage-1);
+  end = lastPage === curPage ? total : pageSize*curPage;
+  
+  const typeList = [
+    {
+      id:'1',
+      name:'虚拟化服务器总数量'
+    },
+    {
+      id:'2',
+      name:'虚拟化服务器CPU总数量'
+    },
+    {
+      id:'3',
+      name:'虚拟化服务器内存总数量'
+    },
+    {
+      id:'4',
+      name:'虚拟化服务器存储总数量'
+    },
+    {
+      id:'5',
+      name:'虚拟化服务器网络总数量'
+    },
+  ];
+  
+  
+  for(let i=start; i<end; i++){
+    let newArticleObject = {
+      sortNo: i+1,
+      time:Random.date() + ' ' + Random.time(),
+      type: typeList[Random.natural(0,typeList.length-1)].name,
+      name: Random.csentence(3, 5),
+      status: 'xx',
+      content: Random.cparagraph()
+    };
+    articles.push(newArticleObject);
+  }
+  
+  return {
+    articles: articles,
+    total: total
+  }
+};
 
 
 /*
@@ -1398,6 +1557,12 @@ Mock.mock('/serverList', 'post', serverList);
 //服务器-详情页：资源变更
 Mock.mock('/changeTypeList','post', changeTypeList);
 Mock.mock('/changeList', 'post', changeList);
+
+//服务器-详情页：告警
+Mock.mock('/warnTypeList','post', warnTypeList);
+Mock.mock('/warnList', 'post', warnList);
+
+Mock.mock('/storageDeviceList', 'post', storageDeviceList);
 
 
 

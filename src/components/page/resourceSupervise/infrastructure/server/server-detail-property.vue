@@ -61,6 +61,9 @@
     components: {
       chartsLine
     },
+    props: {
+      hostname: {type: String},
+    },
     data(){
       return {
         tableList:[

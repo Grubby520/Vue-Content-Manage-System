@@ -6,6 +6,7 @@
 
       </div>
       <div class="box-right">
+
         <el-select v-model="select_type_id" placeholder="变更类型" class="handle-select mr10">
           <el-option
             v-for="item in typeList"
@@ -15,31 +16,35 @@
           </el-option>
         </el-select>
 
+        <el-date-picker
+          v-model="dateTime"
+          type="daterange"
+          size="200"
+          align="right"
+          unlink-panels
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :picker-options="pickerOptions">
+        </el-date-picker>
+
         <el-button type="primary" icon="search" @click="search">查询</el-button>
+
       </div>
     </div>
 
     <el-table :data="tableList" border style="width: 100%">
       <el-table-column prop="sortNo" label="序号" width="80">
       </el-table-column>
-      <el-table-column prop="time" label="告警时间" width="160">
+      <el-table-column prop="time" label="变更时间">
       </el-table-column>
-      <el-table-column prop="type" label="告警类型" width="200">
+      <el-table-column prop="type" label="变更类型">
       </el-table-column>
-      <el-table-column prop="name" label="告警名称" width="220">
+      <el-table-column prop="resourceBefore" label="变更前资源">
       </el-table-column>
-      <el-table-column prop="status" label="告警状态" width="120">
+      <el-table-column prop="resourceAfter" label="变更后资源">
       </el-table-column>
-      <el-table-column prop="content" label="告警内容">
-        <template slot-scope="scope">
-          <!--<p class="text-overflow" :title="scope.row.content">{{scope.row.content}}</p>-->
-          <el-tooltip class="item text-overflow" popper-class="maxWidth" transition="" effect="light" :content="scope.row.content" placement="top">
-            <p>{{scope.row.content}}</p>
-          </el-tooltip>
-          <!--<el-popover trigger="hover" placement="top">-->
-            <!--<p>{{scope.row.content}}</p>-->
-          <!--</el-popover>-->
-        </template>
+      <el-table-column prop="author" label="变更人">
       </el-table-column>
     </el-table>
 
@@ -62,25 +67,59 @@
   import api from '@/axios/api.js'
 
   export default {
-    props: {
-      hostname: {type: String},
-    },
+      props: {
+        hostname: {type: String},
+      },
     data(){
       return {
+
         //查询table的参数
         tableArgs: {
           currentPage: 1,
           pageSize: 10,
           total: 0,
           args: {
-            hostname: ''
+            hostname: '',
+            dateTime: ''
           }
         },
+
         //async-data
         tableList:[],
-        //filter-table-data
         typeList: [],
+
+        //filter-table-data
         select_type_id:'',
+        dateTime:'',
+
+        //default-dateTimeType
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
       }
     },
     created(){
@@ -95,7 +134,7 @@
        *  渲染search-select
        * */
       initData(){
-        api.$http('/warnTypeList', {})
+        api.$http('/changeTypeList', {})
           .then(res => {
             this.typeList = res;
           });
@@ -104,7 +143,7 @@
        *  渲染table
        * */
       initTable(){
-        api.$http('/warnList', this.tableArgs)
+        api.$http('/changeList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;
@@ -130,9 +169,3 @@
 
   }
 </script>
-<style>
-  .maxWidth{
-    max-width: 600px;
-    line-height: 1.2em;
-  }
-</style>

@@ -34,11 +34,8 @@
         <template slot-scope="scope">
           <!--<p class="text-overflow" :title="scope.row.content">{{scope.row.content}}</p>-->
           <el-tooltip class="item text-overflow" popper-class="maxWidth" transition="" effect="light" :content="scope.row.content" placement="top">
-            <p>{{scope.row.content}}</p>
+            <el-button>{{scope.row.content}}</el-button>
           </el-tooltip>
-          <!--<el-popover trigger="hover" placement="top">-->
-            <!--<p>{{scope.row.content}}</p>-->
-          <!--</el-popover>-->
         </template>
       </el-table-column>
     </el-table>

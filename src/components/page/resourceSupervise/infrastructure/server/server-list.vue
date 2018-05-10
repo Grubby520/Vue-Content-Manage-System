@@ -218,7 +218,8 @@
               this.initTable(val);
           },
           search(){
-
+            this.tableArgs.currentPage = 1;
+            this.initTable();
           },
           /* 跳转至详情页 */
         jumpDetail(scope){
