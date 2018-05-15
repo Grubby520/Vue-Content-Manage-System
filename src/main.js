@@ -166,6 +166,6 @@ new Vue({
     router,
     render: h => h(App),
     created: function () {
-        console.log(this);
+        // console.log(this);
     }
 }).$mount('#app');

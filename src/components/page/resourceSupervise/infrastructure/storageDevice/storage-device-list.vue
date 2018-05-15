@@ -140,7 +140,13 @@
             title: '内存使用率TOP5',
             valueType: 'value',
             unit: 'GB',
-            dataList: []
+            dataList: [
+              {name: 'small', value: 300},
+              {name: 'big', value: 1200},
+              {name: 'middle', value: 800},
+              {name: 'aa', value: 400},
+              {name: 'bb', value: 201}
+            ]
           },
           storage: {
             title: '存储使用率TOP5',

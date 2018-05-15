@@ -40,7 +40,7 @@
                 "icon": "icon iconfont icon-2nd-virtual-resource",
                 "index": "/virtualResource",
                 "title": "虚拟资源",
-              "subs": [
+                "subs": [
                 {
                   "icon": "icon iconfont icon-3rd-cloud-host",
                   "index": "/cloudHost",

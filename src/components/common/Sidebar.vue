@@ -3,6 +3,7 @@
         <div class="sidebar">
             <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
                 <template v-for="item in items">
+
                     <template v-if="item.subs">
 
                         <el-submenu :index="item.index" class="menu-1st">
@@ -26,11 +27,13 @@
                         </el-submenu>
 
                     </template>
+
                     <template v-else>
                         <el-menu-item :index="item.index" class="menu-1st">
                             <i :class="item.icon"></i>{{ item.title }}
                         </el-menu-item>
                     </template>
+
                 </template>
             </el-menu>
         </div>
@@ -64,7 +67,6 @@
         mounted(){
             this.$nextTick(function () {
                 let dom_nav = this.$refs.nav.offsetHeight;
-                console.log(dom_nav);
             });
         }
     }
