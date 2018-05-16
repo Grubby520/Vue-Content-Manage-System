@@ -31,9 +31,9 @@ export function fetch(url, params) {
 
 //拦截地址
 export default {
-
-    $http(url,params){
-        return fetch(url, params);
-    }
+  $http(url,params){
+    console.info(url);
+    return fetch(url, params);
+  }
 }
 

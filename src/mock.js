@@ -1265,6 +1265,7 @@ const serverList = function (data) {
         total: total
     }
 };
+
 const storageDeviceList = function (data) {
   data = JSON.parse(data.body);
   let articles = [];

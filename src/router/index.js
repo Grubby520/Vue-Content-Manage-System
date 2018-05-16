@@ -34,6 +34,14 @@ export default new Router({
           component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
         },
         {
+          path: '/networkEquipment',
+          component: resolve => require(['../components/page/resourceSupervise/infrastructure/networkEquipment/network-equipment-list.vue'], resolve)
+        },
+        // {
+        //   path: '/networkEquipment/:hostName',
+        //   component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
+        // },
+        {
           path: '/userTable',
           component: resolve => require(['../components/page/systemManagement/user/userTable.vue'], resolve)
         },

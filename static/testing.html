@@ -256,6 +256,20 @@
 
 
     </style>
+  <style>
+    .outer{
+      width: 200px;
+      height: 100px;
+      border: 1px solid #00ABEB;
+    }
+    .inner{
+      height: 100%;
+      background: url("./loading.png") no-repeat center;
+      background-size: 50%, 50%;
+    }
+    .box{
+    }
+  </style>
 </head>
 <body>
 
@@ -271,78 +285,110 @@
     <!--</div>-->
 
 <!--</div>-->
-<div style="width: 26%;">
-  <div id="busyDegreeTop5Chart" class="white-background charts-item">
-    <div class="top5-plugin">
-      <div class="top5-title">各单位应用繁忙度TOP5</div>
-      <div class="top5-content">
-        <div class="progress-plugin">
-          <div class="progress-text clearfix"><span class="text-name">林业厅</span><span class="text-value">17%</span></div>
-          <div class="progress-container">
-            <div class="progress-innercore progress-suject-bgcolor-1" style="width:100.00%;"></div>
-            <div class="progress-tip" style="left: 380px; bottom: 13px; display: none;">
-              <ul>
-                <li><span class="tip-title-icon progress-suject-bgcolor-1"></span>林业厅:17%</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="progress-plugin">
-          <div class="progress-text clearfix"><span class="text-name">省扶贫移民局</span><span class="text-value">11%</span>
-          </div>
-          <div class="progress-container">
-            <div class="progress-innercore progress-suject-bgcolor-2" style="width:64.71%;"></div>
-            <div class="progress-tip" style="left: 224px; bottom: 19px; display: none;">
-              <ul>
-                <li><span class="tip-title-icon progress-suject-bgcolor-2"></span>省扶贫移民局:11%</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="progress-plugin">
-          <div class="progress-text clearfix"><span class="text-name">省发展改革委</span><span class="text-value">2.36%</span>
-          </div>
-          <div class="progress-container">
-            <div class="progress-innercore progress-suject-bgcolor-3" style="width:13.88%;"></div>
-            <div class="progress-tip" style="left: 34px; bottom: 18px; display: none;">
-              <ul>
-                <li><span class="tip-title-icon progress-suject-bgcolor-3"></span>省发展改革委:2.36%</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="progress-plugin">
-          <div class="progress-text clearfix"><span class="text-name">省安全监管局</span><span class="text-value">0%</span>
-          </div>
-          <div class="progress-container">
-            <div class="progress-innercore progress-suject-bgcolor-4" style="width:0.00%;"></div>
-            <div class="progress-tip" style="left: 332px; bottom: 17px; display: none;">
-              <ul>
-                <li><span class="tip-title-icon progress-suject-bgcolor-4"></span>省安全监管局:0%</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="progress-plugin">
-          <div class="progress-text clearfix"><span class="text-name">四川省政协</span><span class="text-value">0%</span></div>
-          <div class="progress-container">
-            <div class="progress-innercore progress-suject-bgcolor-5" style="width:0.00%;"></div>
-            <div class="progress-tip" style="left: 347px; bottom: 20px; display: none;">
-              <ul>
-                <li><span class="tip-title-icon progress-suject-bgcolor-5"></span>四川省政协:0%</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div style="width: 26%;">-->
+  <!--<div id="busyDegreeTop5Chart" class="white-background charts-item">-->
+    <!--<div class="top5-plugin">-->
+      <!--<div class="top5-title">各单位应用繁忙度TOP5</div>-->
+      <!--<div class="top5-content">-->
+        <!--<div class="progress-plugin">-->
+          <!--<div class="progress-text clearfix"><span class="text-name">林业厅</span><span class="text-value">17%</span></div>-->
+          <!--<div class="progress-container">-->
+            <!--<div class="progress-innercore progress-suject-bgcolor-1" style="width:100.00%;"></div>-->
+            <!--<div class="progress-tip" style="left: 380px; bottom: 13px; display: none;">-->
+              <!--<ul>-->
+                <!--<li><span class="tip-title-icon progress-suject-bgcolor-1"></span>林业厅:17%</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="progress-plugin">-->
+          <!--<div class="progress-text clearfix"><span class="text-name">省扶贫移民局</span><span class="text-value">11%</span>-->
+          <!--</div>-->
+          <!--<div class="progress-container">-->
+            <!--<div class="progress-innercore progress-suject-bgcolor-2" style="width:64.71%;"></div>-->
+            <!--<div class="progress-tip" style="left: 224px; bottom: 19px; display: none;">-->
+              <!--<ul>-->
+                <!--<li><span class="tip-title-icon progress-suject-bgcolor-2"></span>省扶贫移民局:11%</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="progress-plugin">-->
+          <!--<div class="progress-text clearfix"><span class="text-name">省发展改革委</span><span class="text-value">2.36%</span>-->
+          <!--</div>-->
+          <!--<div class="progress-container">-->
+            <!--<div class="progress-innercore progress-suject-bgcolor-3" style="width:13.88%;"></div>-->
+            <!--<div class="progress-tip" style="left: 34px; bottom: 18px; display: none;">-->
+              <!--<ul>-->
+                <!--<li><span class="tip-title-icon progress-suject-bgcolor-3"></span>省发展改革委:2.36%</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="progress-plugin">-->
+          <!--<div class="progress-text clearfix"><span class="text-name">省安全监管局</span><span class="text-value">0%</span>-->
+          <!--</div>-->
+          <!--<div class="progress-container">-->
+            <!--<div class="progress-innercore progress-suject-bgcolor-4" style="width:0.00%;"></div>-->
+            <!--<div class="progress-tip" style="left: 332px; bottom: 17px; display: none;">-->
+              <!--<ul>-->
+                <!--<li><span class="tip-title-icon progress-suject-bgcolor-4"></span>省安全监管局:0%</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="progress-plugin">-->
+          <!--<div class="progress-text clearfix"><span class="text-name">四川省政协</span><span class="text-value">0%</span></div>-->
+          <!--<div class="progress-container">-->
+            <!--<div class="progress-innercore progress-suject-bgcolor-5" style="width:0.00%;"></div>-->
+            <!--<div class="progress-tip" style="left: 347px; bottom: 20px; display: none;">-->
+              <!--<ul>-->
+                <!--<li><span class="tip-title-icon progress-suject-bgcolor-5"></span>四川省政协:0%</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <input type="text" id="keyword">
 <button id="btn">查询</button>
 
+
+<div class="outer">
+  <div class="inner"></div>
+</div>
+<div class="box">
+  <svg  style="width: 300px;" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 227.1 158.9" style="enable-background:new 0 0 227.1 158.9;" xml:space="preserve">
+    <style type="text/css">
+      .st0{fill:#eee;}
+      .st1{display:none;}
+      .st0_1{fill:#00ABEB;}
+    </style>
+		<path class="st0 first" d="M165.9,141c23.1-6.2,27.9-27.3,16.2-51.4c-10.9-22.2,14.1-29.4,22-8C216.1,113.8,198.1,143.1,165.9,141z" />
+		<path class="st0" d="M165.5,138.8c12.2-9.5,6.7-23.5,1.1-34.7c-6.6-13.7,9.6-21.6,15.5-6.3C190.6,119.6,180.8,135.7,165.5,138.8z"
+			/>
+		<path class="st0" d="M168.6,143.4c29.1-1.2,40.7-18.6,42.1-42.2c0.9-17.5,16.7-16.2,16.4,1.8C226.6,136.1,196.4,150.2,168.6,143.4
+			z"/>
+		<path class="st0" d="M105.9,11.7c28.3-28.9,58.3,1.6,31.5,27.3c-38.2,36-28.5,118.1,34.8,112.7C83.2,185.6,52,66.8,105.9,11.7z"/>
+		<path class="st0" d="M83.4,42.1c-19,48.6-0.1,108.8,47.2,116.8c-49.2-0.8-80.1-36-83-83.2c-1-16.7,1.8-36.3,9.3-49.8
+			c4-7.1,12.8-13.4,21.3-10.3C90,19.8,86.8,33.4,83.4,42.1z"/>
+		<path class="st0" d="M37,54.4c7,2,7.2,10.4,7.4,19.3c0.7,31.1,15.6,62.8,43.1,75.4c-37.5-1.2-68.8-33.4-66.2-77.9
+			C21.7,63.1,26.2,51.4,37,54.4z"/>
+		<path class="st0" d="M76.9,150.1c-36.5,2.3-73.7-17.6-76.8-58.4c-0.5-7,1.8-14.4,9-15c7.6-0.7,9,7.1,10,13.1
+			C24.1,120.6,45.3,145.1,76.9,150.1z"/>
+		<path class="st0" d="M171.4,58.6c1.9-2.5,3.1-5.6,3.1-9c0.1-7.1-4.7-13.2-11.3-15c-3.4-0.9-7.2-0.6-10.5,0.2
+			c-17,4.2-27,23-31.5,38.5c-10.2,35,3.5,80.6,54.9,76.1c-26.8-5.6-36.9-31-32.1-54c3.1-15.1,8.8-21.5,16.6-27.7
+			C164.1,64.8,168.7,62.2,171.4,58.6z"/>
+</svg>
+</div>
+
+
 <script src="jquery-1.11.0.min.js"></script>
+<script src="snap.svg-min.js"></script>
 <script>
 
   $('#btn').click(function(){
@@ -588,6 +634,99 @@
   Object.assign(a1, a2);
 console.log(a1);
 
+
+  for (let i = 1; i< 10; i++) {
+    setTimeout(function(){
+      console.log(i);
+    }, 1000)
+  }
 </script>
+<script>
+  $('.box').on('mouseenter',function(){
+    console.log('dd');
+
+  })
+</script>
+<!--<script>-->
+  <!--// 列表元素-->
+  <!--let eleList = document.querySelectorAll(".showList");-->
+
+  <!--// 数组空格连接-->
+  <!--Array.prototype.space = function() {-->
+    <!--return this.join(" ");-->
+  <!--};-->
+
+  <!--// 为每个列表创建一个SVG-->
+  <!--[].slice.call(eleList).forEach(function(list) {-->
+    <!--// SVG的尺寸-->
+    <!--// 1.5倍容器尺寸-->
+    <!--let svg_width = list.clientWidth * 1.5, svg_height = list.clientHeight * 1.5;-->
+    <!--// SVG的颜色-->
+    <!--let svg_color = list.getAttribute("data-svgcolor");-->
+    <!--// 创建SVG对象-->
+    <!--let svg = Snap(svg_width, svg_height).attr({-->
+      <!--fill: svg_color,-->
+      <!--"class": "shape-svg"-->
+    <!--});-->
+    <!--// 创建路径元素-->
+    <!--let path = svg.paper.path("");-->
+    <!--// 强势插入-->
+    <!--list.appendChild(svg.node);-->
+
+
+    <!--// 变化图形示意如下-->
+    <!--/*-->
+     <!--o-&#45;&#45;&#45;&#45;oo(2,4)-->
+     <!--|-->
+     <!--|-->
+     <!--o-->
+
+     <!--↓-->
+
+     <!--o-&#45;&#45;&#45;&#45;o-->
+     <!--|	   |-->
+     <!--|     |-->
+     <!--o-&#45;&#45;&#45;&#45;o-->
+
+     <!--*/-->
+
+    <!--// 确定点坐标-->
+    <!--// 共四个点-->
+    <!--// 可以使用polygon, 这里使用万能的path做演示-->
+    <!--// 变化的只有点4, 点1-3都是固定的，于是-->
+    <!--let p1 = [0, 0], p2 = [svg_width, 0], p3 = [svg_width, svg_height];-->
+    <!--// p4则是从点[svg_width, 0]到[0, svg_height]不断变化的过程-->
+    <!--let p4_start = [svg_width, 0], p4_end = [0, svg_height];-->
+    <!--// 于是，我们可以得到p4的运动坐标-->
+    <!--// 根据 y = ax + b;-->
+    <!--// 得，a = ?; b = ?;-->
+    <!--let a = -1 * svg_height / svg_width, b = svg_height;-->
+
+    <!--// 事件-->
+    <!--list.addEventListener("mouseover", function() {-->
+      <!--// 鼠标移入，图形展开-->
+      <!--Snap.animate(svg_width, 0, function(x) {-->
+        <!--let p4 = [x, a * x + b];-->
+        <!--// 路径变化走起-->
+        <!--// M p1 L p2 L p3 L p4 L p1Z-->
+        <!--path.attr({-->
+          <!--d: "M" + [p1.space(), p2.space(), p3.space(), p4.space(), p1.space()].join("L") + "Z"-->
+        <!--});-->
+      <!--}, 200, mina.easein);-->
+    <!--});-->
+    <!--list.addEventListener("mouseout", function() {-->
+      <!--// 鼠标移出，图形收起-->
+      <!--Snap.animate(0, svg_width, function(x) {-->
+        <!--let p4 = [x, a * x + b];-->
+        <!--// 路径变化走起-->
+        <!--// M p1 L p2 L p3 L p4 L p1Z-->
+        <!--path.attr({-->
+          <!--d: "M" + [p1.space(), p2.space(), p3.space(), p4.space(), p1.space()].join("L") + "Z"-->
+        <!--});-->
+      <!--}, 250, mina.easeout);-->
+    <!--});-->
+  <!--});-->
+
+<!--</script>-->
 </body>
 </html>

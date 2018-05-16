@@ -1,3 +1,4 @@
+//入口文件
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -5,6 +6,7 @@ import router from './router'
 // Vue.prototype.$echarts  = eCharts;
 
 import axios from 'axios'
+import loading from './components/common/loading/index'
 
 // import ElementUI from 'element-ui'
 import {
@@ -75,15 +77,15 @@ import {
   MessageBox,
   Message,
   Notification
-} from 'element-ui' //按需引入
+} from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/main.css'// 重置样式
 
 import './assets/icon-fonts/iconfont.css'
 
-require('./mock.js')
-Vue.config.productionTip = false
+require('./mock.js');
+Vue.config.productionTip = false;
 
 import "babel-polyfill"; // babel垫片，编译新的API
 
@@ -149,9 +151,7 @@ Vue.use(Header);
 Vue.use(Aside);
 Vue.use(Main);
 Vue.use(Footer);
-
 Vue.use(Loading.directive);
-
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
@@ -159,9 +159,10 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
-
-
 Vue.prototype.$axios = axios;
+
+Vue.use(loading);
+
 new Vue({
     router,
     render: h => h(App),
