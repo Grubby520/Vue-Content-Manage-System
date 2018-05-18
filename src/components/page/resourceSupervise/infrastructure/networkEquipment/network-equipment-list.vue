@@ -128,6 +128,7 @@
        *  渲染table
        * */
       initTable(){
+        //this.loading = true;
         api.$http('/storageDeviceList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
@@ -149,11 +150,18 @@
        * */
       handleSizeChange(val){
         this.tableArgs.pageSize = val;
-        this.initTable();
+        this.loading = true;
+        setTimeout(() =>{
+          this.initTable();
+        },1500);
       },
       handleCurrentChange(val){
         this.tableArgs.currentPage  = val;
-        this.initTable(val);
+        this.loading = true;
+        setTimeout(() =>{
+          this.initTable(val);
+        },1500);
+
       },
       search(){
         this.tableArgs.currentPage = 1;
