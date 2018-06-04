@@ -6,7 +6,7 @@ import router from './router'
 // Vue.prototype.$echarts  = eCharts;
 
 import axios from 'axios'
-import loading from './components/common/loading/index'
+import loading from './components/page-area/loading/index'
 
 // import ElementUI from 'element-ui'
 import {

@@ -1,5 +1,5 @@
 /*
-*  存放公共方法
+*  存放公共模块
 * */
 
 /*
@@ -31,9 +31,39 @@ export function isObjectValueEqual(a, b){
     }
     return true;
 }
-
+/*
+ *  获取一定范围内的随机数
+ * */
 export function getRandomNumber(min, max){
     const r = Math.random() * (max - min),
            re = Math.round(r + min);
     return Math.max(Math.min(re, max), min);
 }
+/*
+ *  table表格的mixin
+ * */
+export let tableMixin = {
+  data(){
+    return {
+      //table的data
+      tableList: [],
+      
+      //查询table的参数
+      tableArgs: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 0,
+        args: {}
+      },
+      
+    }
+  },
+  methods: {
+    /* 查询table */
+    search(){
+      this.tableArgs.currentPage = 1;
+      this.initTable();
+    }
+    
+  }
+};

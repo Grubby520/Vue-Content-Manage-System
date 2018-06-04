@@ -40,13 +40,16 @@
 </script>
 <style scoped>
     .header {
-        position: relative;
-        box-sizing: border-box;
+        position: fixed;
+        left: 0;
+        right: 0;
         height: 50px;
+        box-sizing: border-box;
         font-size: 22px;
         line-height: 50px;
         color: #fff;
         background: #324157;
+        z-index: 9999;
     }
     .header .logo, .header .system{
         float: left;

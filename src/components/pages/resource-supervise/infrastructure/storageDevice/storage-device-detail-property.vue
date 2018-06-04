@@ -40,8 +40,8 @@
 </template>
 <script>
   import eCharts from 'echarts'
-  import {initLine} from '@/assets/js/components/charts'
-  import chartsLine from '@/components/common/eCharts/charts-line'
+  import {initLine} from '@/assets/js/modules/charts'
+  import chartsLine from '@/components/business-module/eCharts/charts-line'
   export default {
     components: {
       chartsLine

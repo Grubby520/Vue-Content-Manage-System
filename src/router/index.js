@@ -11,79 +11,79 @@ export default new Router({
     },
     {
       path: '/home',
-      component: resolve => require(['../components/common/Home.vue'], resolve),
+      component: resolve => require(['../components/page-area/Home.vue'], resolve),
       children:[
         {
           path: '/',
-          component: resolve => require(['../components/page/home.vue'], resolve)
+          component: resolve => require(['../components/pages/home.vue'], resolve)
         },
         {
           path: '/server',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-list.vue'], resolve),
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/server/server-list.vue'], resolve),
         },
         {
           path: '/server/:hostName',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/server/server-detail-list.vue'], resolve),
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/server/server-detail-list.vue'], resolve),
         },
         {
           path: '/storageDevice',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-list.vue'], resolve)
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/storageDevice/storage-device-list.vue'], resolve)
         },
         {
           path: '/storageDevice/:hostName',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
         },
         {
           path: '/networkEquipment',
-          component: resolve => require(['../components/page/resourceSupervise/infrastructure/networkEquipment/network-equipment-list.vue'], resolve)
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/networkEquipment/network-equipment-list.vue'], resolve)
         },
         // {
         //   path: '/networkEquipment/:hostName',
-        //   component: resolve => require(['../components/page/resourceSupervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
+        //   component: resolve => require(['../modules/page/resource-supervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
         // },
         {
           path: '/userTable',
-          component: resolve => require(['../components/page/systemManagement/user/userTable.vue'], resolve)
+          component: resolve => require(['../components/pages/systemManagement/user/userTable.vue'], resolve)
         },
         {
           path: '/tenantTable',
-          component: resolve => require(['../components/page/systemManagement/tenant/tenantTable.vue'], resolve)     // vue-datasource组件
+          component: resolve => require(['../components/pages/systemManagement/tenant/tenantTable.vue'], resolve)     // vue-datasource组件
         },
         {
           path: '/serviceCatalog',
-          component: resolve => require(['../components/page/operationManagement/serviceCatalog/serviceCatalog-list.vue'], resolve)     // vue-datasource组件
+          component: resolve => require(['../components/pages/operationManagement/serviceCatalog/serviceCatalog-list.vue'], resolve)     // vue-datasource组件
         },
 
         {
           path: '/codeTable',
-          component: resolve => require(['../components/page/operationManagement/code/codeTable.vue'], resolve)     // vue-datasource组件
+          component: resolve => require(['../components/pages/operationManagement/code/codeTable.vue'], resolve)     // vue-datasource组件
         },
 
         {
           path: '/baseform',
-          component: resolve => require(['../components/page/BaseForm.vue'], resolve)
+          component: resolve => require(['../components/pages/BaseForm.vue'], resolve)
         },
         {
           path: '/vueeditor',
-          component: resolve => require(['../components/page/VueEditor.vue'], resolve)    // Vue-Quill-Editor组件
+          component: resolve => require(['../components/pages/VueEditor.vue'], resolve)    // Vue-Quill-Editor组件
         },
         {
           path: '/markdown',
-          component: resolve => require(['../components/page/Markdown.vue'], resolve)     // Vue-Quill-Editor组件
+          component: resolve => require(['../components/pages/Markdown.vue'], resolve)     // Vue-Quill-Editor组件
         },
         {
           path: '/upload',
-          component: resolve => require(['../components/page/Upload.vue'], resolve)       // Vue-Core-Image-Upload组件
+          component: resolve => require(['../components/pages/Upload.vue'], resolve)       // Vue-Core-Image-Upload组件
         },
         {
           path: '/DragList',
-          component: resolve => require(['../components/page/DragList.vue'], resolve)    // 拖拽列表组件
+          component: resolve => require(['../components/pages/DragList.vue'], resolve)    // 拖拽列表组件
         }
       ]
     },
     {
       path: '/login',
-      component: resolve => require(['../components/page/Login.vue'], resolve)
+      component: resolve => require(['../components/pages/Login.vue'], resolve)
     },
   ]
 })
