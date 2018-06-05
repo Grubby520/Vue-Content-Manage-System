@@ -11,27 +11,24 @@
 
               <div class="box-left"></div>
               <div class="box-right not-box-left">
-
-                  <el-select v-model="select_cloudPlatform_id" placeholder="云平台" class="handle-select mr10">
+                  <el-select v-model="providerId" clearable name="providerId" placeholder="云平台" class="handle-select mr10">
                       <el-option
-                          v-for="item in cloudPlatform"
+                          v-for="item in providerList"
                           :key="item.id"
                           :label="item.name"
                           :value="item.id">
                       </el-option>
                   </el-select>
 
-                  <el-select v-model="select_cloudResourcePool_id" filterable placeholder="云资源池" class="handle-select mr10">
+                  <el-select v-model="regionId" clearable name="regionId" placeholder="云资源池" class="handle-select mr10">
                       <el-option
-                          v-for="item in cloudResourcePool"
+                          v-for="item in regionList"
                           :key="item.id"
                           :label="item.name"
                           :value="item.id">
                       </el-option>
                   </el-select>
-
-                  <el-button type="primary" icon="search" @click="search">查询</el-button>
-
+                <el-button type="primary" icon="search" @click="search">查询</el-button>
               </div>
           </div>
 
@@ -93,7 +90,7 @@
 <script>
   import {tableMixin} from '@/assets/js/public'
   import api from '@/axios/api'
-  import topFive from '@/components/business-module/topfive/topfive'
+  import topFive from '@/components/business-module/topFive/topfive'
   import crumbs from '@/components/page-area/crumbs'
   import pagination from '@/components/page-area/pagination.vue'
 
@@ -104,7 +101,7 @@
     },
     data(){
         return {
-          //顶部crumbs
+          //crumbs
           crumbs: [
             {
               "title": "资源监管",
@@ -116,11 +113,11 @@
               "title": "服务器",
             },
           ],
-          //select下拉框
-          select_cloudPlatform_id: '',
-          select_cloudResourcePool_id: '',
-          cloudPlatform: [],
-          cloudResourcePool: [],
+          //select
+          providerId: '',
+          regionId: '',
+          providerList: [],
+          regionList: [],
           //top5
           usageRateData: {
               cpu: {
@@ -161,52 +158,47 @@
         this.initSelectData();
         this.initTable();
       },
-        /*
-        *  渲染search-select
-        * */
-        initSelectData(){
-            api.$http('/cloudPlatformList', {})
-                .then(res => {
-                    this.cloudPlatform = res;
-                });
-            api.$http('/cloudResourcePoolList', {})
-                .then(res => {
-                    this.cloudResourcePool = res;
-                });
-        },
+      /* 渲染select */
+      initSelectData(){
+          api.$http('/cloudPlatformList', {})
+              .then(res => {
+                  this.providerList = res;
+              });
+          api.$http('/cloudResourcePoolList', {})
+              .then(res => {
+                  this.regionList = res;
+              });
+      },
 
-        /*
-         *  渲染table
-         * */
-        initTable(){
-            api.$http('/serverList', this.tableArgs)
-                .then(res => {
-                    this.tableList = res.articles;
-                    this.tableArgs.total = res.total;
-                    for (const key in this.usageRateData) {
-                      for (const inner in this.usageRateData[key].dataList) {
-                          if(this.usageRateData[key].dataList[inner].name != '-'){
-                            this.usageRateData[key].dataList[inner].name = res.articles[inner].hostName;
-                          }else{
-                            this.usageRateData[key].dataList[inner].name = '-';
-                          }
-                      }
-                    }
-                });
-        },
+      /* 渲染table */
+      initTable(){
+          api.$http('/serverList', this.tableArgs)
+              .then(res => {
+                  this.tableList = res.articles;
+                  this.tableArgs.total = res.total;
+              });
+      },
 
-        /*
-         *  $emit
-         * */
-        emitTable(args){
-            //this.dialogVisible = !this.dialogVisible;
-            if(args.isInitTable){
-                this.initTable();
-            }
-        },
+      /*search 额外参数时添加*/
+      search(){
+        //search-click时才能更新查询数据,为空会传递参数;
+        //使用form表单序列化获取也是可取的,且为空时就不会传该参数;
+        this.tableArgs.args.providerId = this.providerId;
+        this.tableArgs.args.regionId = this.regionId;
 
-        /* 跳转至详情页 */
-      jumpToDetail(scope){
+        this.tableArgs.currentPage = 1;
+        this.initTable();
+      },
+      /* $emit */
+      emitTable(args){
+          //this.dialogVisible = !this.dialogVisible;
+          if(args.isInitTable){
+              this.initTable();
+          }
+      },
+
+      /* 跳转至详情页 */
+    jumpToDetail(scope){
         this.$router.push( '/server/'+scope.row.hostName);
       },
 

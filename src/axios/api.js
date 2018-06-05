@@ -33,6 +33,7 @@ export function fetch(url, params) {
 export default {
   $http(url,params){
     console.info(url);
+    console.info(params);
     return fetch(url, params);
   }
 }
