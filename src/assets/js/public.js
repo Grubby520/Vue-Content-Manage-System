@@ -45,6 +45,9 @@ export function getRandomNumber(min, max){
 export let tableMixin = {
   data(){
     return {
+      //Loading
+      loading: true,
+      fullScreenLoading: false,
       //table的data
       tableList: [],
       

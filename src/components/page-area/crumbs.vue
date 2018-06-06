@@ -3,7 +3,11 @@
   <div class="crumbs">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item v-for="(item, index) in crumbs" :key="item.title">
-        <span :class="index == len-1 ? 'current' : ''"><i class="icon" :class="item.icon"></i> {{item.title}}</span>
+
+        <span v-if="item.to"><router-link :to='item.to'><i class="icon" :class="item.icon"></i> {{item.title}}</router-link></span>
+        <span v-else-if="item.icon"><i class="icon" :class="item.icon"></i> {{item.title}}</span>
+        <span v-else class="current"> {{item.title}}</span>
+
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>

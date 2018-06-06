@@ -1,13 +1,6 @@
 <template>
   <div class="table">
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item><i class="icon iconfont icon-1st-resource-supervise"></i> 资源监管</el-breadcrumb-item>
-        <el-breadcrumb-item><i class="icon iconfont icon-2nd-Infrastructure"></i> 基础设施</el-breadcrumb-item>
-        <el-breadcrumb-item><router-link to="/server"><i class="icon iconfont icon-3rd-server"></i> 服务器</router-link></el-breadcrumb-item>
-        <el-breadcrumb-item ><span class="current">{{hostname}}</span></el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
+    <my-crumbs :crumbs="crumbs"></my-crumbs>
 
     <div class="time-task-logic">
 
@@ -43,11 +36,29 @@
       serviceDetailBasicInfo,
       serviceDetailProperty,
       serviceDetailChange,
-      serviceDetailWarn
+      serviceDetailWarn,
     },
     data() {
       return {
+        //crumbs
+        crumbs: [
+          {
+            "title": "资源监管",
+            "icon": "icon-1st-resource-supervise",
+          }, {
+            "title": "基础设施",
+            "icon": "icon-2nd-Infrastructure",
+          }, {
+            "title": "服务器",
+            "icon": "icon-3rd-server",
+            "to": "/server"
+          }, {
+            "title": '',
+          },
+        ],
+        //router获取的参数
         hostname: '',
+        //tab基础数据
         activeName: 'first',
         initSecond: false,
         initThird: false,
@@ -56,13 +67,16 @@
     },
 
     created(){
+      //获取router.params
       this.hostname = this.$route.params.hostName;
+      //更新crumbs的title值
+      this.crumbs[this.crumbs.length-1].title = this.hostname;
     },
 
     methods: {
       /*
       * tab切换
-      * bk: 切换时才异步请求组件
+      * pc: 切换时才异步请求组件
       * */
       handleClick(tab, event){
         if(tab.name === 'second' && !this.initSecond){

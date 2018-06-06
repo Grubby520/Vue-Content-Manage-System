@@ -17,6 +17,7 @@ export default new Router({
           path: '/',
           component: resolve => require(['../components/pages/home.vue'], resolve)
         },
+        
         {
           path: '/server',
           component: resolve => require(['../components/pages/resource-supervise/infrastructure/server/server-list.vue'], resolve),
@@ -27,20 +28,13 @@ export default new Router({
         },
         {
           path: '/storageDevice',
-          component: resolve => require(['../components/pages/resource-supervise/infrastructure/storageDevice/storage-device-list.vue'], resolve)
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/storage-device/storage-device-list.vue'], resolve)
         },
         {
           path: '/storageDevice/:hostName',
-          component: resolve => require(['../components/pages/resource-supervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
+          component: resolve => require(['../components/pages/resource-supervise/infrastructure/storage-device/storage-device-detail-list.vue'], resolve),
         },
-        {
-          path: '/networkEquipment',
-          component: resolve => require(['../components/pages/resource-supervise/infrastructure/networkEquipment/network-equipment-list.vue'], resolve)
-        },
-        // {
-        //   path: '/networkEquipment/:hostName',
-        //   component: resolve => require(['../modules/page/resource-supervise/infrastructure/storageDevice/storage-device-detail-list.vue'], resolve),
-        // },
+        
         {
           path: '/userTable',
           component: resolve => require(['../components/pages/systemManagement/user/userTable.vue'], resolve)

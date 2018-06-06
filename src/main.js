@@ -2,11 +2,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import eCharts from 'echarts'
-// Vue.prototype.$echarts  = eCharts;
 
 import axios from 'axios'
-import loading from './components/page-area/loading/index'
+//import loading from './components/page-area/loading/index'
+import components from './components/components.js'
 
 // import ElementUI from 'element-ui'
 import {
@@ -161,12 +160,13 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 Vue.prototype.$axios = axios;
 
-Vue.use(loading);
+//Vue.use(loading);
+Vue.use(components);
 
 new Vue({
     router,
     render: h => h(App),
     created: function () {
-        // console.log(this);
+    
     }
 }).$mount('#app');

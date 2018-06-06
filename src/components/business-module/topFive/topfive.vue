@@ -6,12 +6,12 @@
       </div>
       <div v-else class="progress-plugin">
         <top-five-item
-        v-for="(item, index) in dataList"
-        :key="index"
-        :item="item"
-        :unit="unit"
-        :index="index"
-        ></top-five-item>
+          v-for="(item, index) in dataList"
+          :key="index"
+          :item="item"
+          :unit="unit"
+          :index="index">
+        </top-five-item>
       </div>
     </div>
   </div>

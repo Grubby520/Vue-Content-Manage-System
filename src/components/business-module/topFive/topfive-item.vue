@@ -52,7 +52,7 @@
       show(){
         let e = event || window.event;
         this.styleObject.left = e.clientX +10+ 'px';
-        this.styleObject.top = e.clientY -15+ 'px';
+        this.styleObject.top = e.clientY -12+ 'px';
         this.styleObject.display = 'block';
       },
       hide(){

@@ -1,43 +1,51 @@
 <template>
-    <div class="table">
+    <div class="table" v-loading.fullscreen.lock="fullScreenLoading">
 
-        <crumbs :crumbs="crumbs"></crumbs>
+        <my-crumbs :crumbs="crumbs"></my-crumbs>
 
         <div class="time-task-logic">
 
           <div class="lg-title">服务器列表</div>
 
-          <div class="handle-box">
+          <div class="table-box" v-loading="loading">
+            <div class="handle-box">
 
               <div class="box-left"></div>
               <div class="box-right not-box-left">
-                  <el-select v-model="providerId" clearable name="providerId" placeholder="云平台" class="handle-select mr10">
-                      <el-option
-                          v-for="item in providerList"
-                          :key="item.id"
-                          :label="item.name"
-                          :value="item.id">
-                      </el-option>
-                  </el-select>
+                <el-select v-model="providerId" clearable name="providerId" placeholder="云平台" class="handle-select mr10">
+                  <el-option
+                    v-for="item in providerList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
 
-                  <el-select v-model="regionId" clearable name="regionId" placeholder="云资源池" class="handle-select mr10">
-                      <el-option
-                          v-for="item in regionList"
-                          :key="item.id"
-                          :label="item.name"
-                          :value="item.id">
-                      </el-option>
-                  </el-select>
+                <el-select v-model="regionId" clearable name="regionId" placeholder="云资源池" class="handle-select mr10">
+                  <el-option
+                    v-for="item in regionList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
                 <el-button type="primary" icon="search" @click="search">查询</el-button>
               </div>
-          </div>
+            </div>
 
-          <el-table :data="tableList" border style="width: 100%" ref="multipleTable">
+            <el-table
+              :data="tableList"
+              border
+              style="width: 100%"
+              ref="multipleTable">
               <el-table-column prop="sortNo" label="序号" width="80">
               </el-table-column>
               <el-table-column prop="hostName" class="jump-detail" label="服务器名称">
                 <template slot-scope="scope">
-                  <p class="jump-detail" @click="jumpToDetail(scope)">{{scope.row.hostName}}</p>
+                  <p class="jump-detail"
+                     @click="jumpToDetail(scope)">
+                    {{scope.row.hostName}}
+                  </p>
                 </template>
               </el-table-column>
               <el-table-column prop="groupRole" label="角色">
@@ -55,30 +63,32 @@
               <el-table-column prop="instanceCounts" label="承载云主机(个)">
               </el-table-column>
               <el-table-column prop="healthStatus" label="状态">
-                  <template slot-scope="scope">
-                      <p v-if="scope.row.healthStatus" class="table-success"><i class="icon iconfont icon-success"></i> 正常</p>
-                      <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i> 异常</p>
-                  </template>
+                <template slot-scope="scope">
+                  <p v-if="scope.row.healthStatus" class="table-success"><i class="icon iconfont icon-success"></i> 正常</p>
+                  <p v-else class="table-fail"><i class="icon iconfont icon-failure"></i> 异常</p>
+                </template>
               </el-table-column>
-          </el-table>
-          <pagination :tableArgs="tableArgs" @emitTable="emitTable"></pagination>
+            </el-table>
+
+            <my-pagination :tableArgs="tableArgs" @emitTable="emitTable"></my-pagination>
+          </div>
 
         </div>
         <div class="time-task-logic noBg noPadding">
           <el-row  :gutter="15" class="noBg">
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
 
-              <top-five v-bind="usageRateData.cpu"></top-five>
+              <my-top-five v-bind="usageRateData.cpu"></my-top-five>
 
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
 
-              <top-five v-bind="usageRateData.memory"></top-five>
+              <my-top-five v-bind="usageRateData.memory"></my-top-five>
 
             </div></el-col>
             <el-col :span="8"><div class="grid-content bg-purple whiteBg padding-15">
 
-              <top-five v-bind="usageRateData.storage"></top-five>
+              <my-top-five v-bind="usageRateData.storage"></my-top-five>
 
             </div></el-col>
           </el-row>
@@ -90,15 +100,9 @@
 <script>
   import {tableMixin} from '@/assets/js/public'
   import api from '@/axios/api'
-  import topFive from '@/components/business-module/topFive/topfive'
-  import crumbs from '@/components/page-area/crumbs'
-  import pagination from '@/components/page-area/pagination.vue'
 
   export default {
     mixins: [tableMixin],
-    components: {
-      topFive, crumbs, pagination
-    },
     data(){
         return {
           //crumbs
@@ -172,11 +176,17 @@
 
       /* 渲染table */
       initTable(){
+        this.loading = true;
+        setTimeout(()=>{
+          //实际项目：catch加上处理
           api.$http('/serverList', this.tableArgs)
-              .then(res => {
-                  this.tableList = res.articles;
-                  this.tableArgs.total = res.total;
-              });
+            .then(res => {
+              this.tableList = res.articles;
+              this.tableArgs.total = res.total;
+              this.loading = false;
+            });
+        },1500);
+
       },
 
       /*search 额外参数时添加*/
@@ -198,14 +208,22 @@
       },
 
       /* 跳转至详情页 */
-    jumpToDetail(scope){
-        this.$router.push( '/server/'+scope.row.hostName);
-      },
-
+      jumpToDetail(scope){
+        this.fullScreenLoading = true;
+        setTimeout(()=>{
+          this.$router.push( '/server/'+scope.row.hostName);
+          //router中需要配置name
+//          let hostname = scope.row.hostName;
+//          this.$router.push({ name: 'server', params: {hostname}});
+        },1500);
+      }
     }
   }
 </script>
 <style scoped>
+  /* scoped,组件私有
+  * select长度无法自适应
+ */
   .handle-select{
     width: 160px;
   }

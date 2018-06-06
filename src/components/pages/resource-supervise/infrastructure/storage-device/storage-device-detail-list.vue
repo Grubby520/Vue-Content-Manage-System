@@ -41,6 +41,23 @@
     },
     data() {
       return {
+        //crumbs
+        crumbs: [
+          {
+            "title": "资源监管",
+            "icon": "icon-1st-resource-supervise",
+          }, {
+            "title": "基础设施",
+            "icon": "icon-2nd-Infrastructure",
+          }, {
+            "title": "存储设备",
+            "icon": "icon-2nd-Infrastructure",
+            "to": "/storageDevice"
+          },
+          {
+            "title": "服务器",
+          },
+        ],
         hostname: '',
         activeName: 'second',
         initThird: false,
