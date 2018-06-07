@@ -1,5 +1,5 @@
 <template>
-    <div class="table" v-loading.fullscreen.lock="fullScreenLoading">
+    <div class="table">
 
         <my-crumbs :crumbs="crumbs"></my-crumbs>
 
@@ -7,7 +7,9 @@
 
           <div class="lg-title">服务器列表</div>
 
-          <div class="table-box" v-loading="loading">
+          <div class="table-box"
+               v-loading="loading"
+               element-loading-text="数据加载中...">
             <div class="handle-box">
 
               <div class="box-left"></div>
@@ -154,9 +156,11 @@
             },
         }
     },
+
     created(){
       this.init();
     },
+
     methods: {
       init(){
         this.initSelectData();
@@ -199,25 +203,17 @@
         this.tableArgs.currentPage = 1;
         this.initTable();
       },
-      /* $emit */
-      emitTable(args){
-          //this.dialogVisible = !this.dialogVisible;
-          if(args.isInitTable){
-              this.initTable();
-          }
-      },
+
 
       /* 跳转至详情页 */
       jumpToDetail(scope){
-        this.fullScreenLoading = true;
+        this.showScreenLoading();
         setTimeout(()=>{
           this.$router.push( '/server/'+scope.row.hostName);
-          //router中需要配置name
-//          let hostname = scope.row.hostName;
-//          this.$router.push({ name: 'server', params: {hostname}});
         },1500);
-      }
+      },
     }
+
   }
 </script>
 <style scoped>

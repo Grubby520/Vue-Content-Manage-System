@@ -231,17 +231,17 @@ color
     border-color: #20a0ff;
     color: #fff;
 }
-.handle-box>div{
-    display: inline-block;
-}
+/*.handle-box>div{*/
+    /*display: inline-block;*/
+/*}*/
 .box-right{
     /*float: right;*/
 }
-.not-box-left{
-  margin-left: -14px;
-}
+/*.not-box-left{*/
+  /*margin-left: -14px;*/
+/*}*/
 .box-right>.handle-select, .box-right>.el-button, .box-right>.el-input{
-    margin-left: 10px;
+    margin-right: 10px;
 }
 .handle-input{
     width: 200px;

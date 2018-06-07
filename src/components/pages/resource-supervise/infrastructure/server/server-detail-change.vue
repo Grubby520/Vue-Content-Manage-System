@@ -1,123 +1,99 @@
 <template>
   <div>
     <div class="lg-title">资源变更列表</div>
-    <div class="handle-box">
-      <div class="box-left">
+    <div class="table-box"
+         v-loading="loading"
+         element-loading-text="数据加载中...">
+      <div class="handle-box">
+        <div class="box-left">
 
+        </div>
+        <div class="box-right">
+          <el-select v-model="typeId" clearable placeholder="变更类型" class="handle-select mr10">
+            <el-option
+              v-for="item in typeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+
+          <el-button type="primary" icon="search" @click="search">查询</el-button>
+        </div>
       </div>
-      <div class="box-right">
-        <el-select v-model="select_type_id" placeholder="变更类型" class="handle-select mr10">
-          <el-option
-            v-for="item in typeList"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-          </el-option>
-        </el-select>
 
-        <el-button type="primary" icon="search" @click="search">查询</el-button>
-      </div>
-    </div>
+      <el-table :data="tableList" border style="width: 100%">
+        <el-table-column prop="sortNo" label="序号" width="80">
+        </el-table-column>
+        <el-table-column prop="time" label="变更时间">
+        </el-table-column>
+        <el-table-column prop="type" label="变更类型">
+        </el-table-column>
+        <el-table-column prop="resourceBefore" label="变更前资源">
+        </el-table-column>
+        <el-table-column prop="resourceAfter" label="变更后资源">
+        </el-table-column>
+        <el-table-column prop="author" label="变更人">
+        </el-table-column>
+      </el-table>
 
-    <el-table :data="tableList" border style="width: 100%">
-      <el-table-column prop="sortNo" label="序号" width="80">
-      </el-table-column>
-      <el-table-column prop="time" label="变更时间">
-      </el-table-column>
-      <el-table-column prop="type" label="变更类型">
-      </el-table-column>
-      <el-table-column prop="resourceBefore" label="变更前资源">
-      </el-table-column>
-      <el-table-column prop="resourceAfter" label="变更后资源">
-      </el-table-column>
-      <el-table-column prop="author" label="变更人">
-      </el-table-column>
-    </el-table>
-
-    <div class="pagination">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="tableArgs.currentPage"
-        :page-sizes="[10, 15, 20]"
-        :page-size="tableArgs.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="tableArgs.total">
-      </el-pagination>
+      <my-pagination :tableArgs="tableArgs" @emitTable="emitTable"></my-pagination>
     </div>
 
   </div>
 </template>
 <script>
-
+  import {tableMixin} from '@/assets/js/public'
   import api from '@/axios/api.js'
 
   export default {
-      props: {
-        hostname: {type: String},
-      },
+    mixins: [tableMixin],
+    props: {
+      hostname: {type: String, required: true},
+    },
     data(){
       return {
-        //查询table的参数
-        tableArgs: {
-          currentPage: 1,
-          pageSize: 10,
-          total: 0,
-          args: {
-            hostname: ''
-          }
-        },
-        //async-data
-        tableList:[],
-        //filter-table-data
+        //select
+        typeId:'',
         typeList: [],
-        select_type_id:'',
       }
     },
     created(){
       this.initData();
-
       this.tableArgs.args.hostname = this.hostname; // 传参
       this.initTable();
 
     },
     methods:{
-      /*
-       *  渲染search-select
-       * */
-      initData(){
-        api.$http('/changeTypeList', {})
-          .then(res => {
-            this.typeList = res;
-          });
-      },
-      /*
-       *  渲染table
-       * */
-      initTable(){
+    /*
+     *  渲染search-select
+     * */
+    initData(){
+      api.$http('/changeTypeList', {hostname: this.hostname})
+        .then(res => {
+          this.typeList = res;
+        });
+    },
+    /*
+     *  渲染table
+     * */
+    initTable(){
+      this.loading = true;
+      setTimeout(()=>{
         api.$http('/changeList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;
+            this.loading = false;
           });
-      },
-      /*
-       *  翻页
-       * */
-      handleSizeChange(val){
-        this.tableArgs.pageSize = val;
-        this.initTable();
-      },
-      handleCurrentChange(val){
-        this.tableArgs.currentPage  = val;
-        this.initTable(val);
-      },
-      search(){
-        this.tableArgs.currentPage = 1;
-        this.initTable();
-      },
-
+      },1200);
     },
 
-  }
+    search(){
+      this.tableArgs.args.typeId = this.typeId;
+      this.tableArgs.currentPage = 1;
+      this.initTable();
+    },
+  },
+}
 </script>

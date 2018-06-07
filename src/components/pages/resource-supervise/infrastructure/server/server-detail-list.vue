@@ -6,7 +6,7 @@
 
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="基本信息" name="first">
-          <service-detail-basicInfo></service-detail-basicInfo>
+          <service-detail-basicInfo :basicInfo="basicInfo" :resourceConfig="resourceConfig"></service-detail-basicInfo>
         </el-tab-pane>
         <el-tab-pane label="性能" name="second">
           <service-detail-property :hostname="hostname" v-if="initSecond"></service-detail-property>
@@ -18,7 +18,6 @@
           <service-detail-warn :hostname="hostname" v-if="initFourth"></service-detail-warn>
         </el-tab-pane>
       </el-tabs>
-
 
     </div>
   </div>
@@ -63,17 +62,49 @@
         initSecond: false,
         initThird: false,
         initFourth: false,
+        //基本信息组件
+        basicInfo: {},
+        resourceConfig: {},
       };
     },
 
     created(){
-      //获取router.params
-      this.hostname = this.$route.params.hostName;
-      //更新crumbs的title值
-      this.crumbs[this.crumbs.length-1].title = this.hostname;
+
+    },
+
+    //进入created之前
+    beforeRouteEnter (to, from, next) {
+      //获取hostname
+      api.$http('/basicInfoList', {'hostname': to.params.hostName})
+        .then(res => {
+          //next完成后的回调，vm获取当前组件
+          next(vm => vm.setData(res));
+        });
+    },
+    // 复用时才会触发，重新更新视图
+    beforeRouteUpdate (to, from, next) {
+      this.basicInfo = {};
+      this.resourceConfig = {};
+      api.$http('/basicInfoList', {})
+        .then(res => {
+          this.setData(res);
+          next();//触发更新view?
+        });
     },
 
     methods: {
+      /* res: 接口返回的data*/
+      setData(res){
+        if(res && typeof res === 'object'){
+          //获取router.params
+          this.hostname = this.$route.params.hostName;
+          //更新crumbs的title值
+          this.crumbs[this.crumbs.length-1].title = this.hostname;
+          this.basicInfo = res.basicInfo;
+          this.resourceConfig = res.resourceConfig;
+          this.$store.commit('hiddenScreenLoading');
+        }
+      },
       /*
       * tab切换
       * pc: 切换时才异步请求组件

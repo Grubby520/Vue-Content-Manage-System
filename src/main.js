@@ -2,10 +2,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex'
 
 import axios from 'axios'
 //import loading from './components/page-area/loading/index'
-import components from './components/components.js'
+import store from './store/store'
+import components from './components/components'
 
 // import ElementUI from 'element-ui'
 import {
@@ -88,6 +90,7 @@ Vue.config.productionTip = false;
 
 import "babel-polyfill"; // babel垫片，编译新的API
 
+Vue.use(Vuex);
 Vue.use(Pagination);
 Vue.use(Dialog);
 Vue.use(Autocomplete);
@@ -160,13 +163,12 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 Vue.prototype.$axios = axios;
 
+
 //Vue.use(loading);
 Vue.use(components);
 
 new Vue({
+    store,
     router,
-    render: h => h(App),
-    created: function () {
-    
-    }
+    render: h => h(App)
 }).$mount('#app');

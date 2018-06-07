@@ -47,7 +47,6 @@ export let tableMixin = {
     return {
       //Loading
       loading: true,
-      fullScreenLoading: false,
       //table的data
       tableList: [],
       
@@ -62,11 +61,19 @@ export let tableMixin = {
     }
   },
   methods: {
-    /* 查询table */
-    search(){
-      this.tableArgs.currentPage = 1;
-      this.initTable();
-    }
+    /* $emit 翻页刷新 */
+    emitTable(args){
+      if(args.isInitTable){
+        this.initTable();
+      }
+    },
+    /* 跳转全屏loading */
+    showScreenLoading(){
+      this.$store.commit('showScreenLoading');
+    },
+    hiddenScreenLoading(){
+      this.$store.commit('hiddenScreenLoading');
+    },
     
   }
 };

@@ -1372,10 +1372,27 @@ const changeTypeList = function(data){
     },
   ];
 };
+const basicInfoList = function(data){
+  return {
+       basicInfo:{
+         hostname: 'inner',
+         serverIp: '172.18.4.2',
+         cloudProvider: '电信-腾讯',
+         cloudResource: '政务外网资源池',
+         hostNo: '9台',
+         status: 'safe',
+         safeRunTime: '3月15天2小时'
+       },
+       resourceConfig: {
+         cpu: '64核',
+         memory: '120GB',
+         storage: '1024GB'
+       }
+    }
+};
 
 const changeList = function (data) {
   data = JSON.parse(data.body);
-  console.log(data);
   let articles = [];
   let pageSize = data.pageSize || 10,
     curPage = data.currentPage || 1,
@@ -1460,7 +1477,6 @@ const warnTypeList = function(data){
 
 const warnList = function (data) {
   data = JSON.parse(data.body);
-  console.log(data);
   let articles = [];
   let pageSize = data.pageSize || 10,
     curPage = data.currentPage || 1,
@@ -1556,6 +1572,7 @@ Mock.mock('/serviceCatalog/getComputingServiceTable', 'post', getComputingServic
 Mock.mock('/serverList', 'post', serverList);
 
 //服务器-详情页：资源变更
+Mock.mock('/basicInfoList','post', basicInfoList);
 Mock.mock('/changeTypeList','post', changeTypeList);
 Mock.mock('/changeList', 'post', changeList);
 

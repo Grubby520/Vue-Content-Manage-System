@@ -61,24 +61,45 @@
   </el-row>
 </template>
 <script>
+  import api from '@/axios/api.js'
   export default {
+    props:{
+      basicInfo: {type: Object, required: true},
+      resourceConfig: {type: Object, required: true}
+    },
     data(){
       return {
-        basicInfo:{
-          hostname: 'inner',
-          serverIp: '172.18.4.2',
-          cloudProvider: '电信-腾讯',
-          cloudResource: '政务外网资源池',
-          hostNo: '9台',
-          status: 'safe',
-          safeRunTime: '3月15天2小时'
-        },
-        resourceConfig: {
-          cpu: '64核',
-          memory: '120GB',
-          storage: '1024GB'
-        }
+
       }
+    },
+
+   /* beforeRouteEnter (to, from, next) {
+      //获取hostname
+      api.$http('/basicInfoList', {})
+        .then(res => {
+          //next回调，vm获取当前组件
+          next(vm => vm.setData(res));
+        });
+    },*/
+
+    // 复用时才会触发，重新更新视图
+   /* beforeRouteUpdate (to, from, next) {
+      this.basicInfo = null;
+      this.resourceConfig = null;
+      api.$http('/basicInfoList', {})
+        .then(res => {
+          this.setData(res);
+          next();//触发更新view?
+        });
+    },*/
+    methods: {
+      /* res: 接口返回的data*/
+     /* setData(res){
+        if(res && typeof res === 'object'){
+          this.basicInfo = res.basicInfo;
+          this.resourceConfig = res.resourceConfig;
+        }
+      }*/
     }
   }
 </script>
