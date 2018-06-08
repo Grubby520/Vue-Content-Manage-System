@@ -21,7 +21,7 @@
     </el-dialog>
 </template>
 <script>
-    import api from '@/axios/api.js'
+
     export default {
         props: {
             dialogPowerVisible: {type: Boolean},
@@ -61,7 +61,7 @@
         methods: {
             initData(orgId){
                 //api
-                api.$http('/userTable/getUserPower',
+                this.$api.$http('/userTable/getUserPower',
                     {
                         orgId: orgId
                     })

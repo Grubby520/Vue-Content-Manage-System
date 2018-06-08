@@ -38,7 +38,7 @@
 
 <script>
     import '../../assets/css/login.css'
-    import api from '@/axios/api.js'
+
     export default {
         data: function(){
             //自定义验证规则
@@ -82,7 +82,7 @@
                 this.$refs[formName].validate((valid) => {
                     if(valid){
                         //模拟验证
-                        api.$http('/validate_logon', this.ruleForm
+                        this.$api.$http('/validate_logon', this.ruleForm
                             ).then(res => {
                                 if(res.result === 'success'){
                                     localStorage.setItem('username', this.ruleForm.username);

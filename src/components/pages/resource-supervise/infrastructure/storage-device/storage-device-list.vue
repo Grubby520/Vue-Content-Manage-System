@@ -101,7 +101,7 @@
 
 <script>
 
-  import api from '@/axios/api.js'
+
   import topFive from '@/components/business-module/topFive/topfive.vue'
 
   export default {
@@ -171,11 +171,11 @@
        *  渲染search-select
        * */
       initData(){
-        api.$http('/cloudPlatformList', {})
+        this.$api.$http('/cloudPlatformList', {})
           .then(res => {
             this.cloudPlatform = res;
           });
-        api.$http('/cloudResourcePoolList', {})
+        this.$api.$http('/cloudResourcePoolList', {})
           .then(res => {
             this.cloudResourcePool = res;
           });
@@ -184,7 +184,7 @@
        *  渲染table
        * */
       initTable(){
-        api.$http('/storageDeviceList', this.tableArgs)
+        this.$api.$http('/storageDeviceList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;

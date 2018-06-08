@@ -54,7 +54,7 @@ add/edit dialog
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import {deepCopyObject, isObjectValueEqual} from '../../../../assets/js/public.js'
     export default {
         props: {

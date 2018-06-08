@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import codeTableDialog from './codeTable-dialog.vue'
     export default {
         props: {
@@ -99,7 +99,7 @@
              * */
             initTableData() {
                 //api，获取table列表对象
-                api.$http('/codeTable',
+                this.$api.$http('/codeTable',
                     {
                         table: this.setTableData,
                         page: this.table_user

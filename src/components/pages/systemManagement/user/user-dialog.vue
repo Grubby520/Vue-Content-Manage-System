@@ -62,7 +62,7 @@ add/edit dialog
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import {deepCopyObject, isObjectValueEqual} from '../../../../assets/js/public.js'
     export default {
         props: {
@@ -135,12 +135,12 @@ add/edit dialog
         },
         methods: {
             initData(){
-                api.$http('/roleList', {})
+                this.$api.$http('/roleList', {})
                     .then(res => {
                         this.roles = res;
                     });
 
-                api.$http('/departmentList',{})
+                this.$api.$http('/departmentList',{})
                     .then(res => {
                         this.departments = res;
                     })

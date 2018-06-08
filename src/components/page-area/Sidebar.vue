@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     export default {
         data() {
             return {
@@ -58,7 +58,7 @@
         },
         methods: {
             getMenuList(){
-                api.$http('/menuList',{})
+                this.$api.$http('/menuList',{})
                     .then(res => {
                         this.items = res;
                     })

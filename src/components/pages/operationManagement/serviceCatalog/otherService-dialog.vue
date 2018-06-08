@@ -71,7 +71,7 @@ add/edit dialog
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import {deepCopyObject, isObjectValueEqual} from '../../../../assets/js/public.js'
     export default {
         props: {
@@ -170,15 +170,15 @@ add/edit dialog
             *  初始化下拉框
             * */
             initData(){
-                api.$http('/specificSetList', {})
+                this.$api.$http('/specificSetList', {})
                     .then(res => {
                         this.specificSetList = res;
                     });
-                api.$http('/priceUnitList', {})
+                this.$api.$http('/priceUnitList', {})
                     .then(res => {
                         this.priceUnitList = res;
                     });
-                api.$http('/pricePeriodList', {})
+                this.$api.$http('/pricePeriodList', {})
                     .then(res => {
                         this.pricePeriodList = res;
                     });

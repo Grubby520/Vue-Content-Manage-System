@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import api from '@/axios/api.js'
+
   import storageDeviceDetailProperty from './storage-device-detail-property'
   import storageDeviceDetailChange from './storage-device-detail-change.vue'
   import storageDeviceDetailWarn from './storage-device-detail-warn.vue'

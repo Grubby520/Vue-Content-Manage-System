@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import thirdSecurityServiceDialog from './thirdSecurityService-dialog.vue'
     export default {
         components: {
@@ -92,7 +92,7 @@
             *  渲染table
             * */
             initTable(){
-                api.$http('/serviceCatalog/getComputingServiceTable', this.tableArgs)
+                this.$api.$http('/serviceCatalog/getComputingServiceTable', this.tableArgs)
                     .then(res => {
                         this.tableList = res.articles;
                         this.tableArgs.total = res.total;

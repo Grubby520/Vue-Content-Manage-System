@@ -64,7 +64,7 @@
 </template>
 <script>
 
-  import api from '@/axios/api.js'
+
 
   export default {
       props: {
@@ -134,7 +134,7 @@
        *  渲染search-select
        * */
       initData(){
-        api.$http('/changeTypeList', {})
+        this.$api.$http('/changeTypeList', {})
           .then(res => {
             this.typeList = res;
           });
@@ -143,7 +143,7 @@
        *  渲染table
        * */
       initTable(){
-        api.$http('/changeList', this.tableArgs)
+        this.$api.$http('/changeList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;

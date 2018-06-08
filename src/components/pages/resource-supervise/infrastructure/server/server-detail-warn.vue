@@ -51,7 +51,6 @@
 </template>
 <script>
   import {tableMixin} from '@/assets/js/public'
-  import api from '@/axios/api.js'
 
   export default {
     mixins: [tableMixin],
@@ -77,7 +76,7 @@
        *  渲染search-select
        * */
       initData(){
-        api.$http('/warnTypeList', {hostname: this.hostname})
+        this.$api.$http('/warnTypeList', {hostname: this.hostname})
           .then(res => {
             this.typeList = res;
           });
@@ -88,7 +87,7 @@
       initTable(){
         this.loading = true;
         setTimeout(()=>{
-          api.$http('/warnList', this.tableArgs)
+          this.$api.$http('/warnList', this.tableArgs)
             .then(res => {
               this.tableList = res.articles;
               this.tableArgs.total = res.total;

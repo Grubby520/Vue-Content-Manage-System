@@ -137,7 +137,7 @@
 
 <script>
     import '../../assets/css/home.css'
-    import api from '@/axios/api.js'
+
     import {Chart,getColor,business_monitor_option,business_status} from '../../assets/js/modules/charts'
     export default {
         data(){
@@ -164,14 +164,14 @@
             }
         },
         created(){
-            api.$http('/getHomeList',{})
+            this.$api.$http('/getHomeList',{})
                 .then(res => {
                     this.basic = res.basic;
                     this.resource = res.resource;
                     this.distribution = res.distribution;
                 });
 
-            api.$http('/getHomeList/business',{})
+            this.$api.$http('/getHomeList/business',{})
                 .then(res => {
                     if(res.business_security >= 80){
                         this.security.text = '安全';

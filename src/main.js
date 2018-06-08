@@ -3,8 +3,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
+//import axios from 'axios'
+import api from '@/axios/api'
 
-import axios from 'axios'
 //import loading from './components/page-area/loading/index'
 import store from './store/store'
 import components from './components/components'
@@ -161,7 +162,9 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
-Vue.prototype.$axios = axios;
+
+//Vue.prototype.$axios = axios;
+Vue.prototype.$api = api;
 
 
 //Vue.use(loading);

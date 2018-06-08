@@ -58,7 +58,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import tenantDialog from './tenant-dialog.vue'
     export default {
         components: {
@@ -114,7 +114,7 @@
             * */
             getTableData() {
                 //api，获取table列表对象
-                api.$http('/tenantTable',
+                this.$api.$http('/tenantTable',
                     {
                         currentPage: this.currentPage,
                         pageSize: this.pageSize,

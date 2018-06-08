@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import computingServiceTable from './computingService-table.vue'
     import storageServiceTable from './storageService-table.vue'
     import softwareServiceTable from './softwareService-table.vue'
@@ -99,7 +99,7 @@
             *  获取tabList
             * */
             getTabList(){
-                api.$http('/serviceCatalog/getTabList', {})
+                this.$api.$http('/serviceCatalog/getTabList', {})
                     .then(res => {
                         this.tabList = res;
                         this.activeName = res[0].id;

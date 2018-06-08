@@ -101,7 +101,6 @@
 
 <script>
   import {tableMixin} from '@/assets/js/public'
-  import api from '@/axios/api'
 
   export default {
     mixins: [tableMixin],
@@ -168,11 +167,11 @@
       },
       /* 渲染select */
       initSelectData(){
-          api.$http('/cloudPlatformList', {})
+          this.$api.$http('/cloudPlatformList', {})
               .then(res => {
                   this.providerList = res;
               });
-          api.$http('/cloudResourcePoolList', {})
+        this.$api.$http('/cloudResourcePoolList', {})
               .then(res => {
                   this.regionList = res;
               });
@@ -183,7 +182,7 @@
         this.loading = true;
         setTimeout(()=>{
           //实际项目：catch加上处理
-          api.$http('/serverList', this.tableArgs)
+          this.$api.$http('/serverList', this.tableArgs)
             .then(res => {
               this.tableList = res.articles;
               this.tableArgs.total = res.total;

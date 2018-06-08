@@ -162,7 +162,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import UserDialog from './user-dialog.vue'
     import UserPowerDialog from './user_power_dialog.vue'
     import pwdDialog from './pwd-dialog.vue'
@@ -244,12 +244,12 @@
             * 初始化下拉搜索
             * */
             getSelectSearchData(){
-                api.$http('/roleList', {})
+                this.$api.$http('/roleList', {})
                     .then(res => {
                         this.roles = res;
                     });
 
-                api.$http('/departmentList',{})
+                this.$api.$http('/departmentList',{})
                     .then(res => {
                         this.departments = res;
                     })
@@ -259,7 +259,7 @@
             * */
             getTableData() {
                 //api，获取table列表对象
-                api.$http('/userTable',
+                this.$api.$http('/userTable',
                     {
                         currentPage: this.currentPage,
                         pageSize: this.pageSize,

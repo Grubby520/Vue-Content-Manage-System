@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import api from '@/axios/api.js'
+
     import codeTableSys from './codeTable-sys.vue'
     import codeTableUser from './codeTable-user.vue'
 
@@ -115,7 +115,7 @@
             *  获取treeData
             * */
             initTreeData(){
-                api.$http('/codeTree', {})
+                this.$api.$http('/codeTree', {})
                     .then(res => {
                         this.tabListArray = res;
 
