@@ -134,7 +134,7 @@
        *  渲染search-select
        * */
       initData(){
-        this.$api.$http('/changeTypeList', {})
+        this.$api.post('/changeTypeList', {})
           .then(res => {
             this.typeList = res;
           });
@@ -143,7 +143,7 @@
        *  渲染table
        * */
       initTable(){
-        this.$api.$http('/changeList', this.tableArgs)
+        this.$api.post('/changeList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;

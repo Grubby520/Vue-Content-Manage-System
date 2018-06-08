@@ -135,12 +135,12 @@ add/edit dialog
         },
         methods: {
             initData(){
-                this.$api.$http('/roleList', {})
+                this.$api.post('/roleList', {})
                     .then(res => {
                         this.roles = res;
                     });
 
-                this.$api.$http('/departmentList',{})
+                this.$api.post('/departmentList',{})
                     .then(res => {
                         this.departments = res;
                     })

@@ -68,7 +68,7 @@
      *  渲染search-select
      * */
     initData(){
-      this.$api.$http('/changeTypeList', {hostname: this.hostname})
+      this.$api.post('/changeTypeList', {hostname: this.hostname})
         .then(res => {
           this.typeList = res;
         });
@@ -79,7 +79,7 @@
     initTable(){
       this.loading = true;
       setTimeout(()=>{
-        this.$api.$http('/changeList', this.tableArgs)
+        this.$api.post('/changeList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;

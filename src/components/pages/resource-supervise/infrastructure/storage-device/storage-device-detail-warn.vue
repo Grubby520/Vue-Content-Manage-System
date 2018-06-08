@@ -92,7 +92,7 @@
        *  渲染search-select
        * */
       initData(){
-        this.$api.$http('/warnTypeList', {})
+        this.$api.post('/warnTypeList', {})
           .then(res => {
             this.typeList = res;
           });
@@ -101,7 +101,7 @@
        *  渲染table
        * */
       initTable(){
-        this.$api.$http('/warnList', this.tableArgs)
+        this.$api.post('/warnList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;

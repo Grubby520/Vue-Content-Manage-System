@@ -61,7 +61,7 @@
         methods: {
             initData(orgId){
                 //api
-                this.$api.$http('/userTable/getUserPower',
+                this.$api.post('/userTable/getUserPower',
                     {
                         orgId: orgId
                     })

@@ -133,7 +133,7 @@ add/edit dialog
         },
         methods: {
             initData(){
-                this.$api.$http('/departmentList',{})
+                this.$api.post('/departmentList',{})
                     .then(res => {
                         this.departments = res;
                     })

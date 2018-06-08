@@ -75,7 +75,7 @@
 
    /* beforeRouteEnter (to, from, next) {
       //获取hostname
-      this.$api.$http('/basicInfoList', {})
+      this.$api.post('/basicInfoList', {})
         .then(res => {
           //next回调，vm获取当前组件
           next(vm => vm.setData(res));
@@ -86,7 +86,7 @@
    /* beforeRouteUpdate (to, from, next) {
       this.basicInfo = null;
       this.resourceConfig = null;
-      this.$api.$http('/basicInfoList', {})
+      this.$api.post('/basicInfoList', {})
         .then(res => {
           this.setData(res);
           next();//触发更新view?

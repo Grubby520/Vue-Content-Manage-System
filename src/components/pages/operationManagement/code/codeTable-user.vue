@@ -99,7 +99,7 @@
              * */
             initTableData() {
                 //api，获取table列表对象
-                this.$api.$http('/codeTable',
+                this.$api.post('/codeTable',
                     {
                         table: this.setTableData,
                         page: this.table_user

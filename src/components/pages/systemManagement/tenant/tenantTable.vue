@@ -114,7 +114,7 @@
             * */
             getTableData() {
                 //api，获取table列表对象
-                this.$api.$http('/tenantTable',
+                this.$api.post('/tenantTable',
                     {
                         currentPage: this.currentPage,
                         pageSize: this.pageSize,

@@ -58,7 +58,7 @@
         },
         methods: {
             getMenuList(){
-                this.$api.$http('/menuList',{})
+                this.$api.post('/menuList',{})
                     .then(res => {
                         this.items = res;
                     })

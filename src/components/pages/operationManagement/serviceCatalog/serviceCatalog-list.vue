@@ -99,7 +99,7 @@
             *  获取tabList
             * */
             getTabList(){
-                this.$api.$http('/serviceCatalog/getTabList', {})
+                this.$api.post('/serviceCatalog/getTabList', {})
                     .then(res => {
                         this.tabList = res;
                         this.activeName = res[0].id;

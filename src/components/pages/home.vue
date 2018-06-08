@@ -164,14 +164,14 @@
             }
         },
         created(){
-            this.$api.$http('/getHomeList',{})
+            this.$api.post('/getHomeList',{})
                 .then(res => {
                     this.basic = res.basic;
                     this.resource = res.resource;
                     this.distribution = res.distribution;
                 });
 
-            this.$api.$http('/getHomeList/business',{})
+            this.$api.post('/getHomeList/business',{})
                 .then(res => {
                     if(res.business_security >= 80){
                         this.security.text = '安全';

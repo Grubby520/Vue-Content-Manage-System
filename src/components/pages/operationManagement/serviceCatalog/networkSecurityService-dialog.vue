@@ -170,15 +170,15 @@ add/edit dialog
             *  初始化下拉框
             * */
             initData(){
-                this.$api.$http('/specificSetList', {})
+                this.$api.post('/specificSetList', {})
                     .then(res => {
                         this.specificSetList = res;
                     });
-                this.$api.$http('/priceUnitList', {})
+                this.$api.post('/priceUnitList', {})
                     .then(res => {
                         this.priceUnitList = res;
                     });
-                this.$api.$http('/pricePeriodList', {})
+                this.$api.post('/pricePeriodList', {})
                     .then(res => {
                         this.pricePeriodList = res;
                     });

@@ -1581,6 +1581,3 @@ Mock.mock('/warnTypeList','post', warnTypeList);
 Mock.mock('/warnList', 'post', warnList);
 
 Mock.mock('/storageDeviceList', 'post', storageDeviceList);
-
-
-

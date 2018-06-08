@@ -92,7 +92,7 @@
             *  渲染table
             * */
             initTable(){
-                this.$api.$http('/serviceCatalog/getComputingServiceTable', this.tableArgs)
+                this.$api.post('/serviceCatalog/getComputingServiceTable', this.tableArgs)
                     .then(res => {
                         this.tableList = res.articles;
                         this.tableArgs.total = res.total;

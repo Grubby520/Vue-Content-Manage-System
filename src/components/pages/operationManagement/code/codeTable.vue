@@ -115,7 +115,7 @@
             *  获取treeData
             * */
             initTreeData(){
-                this.$api.$http('/codeTree', {})
+                this.$api.post('/codeTree', {})
                     .then(res => {
                         this.tabListArray = res;
 

@@ -167,11 +167,11 @@
       },
       /* 渲染select */
       initSelectData(){
-          this.$api.$http('/cloudPlatformList', {})
+          this.$api.post('/cloudPlatformList', {})
               .then(res => {
                   this.providerList = res;
               });
-        this.$api.$http('/cloudResourcePoolList', {})
+        this.$api.post('/cloudResourcePoolList', {})
               .then(res => {
                   this.regionList = res;
               });
@@ -182,7 +182,7 @@
         this.loading = true;
         setTimeout(()=>{
           //实际项目：catch加上处理
-          this.$api.$http('/serverList', this.tableArgs)
+          this.$api.post('/serverList', this.tableArgs)
             .then(res => {
               this.tableList = res.articles;
               this.tableArgs.total = res.total;

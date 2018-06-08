@@ -171,11 +171,11 @@
        *  渲染search-select
        * */
       initData(){
-        this.$api.$http('/cloudPlatformList', {})
+        this.$api.post('/cloudPlatformList', {})
           .then(res => {
             this.cloudPlatform = res;
           });
-        this.$api.$http('/cloudResourcePoolList', {})
+        this.$api.post('/cloudResourcePoolList', {})
           .then(res => {
             this.cloudResourcePool = res;
           });
@@ -184,7 +184,7 @@
        *  渲染table
        * */
       initTable(){
-        this.$api.$http('/storageDeviceList', this.tableArgs)
+        this.$api.post('/storageDeviceList', this.tableArgs)
           .then(res => {
             this.tableList = res.articles;
             this.tableArgs.total = res.total;

@@ -244,12 +244,12 @@
             * 初始化下拉搜索
             * */
             getSelectSearchData(){
-                this.$api.$http('/roleList', {})
+                this.$api.post('/roleList', {})
                     .then(res => {
                         this.roles = res;
                     });
 
-                this.$api.$http('/departmentList',{})
+                this.$api.post('/departmentList',{})
                     .then(res => {
                         this.departments = res;
                     })
@@ -259,7 +259,7 @@
             * */
             getTableData() {
                 //api，获取table列表对象
-                this.$api.$http('/userTable',
+                this.$api.post('/userTable',
                     {
                         currentPage: this.currentPage,
                         pageSize: this.pageSize,
