@@ -46,7 +46,7 @@ export let tableMixin = {
   data(){
     return {
       //Loading
-      loading: true,
+      //loading: false,
       //table的data
       tableList: [],
       
@@ -55,7 +55,10 @@ export let tableMixin = {
         currentPage: 1,
         pageSize: 10,
         total: 0,
-        args: {}
+        querySelector: '.table-box',
+        args: {
+          providerId: 'abc'
+        }
       },
       
     }

@@ -76,7 +76,7 @@
     beforeRouteEnter (to, from, next) {
       //获取hostname
       //this.$api.post('/basicInfoList', {'hostname': to.params.hostName})
-      api.$http('/basicInfoList', {'hostname': to.params.hostName})
+      api.post('/basicInfoList', {'hostname': to.params.hostName})
         .then(res => {
           //next完成后的回调，vm获取当前组件
           next(vm => vm.setData(res));

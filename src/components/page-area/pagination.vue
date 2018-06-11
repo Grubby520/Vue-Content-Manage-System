@@ -23,10 +23,12 @@
     methods: {
       /* table翻页 */
       handleSizeChange(val){
+        console.log('handleSizeChange');
         this.tableArgs.pageSize = val;
         this.$emit('emitTable', {isInitTable: true});
       },
       handleCurrentChange(val){
+        console.log('handleCurrentChange');
         this.tableArgs.currentPage  = val;
         this.$emit('emitTable', {isInitTable: true});
       },

@@ -1185,84 +1185,84 @@ const serverList = function (data) {
     data = JSON.parse(data.body);
     let articles = [];
     let pageSize = data.pageSize || 10,
-        curPage = data.currentPage || 1,
-        total = 36,
-        end = 0,
-        lastPage = Math.ceil( total/pageSize),
-        start = pageSize*(curPage-1);
+      curPage = data.currentPage || 1,
+      total = 36,
+      end = 0,
+      lastPage = Math.ceil( total/pageSize),
+      start = pageSize*(curPage-1);
     end = lastPage === curPage ? total : pageSize*curPage;
-
+  
     const groupRole = [
-        {
-            id: '1',
-            name: '计算服务器'
-        },
-        {
-            id: '2',
-            name: '存储服务器'
-        }
+      {
+        id: '1',
+        name: '计算服务器'
+      },
+      {
+        id: '2',
+        name: '存储服务器'
+      }
     ];
     const cloudPlatformName = [
-        {
-            id: '1',
-            name: '移动-华三'
-        },
-        {
-            id: '2',
-            name: '电信-腾讯'
-        },
-        {
-            id: '3',
-            name: '电信-华为备份云'
-        },
-        {
-            id: '4',
-            name: '联通'
-        },
-        {
-            id: '5',
-            name: '浪潮'
-        }
+      {
+        id: '1',
+        name: '移动-华三'
+      },
+      {
+        id: '2',
+        name: '电信-腾讯'
+      },
+      {
+        id: '3',
+        name: '电信-华为备份云'
+      },
+      {
+        id: '4',
+        name: '联通'
+      },
+      {
+        id: '5',
+        name: '浪潮'
+      }
     ];
     const cloudResourcePoolName = [
-        {
-            id: '1',
-            name: '互联网资源池'
-        },
-        {
-            id: '2',
-            name: '政务外网资源池'
-        }
+      {
+        id: '1',
+        name: '互联网资源池'
+      },
+      {
+        id: '2',
+        name: '政务外网资源池'
+      }
     ];
     const modelNo = [
-        {
-            id: '1',
-            name: 'H3C'
-        },
-        {
-            id: '2',
-            name: 'HUAWEI'
-        }
+      {
+        id: '1',
+        name: 'H3C'
+      },
+      {
+        id: '2',
+        name: 'HUAWEI'
+      }
     ];
     for(let i=start; i<end; i++){
-        let newArticleObject = {
-            sortNo: i+1,
-            hostName: Random.character('upper')+Random.natural(10, 99)+'-'+Random.string('upper',3)+'-'+Random.natural(0, 100),
-            groupRole: groupRole[Random.natural(0,groupRole.length-1)].name,
-            ip: Random.ip(),
-            cloudPlatformName: cloudPlatformName[Random.natural(0,cloudPlatformName.length-1)].name,
-            cloudResourcePoolName: cloudResourcePoolName[Random.natural(0,cloudResourcePoolName.length-1)].name,
-            manufacturer: Random.character('upper')+Random.natural(10, 99)+'-'+Random.character('upper')+Random.natural(1, 10),
-            modelNo: modelNo[Random.natural(0,modelNo.length-1)].name,
-            instanceCounts:  Random.natural(0, 20),
-            healthStatus: Random.boolean(8, 9, true)
-        };
-        articles.push(newArticleObject);
+      let newArticleObject = {
+        sortNo: i+1,
+        hostName: Random.character('upper')+Random.natural(10, 99)+'-'+Random.string('upper',3)+'-'+Random.natural(0, 100),
+        groupRole: groupRole[Random.natural(0,groupRole.length-1)].name,
+        ip: Random.ip(),
+        cloudPlatformName: cloudPlatformName[Random.natural(0,cloudPlatformName.length-1)].name,
+        cloudResourcePoolName: cloudResourcePoolName[Random.natural(0,cloudResourcePoolName.length-1)].name,
+        manufacturer: Random.character('upper')+Random.natural(10, 99)+'-'+Random.character('upper')+Random.natural(1, 10),
+        modelNo: modelNo[Random.natural(0,modelNo.length-1)].name,
+        instanceCounts:  Random.natural(0, 20),
+        healthStatus: Random.boolean(8, 9, true)
+      };
+      articles.push(newArticleObject);
     }
-
+  
     return {
-        articles: articles,
-        total: total
+      articles: articles,
+      total: total
     }
 };
 
