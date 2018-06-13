@@ -5,6 +5,7 @@
     <title>testing</title>
     <link href="plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" type="text/css">
     <link href="plugin/style.css" rel="stylesheet" type="text/css">
+
   <style>
     .color{
       color: #f9d079;
@@ -13,6 +14,120 @@
       color: #41a7e6;
       color: #f9a6a4;
     }
+    .floatRight {
+      float:right;
+    }
+
+    .table-title {
+      text-align: left;
+      padding: 0.5em 0;
+      background-color: #fff;
+    }
+
+    .text-safe {
+      color: #66C747;
+    }
+
+    .text-danger {
+      color: #A30034;
+    }
+
+    /*模拟tab页,异步方式*/
+
+    /*公用*/
+    .simulate-tab-content {
+      position:relative;
+      clear:both;
+    }
+
+    /**
+    *标签类导航样式-个性化设置
+    **/
+    .simulate-tab .label-nav {
+      margin:1em auto;
+    }
+
+    .simulate-tab .label-nav > li.active > a {
+      color:#25a4f6;
+    }
+
+    .simulate-tab .label-nav > li > a {
+      padding:0 1em;
+      border-right:1px solid #A9A9A9;
+    }
+
+    .simulate-tab .label-nav > li:last-child > a {
+      border-right:none;
+    }
+
+    /*提示框样式表*/
+    /*容器-公用*/
+    .show-tip {
+      position: absolute;
+      display:none;
+      padding: 1em;
+      color:#fff;
+      background-color: #333;
+      border-radius: 0.3em;
+      z-index:1000;
+    }
+
+    /*show-tip的内容-个性化设置*/
+    .tpchart-tip-content span {
+      display:inline-block;
+      vertical-align: middle;
+    }
+
+    .tpchart-tip-content span.circle-icon {
+      border-radius: 0.5em;
+      margin-right:0.5em;
+      background-color: #93C62D;
+      height: 1em;
+      width: 1em;
+    }
+
+
+    /*拓扑图legend*/
+    .tp-legend {
+      position:absolute;
+      right:5%;
+      bottom:5%;
+      z-index:1000;
+    }
+
+    .tp-legend li {
+      margin-bottom:0.5em;
+    }
+
+    .tp-legend span {
+      display:inline-block;
+      vertical-align: middle;
+    }
+
+    .tp-legend span.tp-legend-icon {
+      border-radius: 1em;
+      margin-right:1em;
+      height: 2em;
+      width: 2em;
+      border:2px solid #fff;
+    }
+
+    .tp-legend-icon-1 {
+      box-shadow: 0 0 10px #EA1E63;
+      background-color: #EA1E63;
+    }
+
+    .tp-legend-icon-2 {
+      box-shadow: 0 0 10px #93C62D;
+      background-color: #93C62D;
+    }
+
+    .tp-legend-icon-3 {
+      box-shadow: 0 0 10px #BA9FE9;
+      background-color: #BA9FE9;
+    }
+
+
   </style>
 </head>
 <body>
@@ -36,8 +151,17 @@
       <option value="222">222</option>
     </select>
     <input type="radio">选中
-    <button type="reset">重置
+    <button type="reset">重置</button>
   </form>
+
+
+  <div style="background-color:#fff;" class="simulate-tab clearfix">
+    <ul class="nav navbar-nav label-nav floatRight">
+      <li class="active" data-click="tpChart"><a href="#">政务云拓扑图</a></li>
+      <li data-click="mapChart"><a href="#">政务云地区分布图</a></li>
+    </ul>
+    <div class="simulate-tab-content"></div>
+  </div>
 </div>
 
 <script src="plugin/jquery.1.11.js"></script>
@@ -53,104 +177,437 @@
 <script src="/phpcms/templates/mf3uR/series/static/scripts/threesixty.js"></script>
 -->
 
+<script src="plugin/d3.min.js"></script>
 <script>
   let arr =['Ger','Bar','Pie'];
   function reserve(arr){
 
   }
 $(function(){
+
   $("#content-3").mCustomScrollbar({
     scrollButtons:{enable:true},
     theme:"dark",
     scrollbarPosition:"outside"
   });
+
+  function getTpData(){
+    return {
+      "id":"1",
+      "parentId":"0",
+      "name":"云大部-云监管平台",
+      "type":"1",
+      "privider":[
+        "testtttIcehouseopenstack原生云Icehouseopenstack原生云",
+        "Icehouseopenstack原生云",
+        "1%1"
+      ],
+      "children":[
+      ]
+    }
+  }
+
+  //show-tip组件
+  var ShowTip = function(htmlstr){
+    this.$ele = $(htmlstr);
+  };
+
+  ShowTip.prototype.getEle = function(){
+    return this.$ele;
+  };
+
+  ShowTip.prototype.show = function(){
+    this.$ele.show();
+  };
+
+  ShowTip.prototype.hide = function(){
+    this.$ele.hide();
+  };
+
+  ShowTip.prototype.position = function(left,top){
+    this.$ele.css({
+      left:left,
+      top:top
+    });
+  };
+
+  ShowTip.prototype.width = function(width){
+    this.$ele.width(width);
+  };
+
+  ShowTip.prototype.setContent = function(htmlstr){
+    this.$ele.html(htmlstr);
+  };
+
+  ShowTip.prototype.destroy = function(){
+    this.$ele.remove();
+  };
+
+  ShowTip.getInstance = (function(){
+    var instance = null;
+
+    return function(htmlstr){
+      if(!instance){
+        instance = new ShowTip(htmlstr);
+      }
+      return instance;
+    };
+  })();
+
+
+  function TPChart(option){
+    let _defaultOption = {
+      width:300,
+      height:300,
+      data:'',
+      container:''
+    };
+
+    option = $.extend(true, _defaultOption,option);
+
+    this.width  = option.width;
+    this.height = option.height;
+    this.data   = option.data;//数据url或对象,必填
+    this.container = option.container;//svg容器(node或者选择器)，必填
+  }
+  TPChart.prototype.init = function(){
+    let that = this;
+    function typeStr(obj){
+      return Object.prototype.toString.call(obj).toLowerCase();
+    }
+
+    function renderTp(nodes,edges){
+
+      let width  = that.width;
+      let height = that.height;
+      let img_w = 40;
+      let img_h = 40;
+
+      let drag = d3.behavior.drag()
+        .origin(function(d) {
+          return d;
+        })
+        .on("dragstart", dragstarted)
+        .on("drag", dragged)
+        .on("dragend", dragended);
+
+      let zoom = d3.behavior.zoom()
+        .scaleExtent([-10, 10])
+        .on("zoom",zoomed);
+
+      let svg = d3.select(that.container)
+        .append("svg")
+        .attr("width",width)
+        .attr("height",height)
+        .append("g")
+        .style("pointer-events", "all")
+        .call(zoom);
+
+      let g = svg.append("g").attr("class","graphCon");
+
+      let lines = g.append("g")
+        .attr("class", "links")
+        .selectAll(".link")
+        .data(edges)
+        .enter()
+        .append("path")
+        .attr("class", "link")
+        .attr("fill","none")
+        .style("stroke-width",2)
+        .style("cursor","move");
+
+      let node = g.append("g")
+        .attr("class", "nodes")
+        .selectAll(".node")
+        .data(nodes)
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("cx", function(d) {
+          return d.x;
+        })
+        .attr("cy", function(d) {
+          return d.y;
+        })
+        .style("cursor","pointer")
+        .call(drag);
+
+      node.append("circle")
+        .attr("class","circle")
+        .attr("r", function(d) {
+          if(d.type == "3") {
+            return 10;
+          }else{
+            return 30;
+          }
+        })
+        .style("fill", function(d) {
+          if(d.type == "1") {
+            return "#EA1E63";
+          } else if(d.type == "2") {
+            return "#93C62D";
+          }else{
+            return "#BA9FE9";
+          }
+
+        });
+
+      node.append("image")
+        .attr("x",function(d){
+          return "-20";
+        })
+        .attr("y",function(d){
+          return "-20";
+        })
+        .attr("width",function(d){
+          return img_w;
+        })
+        .attr("height",function(d){
+          return img_h;
+        })
+        .attr("xlink:href",function(d){
+          return d.image;
+        });
+
+      let nodetext = g.append("g")
+        .attr("class", "texts")
+        .selectAll(".node-text")
+        .data(nodes)
+        .enter()
+        .append("text")
+        .attr("class","node-text")
+        .style("font-size",function(d){
+          return "14px";
+        })
+        .attr("dx",function(d){
+          return -14/2*d.name.length;
+        })
+        .attr("dy",function(d){
+          if(d.type == "3") {
+            return 25;
+          }else{
+            return 45;
+          }
+        })
+        .text(function(d){
+          return d.name;
+        });
+
+      //定义力学图布局
+      //linkDistance 是结点间的距离， charge 是定义结点间是吸引（值为正）还是互斥（值为负），值越大力越强
+      let force = d3.layout.force()
+        .nodes(nodes)
+        .links(edges)
+        .size([width,height])
+        .linkDistance(function(d){
+          return 50 + Math.floor(100*Math.random());
+        })
+        .charge(-700)
+        .start()
+        .on("tick", function(){
+
+          lines.attr("d",function(d){
+              return "M"+d.source.x+","+
+                d.source.y+" Q"+d.source.x+","+
+                d.target.y+" "+d.target.x+" "+d.target.y;
+            })
+            .style("stroke",function(d){
+              if(d.source.type == "1"){
+                return "#93C62D";
+              } else {
+                return "#BA9FE9";
+              }
+            });
+
+          node.attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+          });
+
+          nodetext.attr("x",function(d){ return d.x; });
+          nodetext.attr("y",function(d){
+            return d.y;
+          });
+
+        });
+
+      let showTip = ShowTip.getInstance("<div class='show-tip'></div>");
+      node.on("mouseover", function(d) {
+          let tpchartTip = '<div class="tpchart-tip-content">'+
+            '<div class="title">'+d.name+'</div><ul>';
+          for(let i=0;i<d.provider.length;i++){
+            tpchartTip += '<li><span class="circle-icon"></span><span>'+
+              d.provider[i]+'</span></li>';
+          }
+          tpchartTip += '</ul></div>';
+
+          showTip.setContent(tpchartTip);
+
+          showTip.position(d3.event.clientX+15,d3.event.clientY);
+          if($(".show-tip").length == 0){
+            $("body").append(showTip.getEle());
+          }
+          showTip.show();
+        })
+        .on("mouseout", function(d) {
+          showTip.hide();
+        });
+
+      node.on("mousemove", function(d) {
+        showTip.position(d3.event.clientX+15,d3.event.clientY);
+      });
+
+      function zoomed(){
+        g.attr("transform","translate("+d3.event.translate+")scale(" + d3.event.scale + ")");
+      }
+
+      function dragstarted(d) {
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this).classed("dragging", true);
+        force.start();
+      }
+
+      function dragged(d) {
+        d.x = d3.event.x;
+        d.y = d3.event.y;
+      }
+
+      function dragended(d) {
+        d3.select(this).classed("dragging", false);
+      }
+
+    }
+
+    if(typeStr(that.data)=='[object string]'){
+      d3.json(that.data,function(error,data){
+        if(error) throw error ;
+        that.data = data;
+      });
+    }
+    renderTp(that.data.nodes,that.data.lines);
+
+  };
+
+  let SimulateTab = {
+
+    init:function(){
+      var _that = this;
+      $(".simulate-tab > .nav >li").on('click',function(){
+        var $this = $(this);
+        $this.siblings().removeClass("active").end().addClass("active");
+        _that.doHandle($this,$this.attr("data-click"));
+
+      });
+      $(".simulate-tab > .nav > li:first").click();
+    },
+
+    setNavHandle:function(fnObj){
+      var _that = this;
+      _that.navHandle = fnObj;
+    },
+
+    navHandle:{},
+
+    clearNavContent:function($nav){
+      $nav.parent().next(".simulate-tab-content").html('');
+    },
+
+    doHandle:function($nav,fnName){//调用nav事件处理方法
+      var _that = this;
+      _that.clearNavContent($nav);
+      _that.navHandle[fnName]($nav.parent().next());
+    }
+  };
+  //设置导航点击事件处理方法
+  SimulateTab.setNavHandle({
+    //$content表示放tab内容的容器的JQuery对象
+    tpChart:function($content){//方法名与html中data-click的方法相同
+      //画拓扑图
+      let tpoption = {
+          container:'.simulate-tab-content',
+          data:'',
+          width:$content.width(),
+          height:500
+        },
+        nodesdata = [],
+        linesdata = [],
+        tp,
+        legend,
+        dataObj = getTpData();
+
+      TreeTraverse(dataObj,function(node){
+        nodesdata.push({
+          "id":node["id"],
+          "parentId":node["parentId"],
+          "name": node["name"],
+          "type": node["type"],
+          "provider":node["privider"],
+          "image": node["type"]=="3"?"":"./img/home_top_logo.png"
+        });
+
+        if(nodesdata.length>=2){
+          linesdata.push({
+            "source": objArrIndex(nodesdata,"id",
+              nodesdata[nodesdata.length-1].parentId),
+            "target":nodesdata.length-1
+          });
+        }
+      });
+
+      tpoption.data = {
+        "nodes":nodesdata,
+        "lines":linesdata
+      };
+
+      tp = new TPChart(tpoption);
+      tp.init();
+
+      //添加legend
+      legend ='<div class="tp-legend"><ul>'+
+        '<li><span class="tp-legend-icon tp-legend-icon-1"></span><span>一级政务云</span></li>'+
+        '<li><span class="tp-legend-icon tp-legend-icon-2"></span><span>二级政务云</span></li>'+
+        '<li><span class="tp-legend-icon tp-legend-icon-3"></span><span>三级政务云</span></li>'+
+        '</ul></div>';
+      $content.append(legend);
+    }
+  });
+  SimulateTab.init();// 加载
+
+
+  //返回对象数组中拥有某属性值的对象的索引
+  function objArrIndex(arr,key,value){
+    if (!Array.isArray(arr) || arr.length == 0) {
+      return -1;
+    }
+
+    for(var i=0;i<arr.length;i++){
+      if(arr[i][key] == value) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  //遍历树形结构，生成nodes和lines数据
+  function TreeTraverse(treeObj,fn){
+    return (function recursiveFn(treeObj){
+      if(treeObj){
+        fn(treeObj);
+        if(treeObj.children.length==0){
+          return false;
+        }else{
+          for(var j=0;j<treeObj.children.length;j++){
+            recursiveFn(treeObj.children[j],fn);
+          }
+        }
+      }
+
+    })(treeObj);
+  }
+
 });
 
 
-  import Vue from 'vue'
-  import axios from 'axios'
-  import qs from 'qs'
-  import { Message, Loading } from 'element-ui'
-  // 响应时间
-  axios.defaults.timeout = 5 * 1000
-  // 配置cookie
-  // axios.defaults.withCredentials = true
-  // 配置请求头
-  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-  // 静态资源
-  Vue.prototype.$static = ''
-  // 配置接口地址
-  axios.defaults.baseURL = ''
-  var loadingInstance
-  // POST传参序列化(添加请求拦截器)
-  axios.interceptors.request.use(
-    config => {
-      loadingInstance = Loading.service({
-        lock: true,
-        text: '数据加载中，请稍后...',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      if (config.method === 'post') {
-        config.data = qs.stringify(config.data)
-      }
-      return config
-    },
-    err => {
-      loadingInstance.close()
-      Message.error('请求错误')
-      return Promise.reject(err)
-    }
-  )
-  // 返回状态判断(添加响应拦截器)
-  axios.interceptors.response.use(
-    res => {
-      if (res.data.code === 200) {
-        loadingInstance.close()
-        return res
-      } else {
-        loadingInstance.close()
-        Message.error(res.data.msg)
-      }
-    },
-    err => {
-      loadingInstance.close()
-      Message.error('请求失败，请稍后再试')
-      return Promise.reject(err)
-    }
-  )
-  // 发送请求
-  export function post (url, params) {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(url, params)
-        .then(
-          res => {
-            resolve(res.data)
-          },
-          err => {
-            reject(err.data)
-          }
-        )
-        .catch(err => {
-          reject(err.data)
-        })
-    })
-  }
-  export function get (url, params) {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(url, {
-          params: params
-        })
-        .then(res => {
-          resolve(res.data)
-        })
-        .catch(err => {
-          reject(err.data)
-        })
-    })
-  }
 
 </script>
 </body>

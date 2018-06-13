@@ -77,6 +77,15 @@ export let tableMixin = {
     hiddenScreenLoading(){
       this.$store.commit('hiddenScreenLoading');
     },
-    
-  }
+  },
+  mounted(){
+    this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+      axiosLoading.close();
+  })
+}
 };
+/* 延迟函数 ms */
+export function sleep(n) {
+  let start=new Date().getTime();
+  while(true) if(new Date().getTime()-start>n) break;
+}

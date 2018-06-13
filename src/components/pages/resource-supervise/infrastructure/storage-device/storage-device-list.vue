@@ -95,14 +95,22 @@
         </div></el-col>
       </el-row>
     </div>
+    <div class="time-task-logic">
+      <div style="background-color:#fff;" class="simulate-tab clearfix">
+        <ul class="nav navbar-nav label-nav floatRight">
+          <li class="active" data-click="tpChart"><a href="#">政务云拓扑图</a></li>
+          <li data-click="mapChart"><a href="#">政务云地区分布图</a></li>
+        </ul>
+        <div class="simulate-tab-content"></div>
+      </div>
+    </div>
 
   </div>
 </template>
 
 <script>
-
-
   import topFive from '@/components/business-module/topFive/topfive.vue'
+  import * as d3 from 'd3'
 
   export default {
     components: {
@@ -165,6 +173,7 @@
     created(){
       this.initData();
       this.initTable();
+
     },
     methods: {
       /*
@@ -227,6 +236,12 @@
       jumpDetail(scope){
         this.$router.push( '/storageDevice/'+scope.row.hostName);
       },
+
+    },
+    mounted(){
+      this.$nextTick(function(){
+
+      });
     }
   }
 </script>
