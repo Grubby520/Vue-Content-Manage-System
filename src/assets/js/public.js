@@ -46,7 +46,7 @@ export let tableMixin = {
   data(){
     return {
       //Loading
-      //loading: false,
+      loading: false,
       //table的data
       tableList: [],
       
@@ -78,11 +78,11 @@ export let tableMixin = {
       this.$store.commit('hiddenScreenLoading');
     },
   },
-  mounted(){
-    this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
-      axiosLoading.close();
-  })
-}
+ /* mounted(){
+    this.$nextTick(() => {
+    
+    })
+  }*/
 };
 /* 延迟函数 ms */
 export function sleep(n) {

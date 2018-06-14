@@ -1,5 +1,7 @@
 /*
 * 1.新增全局Loading
+* ps: 应用局限性太大，还有bug，放弃，还是采用页面v-loading方式
+*    axiosLoading是个全局的，页面只有一个table还可以，多个需要怎么办？
 * */
 import axios from 'axios'
 import qs from 'qs'
@@ -25,16 +27,16 @@ let axiosLoading = null;
 // request请求拦截器
 axios.interceptors.request.use(
   config => {
-    //调用loading,配置options
-    const selector = config.data.querySelector;
+    //取消Loading
+    /*const selector = config.data.querySelector;
     if(selector){
-      //console.log('request: '+new Date().getSeconds()+'.'+new Date().getMilliseconds());
+      console.log('request: '+new Date().getSeconds()+'.'+new Date().getMilliseconds());
       axiosLoading = Loading.service({
-        //lock: true,
+        lock: true,
         target: selector,
         text: '数据加载中...'
       });
-    }
+    }*/
     if(config.method === 'post'){
       /*
       * data的json只能是一层键值对？
@@ -46,8 +48,8 @@ axios.interceptors.request.use(
     return config;
   },
   error => {
-    
-    if(axiosLoading) axiosLoading.close();
+    //取消Loading
+    //if(axiosLoading) axiosLoading.close();
     Message.error('请求数据报错');
     return Promise.reject(error);
   }
@@ -56,15 +58,15 @@ axios.interceptors.request.use(
 // response响应拦截器
 axios.interceptors.response.use(
   response => {
-    if(response.data.total){
+    //取消Loading
+    /*if(response.data.total){
       sleep(1500);
       if(axiosLoading){
         //console.log('response: '+new Date().getSeconds()+'.'+new Date().getMilliseconds());
         axiosLoading.close();
       }
-    }
-    // setTimeout(()=>{
-    // },1500);
+    }*/
+    
     // if(response.data.code === 200){
     //   return response;
     // }
@@ -74,7 +76,7 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    axiosLoading.close();
+    //axiosLoading.close();
     Message.error('请求数据失败，请稍后再试');
     return Promise.reject(error);
   }
@@ -124,11 +126,8 @@ export default {
     return get(url, params);
   },
   post(url, params){
-    if(params.querySelector){
-      console.info(url);
-      console.info(params);
-    }
+    //console.info(url);
+    //console.info(params);
     return post(url, params);
   }
 }
-

@@ -7,8 +7,9 @@
 
           <div class="lg-title">服务器列表</div>
 
-          <div class="table-box">
-
+          <div class="table-box"
+               v-loading="loading"
+               element-loading-text="数据加载中...">
             <div class="handle-box">
 
               <div class="box-left"></div>
@@ -178,13 +179,17 @@
 
       /* 渲染table */
       initTable(){
+        this.loading = true;
+        setTimeout(()=>{
+          //实际项目：catch加上处理
+          this.$api.post('/serverList', this.tableArgs)
+            .then(res => {
+              this.tableList = res.articles;
+              this.tableArgs.total = res.total;
+              this.loading = false;
+            });
+        },1500);
 
-        //实际项目：catch加上处理
-        this.$api.post('/serverList', this.tableArgs)
-          .then(res => {
-            this.tableList = res.articles;
-            this.tableArgs.total = res.total;
-          });
       },
 
       /*search 额外参数时添加*/
