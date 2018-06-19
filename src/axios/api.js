@@ -121,8 +121,6 @@ export function post (url, params) {
 //拦截地址
 export default {
   get(url, params){
-    //console.info(url);
-    //console.info(params);
     return get(url, params);
   },
   post(url, params){

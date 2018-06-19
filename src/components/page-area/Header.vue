@@ -49,7 +49,7 @@
         line-height: 50px;
         color: #fff;
         background: #324157;
-        z-index: 9999;
+        z-index: 9;
     }
     .header .logo, .header .system{
         float: left;

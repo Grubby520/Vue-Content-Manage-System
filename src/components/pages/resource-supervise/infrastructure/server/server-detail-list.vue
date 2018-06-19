@@ -89,7 +89,7 @@
       this.$api.post('/basicInfoList', {})
         .then(res => {
           this.setData(res);
-          next();//触发更新view?
+          next();//触发更新router
         });
     },
 

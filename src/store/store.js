@@ -5,6 +5,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state:{
     fullScreenLoading: false,
+    fromPath: 'home',
   },
   mutations:{
     showScreenLoading (state) {
@@ -12,6 +13,9 @@ export default new Vuex.Store({
     },
     hiddenScreenLoading (state) {
       state.fullScreenLoading = false
-    }
+    },
+    resetFromPath(state, from){
+      state.fromPath = from.path
+    },
   }
 })

@@ -38,28 +38,28 @@
             },
             {
                 "icon": "icon iconfont icon-2nd-virtual-resource",
-                "index": "/virtualResource",
+                "index": "2-2",
                 "title": "虚拟资源",
                 "subs": [
                 {
                   "icon": "icon iconfont icon-3rd-cloud-host",
                   "index": "/cloudHost",
-                  "title": "虚拟机"
+                  "title": "云主机"
                 },
                 {
                   "icon": "icon iconfont icon-storage-capacity",
                   "index": "/storageCapacity",
-                  "title": "虚拟硬盘"
+                  "title": "云硬盘"
                 },
                 {
                   "icon": "icon iconfont icon-3rd-cloud-firewall",
                   "index": "/cloudFirewall",
-                  "title": "虚拟防火墙"
+                  "title": "云防火墙"
                 },
                 {
                   "icon": "icon iconfont icon-3rd-load-balancing",
                   "index": "/loadBalancing",
-                  "title": "虚拟负载均衡"
+                  "title": "云负载均衡"
                 }
               ]
             }

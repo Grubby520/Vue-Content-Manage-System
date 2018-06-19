@@ -1,7 +1,11 @@
 <template>
     <div class="outer-screen" ref="nav" id="main-nav">
         <div class="sidebar">
-            <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
+            <el-menu
+              :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router
+                     @select="handleSelect"
+                     @open="handleOpen"
+                     @close="handleClose">
                 <template v-for="item in items">
 
                     <template v-if="item.subs">
@@ -45,24 +49,32 @@
     export default {
         data() {
             return {
-                items:[]
+                items:[],
+                onRoutes: 'home',
             }
         },
         computed:{
-            onRoutes(){
-                return this.$route.path.replace('/','');
-            }
+            //onRoutes(){
+
+                //return this.$route.path.replace('/',''); // 去掉'/'
+            //}
         },
         created() {
             this.getMenuList();
         },
         methods: {
-            getMenuList(){
-                this.$api.post('/menuList',{})
-                    .then(res => {
-                        this.items = res;
-                    })
-            }
+          getMenuList(){
+              this.$api.post('/menuList',{})
+                  .then(res => {
+                      this.items = res;
+                  })
+          },
+          handleSelect(key, keyPath){
+          },
+          handleOpen(key, keyPath) {
+          },
+          handleClose(key, keyPath) {
+          }
         },
         mounted(){
             this.$nextTick(function () {

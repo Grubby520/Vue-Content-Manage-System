@@ -52,7 +52,7 @@
             "error": 2
         },
         {
-            "name": "负载均衡",
+            "name": "云负载均衡",
             "icon": "icon iconfont icon-3rd-load-balancing",
             "menu": "loadBalancing",
             "total": 240,

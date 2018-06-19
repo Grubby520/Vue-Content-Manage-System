@@ -426,3 +426,7 @@ color
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+/* 常用margin,padding */
+.mr2{
+  margin-right: 2em;
+}

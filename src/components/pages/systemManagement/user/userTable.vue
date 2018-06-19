@@ -465,7 +465,6 @@
                     beforeClose: (action, instance, done) => {
                         //submit
                         if (action === 'confirm') {
-                            console.info( _this.del_idList);
                             _this.del_idList = [];
                             instance.confirmButtonLoading = true;
                             instance.confirmButtonText = '执行中...';
