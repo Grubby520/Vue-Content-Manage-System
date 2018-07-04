@@ -56,7 +56,7 @@
         computed:{
             //onRoutes(){
 
-                //return this.$route.path.replace('/',''); // 去掉'/'
+                //return this.$route.path.replace('/','');
             //}
         },
         created() {
